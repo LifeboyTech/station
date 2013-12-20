@@ -1,0 +1,182 @@
+var station_load_more_locked = false;
+var nestable = false;
+
+$(document).ready(function() { 
+	
+	/**
+	 * a click on a list row will trigger the edit button for that row
+	 *
+	 */
+	$('.station-list tr td').live('click', function(event) {
+		
+		window.location = $(this).closest('tr').find('a:first').attr('href');
+		return false;
+	});
+
+	/**
+	 * pagination for station-list
+	 *
+	 */
+	$('.station-list-load-more button').click(function(event) {
+		
+		if (!station_load_more_locked){
+
+			station_load_more_locked = true;
+			$(this).data('orig_html', $(this).html());
+			$(this).html('loading...');
+
+			$.ajax({
+				url: window.location.pathname + '?station_page=next',
+				type: 'GET',
+				dataType: 'html'
+			})
+			.done(function(r) {
+
+				$('.station-list').append(r);
+				station_load_more_locked = false;
+				var orig_html = $('.station-list-load-more button').data('orig_html');
+				$('.station-list-load-more button').html(orig_html);
+			});
+		}
+
+		$(this).blur();
+		return false;
+	});
+
+	/**
+	 * filtering methods
+	 *
+	 */
+	if(window.location.href.indexOf('?')>0)
+	{
+		// Has some filters already, so we need to set the dropdowns.
+		var $url_parts = window.location.href.split('?');
+		var $filters = $url_parts[1];
+		var $filter_array = new Array();
+		if($filters.indexOf('&')>0)
+		{
+			// means more than one filter, need to split!
+			for(var $i=0;$i<$filters.length;$i++)
+			{
+				$filter_array[$i] = $filters[$i].split('=');
+			}
+		}
+		else
+		{
+			// just one filter
+			$filter_array[0] = $filters.split('=');
+		}
+
+
+		for(var $i = 0; $i < $filter_array.length;$i++)
+		{
+			if (typeof $filter_array[$i][0] != 'undefined' && typeof $filter_array[$i][1] != 'undefined'){
+
+				$('[name=filter-'+$filter_array[$i][0]+']').val($filter_array[$i][1]);
+			}
+		}
+	}
+
+	/**
+	 * user filtering of data
+	 */
+	$('.station-list .table-filter').live('change',function()
+	{
+		var $get_data = new Array();
+		var $url_without_hash = window.location.href.split('#')[0];
+		var $url_parts = $url_without_hash.split('?');
+		var $target_url = $url_parts[0];
+
+		//$get_data.push(['tags',4]); testing for more than one filter
+		$('.station-list .table-filter').each(function()
+		{
+
+			//add to the string
+			var $table = $(this).attr('name').split('-');
+			$table = $table[1];
+			$get_data.push([$table,$(this).val()]);
+		});
+
+		if($get_data.length>0)
+		{
+			// have filters to add!
+			var $get = '?';
+
+			for(var $i = 0;$i < $get_data.length;$i++)
+			{
+				$get += $get_data[$i][0]+'='+$get_data[$i][1]+'&';
+			}
+			$target_url += $get.substring(0,($get.length-1));
+		}
+
+		window.location = $target_url;
+	});
+
+	// enable harvest/chosen JS lib on selects
+    if ($(".chosen-select").length){
+
+        $(".chosen-select").chosen({
+            disable_search_threshold: 10,
+            allow_single_deselect: true
+        });
+    }
+
+    /**
+     * nested sortable behaviors
+     */
+    if ($('.is-nestable').length) {
+
+    	nestable = $('.is-nestable .dd');
+	    nestable.nestable();
+	    nestable.on('change', function(){
+
+	    	var relative_uri = nestable.closest('.station-list').attr('data-relative-uri');
+	    	var ids = JSON.stringify($('.is-nestable .dd').nestable('serialize'));
+
+	    	$.ajax({
+                url: relative_uri + '/reorder_nested',
+                type: 'PUT',
+                data: { nested_ids : ids },
+                success: function(data) {
+                    
+                	// assume all went well for now. TODO: handle error.
+                }
+            });
+	    });
+
+	    $('.is-nestable .fui-new').click(function(event) {
+	    	
+	    	window.location = $(this).attr('data-link');
+	    	return false;
+	    });
+
+	    $('a.nestables-collapse-all').live('click', function(event) {
+	    	
+	    	$('.dd').nestable('collapseAll');
+	    	$('.nestables-collapse-all, .nestables-expand-all').toggle();
+	    });
+
+	    $('a.nestables-expand-all').live('click', function(event) {
+	    	
+	    	$('.dd').nestable('expandAll');
+	    	$('.nestables-collapse-all, .nestables-expand-all').toggle();
+	    });
+
+	    if ($('.dd-item .dd-item').length > 30){
+
+	    	$('.dd').nestable('collapseAll');
+	    	$('.nestables-expand-all').show();
+	    	$('.nestables-collapse-all').hide();
+	    
+	    } else {
+
+	    	$('.nestables-expand-all').hide();
+	    	$('.nestables-collapse-all').show();
+	    }
+	}
+});
+
+/**
+ * minified version of https://github.com/douglascrockford/JSON-js/blob/master/json2.js
+ */
+	if(typeof JSON!=='object'){JSON={}}(function(){'use strict';function f(n){return n<10?'0'+n:n}if(typeof Date.prototype.toJSON!=='function'){Date.prototype.toJSON=function(){return isFinite(this.valueOf())?this.getUTCFullYear()+'-'+f(this.getUTCMonth()+1)+'-'+f(this.getUTCDate())+'T'+f(this.getUTCHours())+':'+f(this.getUTCMinutes())+':'+f(this.getUTCSeconds())+'Z':null};String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(){return this.valueOf()}}var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={'\b':'\\b','\t':'\\t','\n':'\\n','\f':'\\f','\r':'\\r','"':'\\"','\\':'\\\\'},rep;function quote(string){escapable.lastIndex=0;return escapable.test(string)?'"'+string.replace(escapable,function(a){var c=meta[a];return typeof c==='string'?c:'\\u'+('0000'+a.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+string+'"'}function str(key,holder){var i,k,v,length,mind=gap,partial,value=holder[key];if(value&&typeof value==='object'&&typeof value.toJSON==='function'){value=value.toJSON(key)}if(typeof rep==='function'){value=rep.call(holder,key,value)}switch(typeof value){case'string':return quote(value);case'number':return isFinite(value)?String(value):'null';case'boolean':case'null':return String(value);case'object':if(!value){return'null'}gap+=indent;partial=[];if(Object.prototype.toString.apply(value)==='[object Array]'){length=value.length;for(i=0;i<length;i+=1){partial[i]=str(i,value)||'null'}v=partial.length===0?'[]':gap?'[\n'+gap+partial.join(',\n'+gap)+'\n'+mind+']':'['+partial.join(',')+']';gap=mind;return v}if(rep&&typeof rep==='object'){length=rep.length;for(i=0;i<length;i+=1){if(typeof rep[i]==='string'){k=rep[i];v=str(k,value);if(v){partial.push(quote(k)+(gap?': ':':')+v)}}}}else{for(k in value){if(Object.prototype.hasOwnProperty.call(value,k)){v=str(k,value);if(v){partial.push(quote(k)+(gap?': ':':')+v)}}}}v=partial.length===0?'{}':gap?'{\n'+gap+partial.join(',\n'+gap)+'\n'+mind+'}':'{'+partial.join(',')+'}';gap=mind;return v}}if(typeof JSON.stringify!=='function'){JSON.stringify=function(value,replacer,space){var i;gap='';indent='';if(typeof space==='number'){for(i=0;i<space;i+=1){indent+=' '}}else if(typeof space==='string'){indent=space}rep=replacer;if(replacer&&typeof replacer!=='function'&&(typeof replacer!=='object'||typeof replacer.length!=='number')){throw new Error('JSON.stringify')}return str('',{'':value})}}if(typeof JSON.parse!=='function'){JSON.parse=function(text,reviver){var j;function walk(holder,key){var k,v,value=holder[key];if(value&&typeof value==='object'){for(k in value){if(Object.prototype.hasOwnProperty.call(value,k)){v=walk(value,k);if(v!==undefined){value[k]=v}else{delete value[k]}}}}return reviver.call(holder,key,value)}text=String(text);cx.lastIndex=0;if(cx.test(text)){text=text.replace(cx,function(a){return'\\u'+('0000'+a.charCodeAt(0).toString(16)).slice(-4)})}if(/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,'@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,']').replace(/(?:^|:|,)(?:\s*\[)+/g,''))){j=eval('('+text+')');return typeof reviver==='function'?walk({'':j},''):j}throw new SyntaxError('JSON.parse')}}}());

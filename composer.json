@@ -1,0 +1,28 @@
+{
+    "name": "canary/station",
+    "description": "Easy CRUD and User Auth Mix For Laravel 4",
+    "version": "0.1.1",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Canary Developers",
+            "email": "developers@thecanarycollective.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.1.*",
+        "way/generators": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations",
+            "src/seeds",
+            "src/controllers"
+        ],
+        "psr-0": {
+            "Canary\\Station": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

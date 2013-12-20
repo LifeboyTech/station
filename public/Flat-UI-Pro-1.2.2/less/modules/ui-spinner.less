@@ -1,0 +1,109 @@
+// Spinner
+// --------------------------------------------------
+
+// Spinner Input
+.spinner {
+  width: 55px;
+  border-right-width: 0 !important;
+  font-weight: bold;
+  font-size: 20px !important;
+  
+  @media (max-width: 767px) {
+    & { width: 100%; }
+  }
+}
+
+// Spinner Wrapper
+.ui-spinner {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0 37px 0 0;
+  position: relative;
+  vertical-align: middle;
+
+  @media (max-width: 767px) {
+    & { display: block; }
+  }
+
+  .ui-button-text {
+    display: block;
+    line-height: normal;
+  }
+
+  input {
+    color: @gray;
+    border-radius: @border-radius-large 0 0 @border-radius-large;
+    text-align: center;
+    padding: 6px 12px;
+  }
+
+  // Focus State
+  &.focus {
+    input {
+      color: @brand-secondary;
+      border-color: @brand-secondary;
+    }
+    .ui-spinner-button {
+      background-color: @brand-secondary;
+
+      &:hover {
+        background-color: mix(@brand-secondary, black, 85%)
+      }
+    }
+    .ui-spinner-up {
+      border-bottom-color: mix(@brand-secondary, black, 85%);
+    }
+  }
+}
+
+// Spinner Buttons
+.ui-spinner-button {
+  cursor: default;
+  display: block;
+  font-size: .5em;
+  line-height: 19px;
+  height: 22px;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  width: 37px;
+  cursor: pointer;
+  color: #fff;
+  text-decoration: none;
+  background-color: @gray-light;
+  outline: none;
+
+  &:hover {
+    background-color: mix(@gray-light, white, 70%);
+    color: mix(@brand-secondary, white, 10%);
+  }
+
+  // Icon
+  span {
+    font-size: 0;
+    
+    &:before {
+      content: "\e001";
+      font-family: "Flat-UI-Icons";
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+  }
+}
+.ui-spinner-up {
+  border-bottom: 2px solid mix(@gray-light, white, 70%);
+  top: 0;
+  border-radius: 0 @border-radius-large 0 0;
+}
+.ui-spinner-down {
+  bottom: 0;
+  height: 20px;
+  border-radius: 0 0 @border-radius-large 0;
+  
+  span:before {
+    content: "\e005";
+  }
+}
