@@ -58,7 +58,3 @@ h4, h5 {
   display: block !important;
   float: none !important;
 }
-.form-signin, .row-header {
-  background: url(/wy.png) no-repeat 50% 0;
-  padding-top: 104px;
-}

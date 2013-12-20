@@ -13,6 +13,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/packages/canary/station/css/login.css" rel="stylesheet">
+    {{ Config::get('station::_app.css_override_file') != '' ? '<link href="'.Config::get('station::_app.css_override_file').'" rel="stylesheet">' : '' }}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
