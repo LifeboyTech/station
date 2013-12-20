@@ -1,7 +1,7 @@
 {
     "name": "canary/station",
     "description": "Easy CRUD and User Auth Mix For Laravel 4",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "license": "MIT",
     "authors": [
         {
