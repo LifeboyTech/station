@@ -15,7 +15,7 @@
 							{{ $raw_count > count($data['data']) ? ' of '.$raw_count : '' }}
 							
 							{{ ($is_reorderable || $is_nestable) && count($data['data']) > 1 ? 
-								'&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-xs btn-default">Drag and Drop to Reorder</a>' : '' }}
+								'&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-xs btn-default drag-drop-notice">Drag and Drop to Reorder</a>' : '' }}
 							
 							@if ($is_nestable && count($data['data']) > 1)
 								<a class="btn btn-xs btn-info nestables-collapse-all"><span class="fui-list"></span>&nbsp;Collapse All</a>
