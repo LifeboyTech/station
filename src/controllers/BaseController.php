@@ -2,6 +2,7 @@
 namespace Canary\Station\Controllers;
 use Illuminate\Routing\Controller;
 use View, Config;
+use Canary\Station\Config\StationConfig as StationConfig;
 
 abstract class BaseController extends Controller{
 
@@ -20,7 +21,7 @@ abstract class BaseController extends Controller{
     public function __construct()
     {
         // Achieve that segment
-        $this->base_uri = Config::get('station::_app.root_uri_segment');
+        $this->base_uri = StationConfig::app('root_uri_segment');
 
         // Setup composed views and the variables that they require
         $this->beforeFilter( 'sessionFilter' , array('except' => array('create')) );

@@ -1,6 +1,7 @@
 <?php namespace Canary\Station;
 
 use Illuminate\Support\ServiceProvider;
+use Config;
 
 class StationServiceProvider extends ServiceProvider {
 
@@ -19,7 +20,7 @@ class StationServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('canary/station', 'station');
-
+		Config::addNamespace('station_vendor_config', './app/config/packages/canary/station/');
 		include __DIR__.'/../../routes.php';
 	}
 

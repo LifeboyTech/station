@@ -1,6 +1,6 @@
 # Station
 
-## A Backend CRUD, Content and User Management System For Laravel 4
+## A Backend CRUD, Content and User Management System For Laravel 4.1
 
 Tired of creating and configuring similar models and controllers which deal with basic CRUD, validation and user role-based capabilities? Station allows developers to setup and configure a backend CMS for a Laravel app/site very quickly. 
 
@@ -21,7 +21,7 @@ The Station Service Provider can be installed via [Composer](http://getcomposer.
 ```json
 {
     "require": {
-        "canary/station": "0.*" // <-- we're still in development
+        "canary/station": "0.1.*"
     }
 }
 ```
@@ -45,6 +45,7 @@ Find the `providers` key in your `app/config/app.php` and register the Station S
     'providers' => array(
         // ...
         'Canary\Station\StationServiceProvider',
+        'Way\Generators\GeneratorsServiceProvider',
     )
 ```
 

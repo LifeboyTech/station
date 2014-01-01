@@ -1,12 +1,14 @@
 <?php
 
+use Canary\Station\Config\StationConfig as StationConfig;
+
 class StationGroupTableSeeder extends Seeder {
 
 	public function run()
 	{
 		$group_list = array();
 
-		$app = Config::get('station::_app');
+		$app = StationConfig::app();
 
 		foreach($app['user_groups'] as $key => $group) // TODO!: change key?
 		{

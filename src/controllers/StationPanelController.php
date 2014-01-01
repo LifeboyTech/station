@@ -4,6 +4,7 @@ use View, App, Config, Session, Auth, Redirect, URL, Input, Response, Request;
 use Canary\Station\Models\Panel as Panel;
 use Canary\Station\Filters\Session as Station_Session;
 use Illuminate\Filesystem\Filesystem as File;
+use Canary\Station\Config\StationConfig as StationConfig;
 
 class StationPanelController extends \BaseController {
 
@@ -50,10 +51,10 @@ class StationPanelController extends \BaseController {
 
 	public function create_user(){
 
-		if (Auth::check()) return Redirect::to(Config::get('station::_app.root_uri_segment').'/login');
+		if (Auth::check()) return Redirect::to(StationConfig::app('root_uri_segment').'/login');
 
 		$this->assets['css'][] = 'login.css';
-		$panel_name = Config::get('station::_app.panel_for_user_create');
+		$panel_name = StationConfig::app('panel_for_user_create');
 		return $this->create($panel_name);
 	}
 
@@ -66,9 +67,12 @@ class StationPanelController extends \BaseController {
 
 		$this->init($panel_name, 'C');
 
-		$validator 	 = $panel->validates_against($panel_name, $user_scope);
-		$attempt_uri = isset($this->is_creating_user) ? '/'.$this->base_uri.'register/' : '/'.$this->base_uri.'panel/'.$panel_name.'/create';
-		$attempt_uri = $attempt_uri.$this->append_attempt_uri;
+		$override_response = $this->override_responded_to($user_scope, 'C');
+		if ($override_response) return $override_response;
+
+		$validator 	 	= $panel->validates_against($panel_name, $user_scope);
+		$attempt_uri 	= isset($this->is_creating_user) ? '/'.$this->base_uri.'register/' : '/'.$this->base_uri.'panel/'.$panel_name.'/create';
+		$attempt_uri 	= $attempt_uri.$this->append_attempt_uri;
 
 		if ($validator->fails()){ // flash error and redirect to form
 
@@ -130,9 +134,9 @@ class StationPanelController extends \BaseController {
 
 	public function do_create_user(){
 
-		if (Auth::check()) return Redirect::to(Config::get('station::_app.root_uri_segment').'/login');
+		if (Auth::check()) return Redirect::to(StationConfig::app('root_uri_segment').'/login');
 
-		$panel_for_user_create = Config::get('station::_app.panel_for_user_create');
+		$panel_for_user_create = StationConfig::app('panel_for_user_create');
 		$this->is_creating_user = TRUE;
 		return $this->do_create($panel_for_user_create);
 	}
@@ -419,7 +423,7 @@ class StationPanelController extends \BaseController {
     	$panel 					= new Panel;
 		$this->id				= $id;
 		$this->name				= $panel_name;
-		$this->app_config		= Config::get('station::_app');
+		$this->app_config		= StationConfig::app();
 		$this->user_scope		= $panel->user_scope($this->name, $method, $this->subpanel_parent);
 
 		// temp handling if someone is trying to access something they shouldn't		
@@ -429,7 +433,7 @@ class StationPanelController extends \BaseController {
 		$this->single_item_name	= $this->panel_config['panel_options']['single_item_name'];
 		$this->user_data		= Session::get('user_data');
 		$this->assets			= isset($this->assets) ? $this->assets : [];
-		$this->base_uri			= Config::get('station::_app.root_uri_segment').'/';
+		$this->base_uri			= StationConfig::app('root_uri_segment').'/';
 		$this->foreign_data 	= $panel->foreign_data_for($this->user_scope, $method);  
 		$this->foreign_panels 	= $panel->foreign_panels_for($this->user_scope, $method);
 		$this->array_img_size 	= $panel->img_sizes_for($this->user_scope, $this->app_config);
@@ -558,8 +562,47 @@ class StationPanelController extends \BaseController {
 
 		if (isset($panel_data['config']['panel_options']['js_include']) && $panel_data['config']['panel_options']['js_include'] != ''){
 
-			$this->assets['js'][] = $panel_data['config']['panel_options']['js_include'];
+			if (is_array($panel_data['config']['panel_options']['js_include'])){
+
+				foreach($panel_data['config']['panel_options']['js_include'] as $js_file){
+
+					$this->assets['js'][] = $js_file;
+				}
+
+			} else {
+
+				$this->assets['js'][] = $panel_data['config']['panel_options']['js_include'];
+			}
 		}
+	}
+
+	private function override($panel_data, $letter = 'L'){
+
+		// if there is an override
+		$controller 	= false;
+		$method 		= false;
+
+		if(isset($panel_data['config']['panel_options']['override'][$letter]))
+		{
+			$temp 			= explode('@', $panel_data['config']['panel_options']['override'][$letter]);
+			$controller 	= $temp[0];
+			$method 		= isset($temp[1]) ? $temp[1] : FALSE;
+		}
+
+		if (!$controller || !$method){
+
+			return FALSE;
+		}
+
+		return array('controller' => $controller, 'method' => $method);
+	}
+
+	private function override_responded_to($user_scope, $method){
+
+		$override = $this->override($user_scope, $method);
+		if ($override) return App::make($override['controller'])->$override['method']();
+
+		return FALSE;
 	}
 
 	private function render($template = 'list', $panel_data = array(), $method = 'L'){
@@ -567,26 +610,18 @@ class StationPanelController extends \BaseController {
 		View::share('panel_name', $this->name);
 		View::share('parent_panel_name', $this->subpanel_parent);
 		View::share('subpanel_parent_uri', $this->subpanel_parent ? '/'.$this->base_uri.'panel'.$this->subpanel_parent_uri : FALSE);
-
+		
 		if (Request::ajax()) return $this->render_ajax($template, $panel_data, $method);
 
 		$configure_method = 'configure_'.$template.'_view';
 		$this->$configure_method($panel_data);
 		$this->load_js_include($panel_data);
 
-		// if there is an override
-		$override_controller 	= false;
-		$override_method 		= false;
-		if(isset($panel_data['config']['panel_options']['override'][$method]))
-		{
-			$temp = explode('@', $panel_data['config']['panel_options']['override'][$method]);
-			$override_controller 	= $temp[0];
-			$override_method 		= $temp[1];
-		}
-		
-		$view = $override_controller ? App::make($override_controller)->$override_method() : View::make('station::layouts.'.$template);
+		$override_response	= $this->override_responded_to($panel_data, $method);
+		$view = $override_response ? $override_response : View::make('station::layouts.'.$template);
+
 		View::share('assets', $this->assets);
-		$this->layout->content 	= $view;		
+		$this->layout->content 	= $view;
 	}
 
 	private function render_ajax($template = 'list', $panel_data = array(), $method = 'L'){

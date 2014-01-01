@@ -512,4 +512,11 @@ ul.is-reorderable {
 .dd-dragel .fui-new {
 	margin-right: 10px;
 }
-
+.station-list-wrap .drag-drop-notice {
+    position: absolute;
+    left: 8px;
+    top: -11px;
+    font-size: 10px;
+    line-height: 7px;
+    background-color: #ddd;
+}

@@ -2,6 +2,7 @@
 
 use Config, Session, URL, DB, Input, Validator, Hash, Request;
 use Canary\Station\Models\Group as Group;
+use Canary\Station\Config\StationConfig as StationConfig;
 
 class Panel {
 
@@ -71,7 +72,7 @@ class Panel {
      */
     public function all($with_subpanels = FALSE){
 
-        $groups = Config::get('station::_app.user_groups');
+        $groups = StationConfig::app('user_groups');
         $ret = [];
 
         foreach ($groups as $group_name => $group) { // loop over groups
@@ -84,7 +85,7 @@ class Panel {
 
                 if (!$with_subpanels) continue;
 
-                $panel_data = Config::get('station::'.$panel_name);
+                $panel_data = StationConfig::panel($panel_name);
 
                 if (isset($panel_data['elements']) && count($panel_data['elements']) > 0){
 
@@ -109,7 +110,7 @@ class Panel {
      */
     public function all_by_group(){
 
-        return Config::get('station::_app.user_groups');
+        return StationConfig::app('user_groups');
     }
 
     /**
@@ -204,7 +205,7 @@ class Panel {
             
             if ($element['type'] == 'subpanel'){
 
-                $ret[$element_name] = Config::get('station::'.$element_name);
+                $ret[$element_name] = StationConfig::panel($element_name);
 
             }
         }
@@ -234,10 +235,10 @@ class Panel {
         $fields_for_select         = $keyword ? [$table_name.'.id', DB::raw($primary_element.' AS name')] : $fields_for_select;
         $where_clause              = $this->where_clause_for($panel); 
         $order_by                  = $this->order_by_clause_for($panel); 
-        $joins                     = $this->joins_for($panel);
+        $joins                     = $this->joins_for($panel); 
         $user_filters              = $is_filtered ? $this->user_filters_for($panel_name) : array();
 
-        $query                     = $model::select($fields_for_select);
+        $query                     = $model::select($fields_for_select); 
         $query                     = $where_clause ? $query->whereRaw($where_clause) : $query;
         $query                     = $keyword ? $query->whereRaw($primary_element." LIKE '%".addslashes($keyword)."%'") : $query;
         $query                     = $is_filtered ? $this->apply_joins_with_filters($joins, $user_filters, $query, $panel) : $query;
@@ -252,7 +253,8 @@ class Panel {
 
         } else {
 
-            $should_not_paginate = $panel['has_user_filters'] || $ids_only || $keyword;
+            $is_nestable         = isset($panel['config']['panel_options']['nestable_by']) && $panel['config']['panel_options']['nestable_by'];
+            $should_not_paginate = $panel['has_user_filters'] || $ids_only || $keyword || $is_nestable;
             $query               = $should_not_paginate ? $query : $this->paginate($query, $panel_name);
             $panel['data']       = $query->get()->toArray(); 
         }
@@ -312,7 +314,7 @@ class Panel {
     /**
      * returns the determined model name for the specified panel
      *
-     * @param  array  $panel // full configuration from station::{panel-name} config file  
+     * @param  array  $panel // full configuration from StationConfig::panel({panel-name}) config file  
      * @return string // the model name
      */
     public function model_name_for($panel_name){
@@ -440,7 +442,7 @@ class Panel {
         if ($has_panel_access || $has_parent_access){ // can access panel AND can perform $letter method
 
             $ret['registry']           = isset($panels[$primary_role]['panels'][$panel_name]) ? $panels[$primary_role]['panels'][$panel_name] : '';
-            $ret['config']             = Config::get('station::'.$panel_name); // start with the whole config!
+            $ret['config']             = StationConfig::panel($panel_name); // start with the whole config!
             $ret['config']['elements'] = $this->elements_for_letter($ret['config'], $letter); // but filter the elements.
             $ret['config']['elements'] = $this->inject_vars_for_elements($ret['config']['elements']);
 
@@ -460,7 +462,7 @@ class Panel {
     public function user_panel_access_list(){
 
         $ret            = array();
-        $base_uri       = Config::get('station::_app.root_uri_segment');
+        $base_uri       = StationConfig::app('root_uri_segment');
         $primary_role   = Session::get('user_data.primary_group');
         $primary_role   = $primary_role ?: 'anon';
         $panels         = $this->all_by_group();
@@ -544,7 +546,7 @@ class Panel {
      */
     static function config_to_uri($name){
 
-        $base_uri       = Config::get('station::_app.root_uri_segment').'/';
+        $base_uri       = StationConfig::app('root_uri_segment').'/';
         $name_arr       = explode('.', $name);
         $panel_name     = $name_arr[0];
         $letter         = isset($name_arr[1]) ? $name_arr[1] : 'L'; // list view by default?
@@ -619,7 +621,7 @@ class Panel {
 
                 // if there is a filter set for this join & it is a pivot
                 if (isset($filters[$join]) && isset($panel['config']['elements'][$join]['data']['pivot'])){
-
+                    
                     $query = $query->with(array($join => function($query) use ($join, $filters)
                     {
                         $query->where(str_singular($join).'_id', '=', $filters[$join]);
@@ -627,7 +629,7 @@ class Panel {
 
                 // just join (any kind). no filter.
                 } else {
-
+                    
                    $query = $query->with($join); 
                 }
             }
@@ -640,7 +642,7 @@ class Panel {
 
         if ($for_user) {
             
-            $starting_group_name = Config::get('station::_app.user_group_upon_register');
+            $starting_group_name = StationConfig::app('user_group_upon_register');
 
             if (strpos($starting_group_name, 'input:') !== FALSE){
 
@@ -875,7 +877,7 @@ class Panel {
     /**
      * returns a list of join tables for the specified panel
      *
-     * @param  array  $panel // full configuration from station::{panel-name} config file  
+     * @param  array  $panel // full configuration from StationConfig::panel({panel-name}) config file  
      * @return array // join tables
      */
     private function joins_for($panel, $for_write = FALSE){
@@ -887,7 +889,7 @@ class Panel {
             // add join on a pivot
             if (isset($element['data']['pivot']) || isset($element['data']['table'])){
 
-                if($element['data']['relation']=='belongsToMany')
+                if(isset($element['data']['relation']) && $element['data']['relation']=='belongsToMany')
                 {
                     $ret[] = isset($element['data']['pivot']) ? $element['data']['pivot'] : $element['data']['table'];
                 }

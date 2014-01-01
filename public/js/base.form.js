@@ -8,11 +8,11 @@ var jcrop_api              = null;
 $(document).ready(function() { 
     
     // give some weights & behaviors to the first few form fields
-    var primary_element = $('.station-form input[type="text"]:first');
+    var primary_element = $('.station-form input[type="text"]:first').not('.for-custom');
     var primary_element_val = primary_element.val();
     primary_element.addClass('input-hg').focus().val('').val(primary_element_val);
 
-    $('.station-form input[type="text"]:eq(1), .station-form input[type="password"]:eq(0)').addClass('input-lg');
+    $('.station-form input[type="text"]:eq(1), .station-form input[type="password"]:eq(0)').not('.for-custom').addClass('input-lg');
 
     // enable harvest/chosen JS lib on selects
     if ($(".chosen-select").length){

@@ -1,14 +1,15 @@
 <?php namespace Canary\Station\Controllers;
 
 use Password, Input, Config, Session, Redirect, View, Hash, Auth, Lang;
+use Canary\Station\Config\StationConfig as StationConfig;
 
 class StationUserController extends ObjectBaseController {
 
 	public function __construct()
     {
         parent::__construct();
-        $this->base_uri = Config::get('station::_app.root_uri_segment').'/';
-        $this->app = Config::get('station::_app');
+        $this->base_uri = StationConfig::app('root_uri_segment').'/';
+        $this->app = StationConfig::app();
         $this->data['is_logged_in'] = Auth::check();
     }
 

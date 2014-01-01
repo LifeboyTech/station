@@ -3,6 +3,7 @@
 use Auth, Redirect, Config, Session as Laravel_Session;
 use Canary\Station\Models\User as User;
 use Canary\Station\Models\Panel as Panel;
+use Canary\Station\Config\StationConfig as StationConfig;
 
 class Session {
 
@@ -13,7 +14,7 @@ class Session {
      */
     public function filter()
     {
-    	$this->base_uri = Config::get('station::_app.root_uri_segment').'/';
+    	$this->base_uri = StationConfig::app('root_uri_segment').'/';
 
         if (Auth::guest()) return Redirect::to($this->base_uri.'login');
 
@@ -32,7 +33,7 @@ class Session {
 		$user				= User::find($user_id);
 		$group_names		= $user->groups->lists('name'); 
 		$primary_group		= current($group_names);
-		$app_groups			= Config::get('station::_app.user_groups');
+		$app_groups			= StationConfig::app('user_groups');
 		$starting_panel		= $app_groups[$primary_group]['starting_panel'];
 		$starting_panel_uri	= Panel::config_to_uri($starting_panel);
 

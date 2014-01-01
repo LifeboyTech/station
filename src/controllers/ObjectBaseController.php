@@ -1,6 +1,7 @@
 <?php namespace Canary\Station\Controllers;
 
-use Config;
+use Config, View;
+use Canary\Station\Config\StationConfig as StationConfig;
 
 abstract class ObjectBaseController extends BaseController{
 
@@ -13,7 +14,8 @@ abstract class ObjectBaseController extends BaseController{
     public function __construct()
     {
         parent::__construct();
-        $this->base_uri = Config::get('station::_app.root_uri_segment').'/';
+        $this->base_uri = StationConfig::app('root_uri_segment').'/';
+        View::share('app_data', StationConfig::app());
     }
 
 }

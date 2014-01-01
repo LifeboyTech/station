@@ -4,6 +4,7 @@ use Input, Response, Config, Session, Medium;
 use Canary\Station\Models\Panel as Panel;
 use Canary\Station\Models\Image_moo as Image_moo;
 use Canary\Station\Models\S3 as S3;
+use Canary\Station\Config\StationConfig as StationConfig;
 //use Canary\Station\Models\Medium as Medium;
 use Illuminate\Filesystem\Filesystem as File;
 
@@ -34,7 +35,7 @@ class StationFileController extends \BaseController {
 		$user_scope			= $panel->user_scope($panel_name, $method);
 		$element			= $user_scope['config']['elements'][$element_name];
 		$size 				= $element['sizes'][$size_name];
-		$app_config			= Config::get('station::_app');
+		$app_config			= StationConfig::app();
 
 		// fetch the original // TODO: we need to force all image uploads to save an original version. not an option. make it standard.
 		$this->fetch_original($file, $app_config);
@@ -102,7 +103,7 @@ class StationFileController extends \BaseController {
 		$method						= Input::get('method');
 		$user_scope					= $panel->user_scope($panel_name, $method, $parent_panel_name);
 		$element					= $user_scope['config']['elements'][$element_name];
-		$app_config					= Config::get('station::_app');
+		$app_config					= StationConfig::app();
 		$success 					= FALSE;
 		$message 					= '';
 		

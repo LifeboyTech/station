@@ -1,5 +1,7 @@
 <?php
 
+use Canary\Station\Config\StationConfig as StationConfig;
+
 class StationUserTableSeeder extends Seeder {
 
 	public function run()
@@ -8,7 +10,7 @@ class StationUserTableSeeder extends Seeder {
 
 			'username'	=> 'admin',
 			'password'	=> \App::make('hash')->make('admin'),
-			'email'		=> Config::get('station::_app.root_admin_email'),
+			'email'		=> StationConfig::app('root_admin_email'),
 			'first_name'=> 'Johnny',
 			'last_name'	=> 'Admin'
 		);

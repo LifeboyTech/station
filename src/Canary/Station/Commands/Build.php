@@ -6,7 +6,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Config;
 use Schema;
+use App;
 use Canary\Station\Models\Panel as Panel;
+use Canary\Station\Config\StationConfig as StationConfig;
 
 class Build extends Command {
 
@@ -36,7 +38,7 @@ class Build extends Command {
 	{
 		parent::__construct();
 
-		$this->pivots = array();
+		$this->pivot = array();
 		$this->model_output = array();
 		$this->valid_relationships = array('hasOne','hasMany','belongsTo','belongsToMany');
 		//$this->file = $file;
@@ -58,7 +60,8 @@ class Build extends Command {
 
 		$panel = new Panel;
         $panels = $panel->all(TRUE); // gets subpanels too.
-        $this->generate_migrations($panels); 
+        if (App::environment() == 'development') $this->generate_migrations($panels); 
+        $this->call('migrate');
         $this->generate_models($panels);
         $this->call('db:seed',array('--class'=>"StationDatabaseSeeder"));
         $this->call('dump-autoload');
@@ -96,6 +99,9 @@ class Build extends Command {
 				$ret = ':integer';
 				break;
 			case 'select':
+				$ret = ':integer';
+				break;
+			case 'int':
 				$ret = ':integer';
 				break;
 			case 'integer':
@@ -168,8 +174,7 @@ class Build extends Command {
 
 		foreach($panels as $panel)
         {
-
-			$data			= Config::get('station::'.$panel);
+			$data			= StationConfig::panel($panel, TRUE);
 			$table_name		= $data['panel_options']['table'];
 
 			if (!isset($data['panel_options']['table'])) continue;
@@ -196,7 +201,7 @@ class Build extends Command {
         				&& !Schema::hasColumn($att_data['data']['table'], $att_data['data']['key'])){ // but no column in table
 
         				// ... add migration for it.
-        				$subpanel_data = Config::get('station::'.$att_name);
+        				$subpanel_data = StationConfig::panel($att_name, TRUE);
         				$subpanel_fields_string	= $this->fields_string_for_elements($att_data['data']['table'], $subpanel_data);
         				if (!Schema::hasTable($att_data['data']['table'])) $this->table_migrate($att_data['data']['table'], $subpanel_fields_string);
         				$migration_name = 'add_'.$att_data['data']['key'].'_column_to_'.$att_data['data']['table'].'_table'; // must keep 'column_to'!
@@ -242,11 +247,12 @@ class Build extends Command {
 		{
 			if(in_array($panel_name, array('users','groups'))) continue; // Skipping over these
 
-			$panel_data	= Config::get('station::'.$panel_name);
-			$className	= $panel_data['panel_options']['single_item_name'];
-			$modelName	= $this->panel_model->model_name_for($panel_name);
-			$tableName	= $panel_data['panel_options']['table'];
-			$filePath	= app_path() . '/models/'.$modelName.'.php';
+			$station_config	= new StationConfig;
+			$panel_data		= $station_config::panel($panel_name, TRUE);
+			$className		= $panel_data['panel_options']['single_item_name'];
+			$modelName		= $this->panel_model->model_name_for($panel_name);
+			$tableName		= $panel_data['panel_options']['table'];
+			$filePath		= app_path() . '/models/'.$modelName.'.php';
 
 			if($this->file->exists($filePath))	// we are just going to rebuild the section that is generated
 			{
@@ -357,34 +363,35 @@ class Build extends Command {
 
 		$code 	.= !$panel_data['panel_options']['has_timestamps'] ? "\tpublic \$timestamps = false;\n\n" : "\n";
 		
-		if (!isset($panel_data['elements'])) return $code;
+		if (isset($panel_data['elements'])){
 
-		foreach($panel_data['elements'] as $elem_name => $elem_data)
-		{
-			if(isset($elem_data['data']['relation']) && in_array($elem_data['data']['relation'], $this->valid_relationships))
-			{	
-				$is_subpanel 	= $elem_data['type'] == 'subpanel';
-				$order_by		= '';
+			foreach($panel_data['elements'] as $elem_name => $elem_data)
+			{
+				if(isset($elem_data['data']['relation']) && in_array($elem_data['data']['relation'], $this->valid_relationships))
+				{	
+					$is_subpanel 	= $elem_data['type'] == 'subpanel';
+					$order_by		= '';
 
-				if ($is_subpanel){ // check to see if we can apply order_by clause for foreign table relationship.
+					if ($is_subpanel){ // check to see if we can apply order_by clause for foreign table relationship.
 
-					$subpanel_data		= Config::get('station::'.$elem_name);
-					$order_by_column	= isset($subpanel_data['panel_options']['default_order_by']) ? $subpanel_data['panel_options']['default_order_by'] : false;
-					$order_by			= $order_by_column ? "->orderBy('".$order_by_column."')" : "";
-				
-				} else {
+						$subpanel_data		= StationConfig::panel($elem_name, TRUE);
+						$order_by_column	= isset($subpanel_data['panel_options']['default_order_by']) ? $subpanel_data['panel_options']['default_order_by'] : false;
+						$order_by			= $order_by_column ? $this->order_by_clause($order_by_column) : "";
+					
+					} else {
 
-					// TODO: add order_by for non sub panels. We will need this soon.
+						// TODO: add order_by for non sub panels. We will need this soon.
+					}
+
+					$pivot_table_name 	= $this->pivot_table_name(array('tableOne' => $tableName, 'tableTwo' => $elem_data['data']['table']), TRUE);
+					$pivot_table 		= strpos($elem_data['data']['relation'], 'ToMany') !== FALSE ? $pivot_table_name : '';
+					$pivot_table 		= $pivot_table == "" && $elem_data['data']['relation'] == 'belongsTo' ? ", '".$elem_name."'" : $pivot_table;
+					$code 				.= "\tpublic function ".$elem_data['data']['table']."()\n\t"
+										. "{\n\t\t"
+										. "return \$this->".$elem_data['data']['relation']
+										. "('".$panel->model_name_for($elem_data['data']['table'])."'".$pivot_table.")".$order_by.";\n\t"
+										. "}\n";
 				}
-
-				$pivot_table_name 	= $this->pivot_table_name(array('tableOne' => $tableName, 'tableTwo' => $elem_data['data']['table']), TRUE);
-				$pivot_table 		= strpos($elem_data['data']['relation'], 'ToMany') !== FALSE ? $pivot_table_name : '';
-				$pivot_table 		= $pivot_table == "" && $elem_data['data']['relation'] == 'belongsTo' ? ", '".$elem_name."'" : $pivot_table;
-				$code 				.= "\tpublic function ".$elem_data['data']['table']."()\n\t"
-									. "{\n\t\t"
-									. "return \$this->".$elem_data['data']['relation']
-									. "('".$panel->model_name_for($elem_data['data']['table'])."'".$pivot_table.")".$order_by.";\n\t"
-									. "}\n";
 			}
 		}
 
@@ -392,6 +399,20 @@ class Build extends Command {
 		$code .= $is_new ? "\n\n\t// Feel free to add any new code after this line\n}" : "";
 
 		return $code;
+	}
+
+	private function order_by_clause($str){
+
+		$ret = '';
+
+		foreach (explode(',', $str) as $part) {
+			
+			$part_arr	= explode(' ', $part);
+			$direction	= isset($part_arr[1]) ? ", '".strtolower($part_arr[1])."'" : "";
+			$ret		.= "->orderBy('".$part_arr[0]."'".$direction.")";
+		}
+
+		return $ret;
 	}
 
 	/**

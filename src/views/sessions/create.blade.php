@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{ Config::get('station::_app.name') }} | Please Login</title>
+    <title>{{ $app_data['name'] }} | Please Login</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/packages/canary/station/Flat-UI-Pro-1.2.2/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -13,7 +13,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/packages/canary/station/css/login.css" rel="stylesheet">
-    {{ Config::get('station::_app.css_override_file') != '' ? '<link href="'.Config::get('station::_app.css_override_file').'" rel="stylesheet">' : '' }}
+    {{ $app_data['css_override_file'] != '' ? '<link href="'.$app_data['css_override_file'].'" rel="stylesheet">' : '' }}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -31,7 +31,7 @@
 
     <div class="container">
 
-      {{ Form::open(array('url' => Config::get('station::_app.root_uri_segment').'/sessions', 'class' => 'form-signin main-login', 'autocomplete' => 'off')) }}
+      {{ Form::open(array('url' => $app_data['root_uri_segment'].'/sessions', 'class' => 'form-signin main-login', 'autocomplete' => 'off')) }}
 
         @if(Session::has('success'))
             <div class="alert alert-success">
@@ -57,12 +57,12 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <div class="text-center">
           <p>&nbsp;</p>
-          <a href="{{ '/'.Config::get('station::_app.root_uri_segment').'/register' }}">Register a new Account</a>
+          <a href="{{ '/'.$app_data['root_uri_segment'].'/register' }}">Register a new Account</a>
         </div>
       {{ Form::close() }}
 
 
-      {{ Form::open(array('url' => Config::get('station::_app.root_uri_segment').'/forgot', 'class' => 'form-signin forgot')) }}
+      {{ Form::open(array('url' => $app_data['root_uri_segment'].'/forgot', 'class' => 'form-signin forgot')) }}
 
         <h4 class="form-signin-heading">Forgot your info?</h4>
 
