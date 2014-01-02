@@ -386,6 +386,7 @@ class Build extends Command {
 					$pivot_table_name 	= $this->pivot_table_name(array('tableOne' => $tableName, 'tableTwo' => $elem_data['data']['table']), TRUE);
 					$pivot_table 		= strpos($elem_data['data']['relation'], 'ToMany') !== FALSE ? $pivot_table_name : '';
 					$pivot_table 		= $pivot_table == "" && $elem_data['data']['relation'] == 'belongsTo' ? ", '".$elem_name."'" : $pivot_table;
+					$pivot_table 		= $pivot_table == "" && $elem_data['data']['relation'] == 'hasMany' && isset($elem_data['data']['key']) ? ", '".$elem_data['data']['key']."'" : $pivot_table;
 					$code 				.= "\tpublic function ".$elem_data['data']['table']."()\n\t"
 										. "{\n\t\t"
 										. "return \$this->".$elem_data['data']['relation']
