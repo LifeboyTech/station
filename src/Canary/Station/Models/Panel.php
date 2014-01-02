@@ -180,7 +180,7 @@ class Panel {
                 $where              = isset($element['data']['where']) ? $element['data']['where'] : FALSE;
                 $order              = isset($element['data']['order']) ? $element['data']['order'] : FALSE;
                 $query              = DB::table($table)->select('id', DB::raw($display));
-                $query              = $where ? $query->whereRaw($where) : $query;
+                $query              = $where ? $query->whereRaw($this->inject_vars($where)) : $query;
                 $query              = $order ? $query->orderBy($order) : $query;
                 $data               = $query->get();
                 $ret[$element_name] = $this->to_array($data);
@@ -304,9 +304,11 @@ class Panel {
         return $ret;
     }
 
-    public function inject_vars($str){
+    public function inject_vars($str, $standard_only = FALSE){
 
-        $replacements  = ['%user_id%' => Session::get('user_data.id')];
+        $standard_vars    = ['%user_id%' => Session::get('user_data.id')]; 
+        $custom_user_vars = !$standard_only ? $this->custom_user_vars($str) : [];
+        $replacements     = array_merge($standard_vars, $custom_user_vars);
 
         return str_replace(array_keys($replacements), array_values($replacements), $str);
     }
@@ -693,6 +695,40 @@ class Panel {
         } else {
 
             $ret = $terms.' AS value';
+        }
+
+        return $ret;
+    }
+
+    private function custom_user_vars($str){
+
+        $custom_user_vars = StationConfig::app('custom_user_vars');
+        $ret = [];
+
+        if ($custom_user_vars && is_array($custom_user_vars)){
+
+            foreach ($custom_user_vars as $var => $custom_value_declaration) {
+                
+                $flanked_var = '%'.$var.'%';
+
+                if (strpos($str, $flanked_var) !== FALSE){
+
+                    if (strpos($custom_value_declaration, '::') || strpos($custom_value_declaration, '->')){
+
+                        // it's a function call
+                        $args           = preg_match('#\((.*?)\)#', $custom_value_declaration, $match);
+                        $args_injected  = isset($match[1]) ? explode(',', $this->inject_vars($match[1], TRUE)) : [];
+                        $function       = preg_replace("/\([^)]+\)/", "", $custom_value_declaration);
+                        $value          = call_user_func_array($function, $args_injected);
+                    
+                    } else {
+
+                        $value = $custom_value_declaration;
+                    }
+
+                    $ret[$flanked_var] = $value;
+                }
+            }
         }
 
         return $ret;
