@@ -242,7 +242,7 @@ class Panel {
         $query                     = $where_clause ? $query->whereRaw($where_clause) : $query;
         $query                     = $keyword ? $query->whereRaw($primary_element." LIKE '%".addslashes($keyword)."%'") : $query;
         $query                     = $is_filtered ? $this->apply_joins_with_filters($joins, $user_filters, $query, $panel) : $query;
-        $query                     = $order_by ? $query->orderBy($order_by['field'], $order_by['direction']) : $query;
+        $query                     = $order_by ? $query->orderByRaw($order_by) : $query;
 
         $panel['user_filters']     = $user_filters;
         $panel['has_user_filters'] = count($user_filters) > 0;
@@ -954,12 +954,17 @@ class Panel {
         if (isset($panel['config']['panel_options']['default_order_by']) && $panel['config']['panel_options']['default_order_by'] != '') {
             
             $field     = $panel['config']['panel_options']['default_order_by'];
-            $direction = strpos($field, 'DESC') !== FALSE ? 'DESC' : 'ASC';
-            $field     = str_replace(array('ASC', 'DESC'), array('', ''), $field);
-            $field     = trim($field);
             $table     = $panel['config']['panel_options']['table'];
+            $ret       = "";
 
-            return array('field' => $table.'.'.$field, 'direction' => $direction);
+            foreach (explode(',', $field) as $key => $term) {
+                
+                $term = trim($term);
+                $ret .= $key > 0 ? ", " : "";
+                $ret .= $table.'.'.$term;
+            }
+
+            return $ret;
         }
 
         return FALSE;
