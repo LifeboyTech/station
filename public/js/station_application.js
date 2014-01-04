@@ -2,7 +2,7 @@ var sidebar   = null;
 
 $(document).ready(function() { 
 
-	/**
+    /**
      * delete button clicked. launch modal and mark for deletion
      * this will work for both list views and subpanel lists within an edit form
      *
@@ -153,7 +153,7 @@ $(window).load(function() {
 
     function audit_sidebar(){
 
-        if ($(window).scrollTop() > 30 && $(window).width() > 980) {
+        if ($(window).scrollTop() > 65 && $(window).width() > 980) {
             sidebar.css('position', 'fixed');
             sidebar.css('top', '10px');
             sidebar.css('width', sidebar.parent().width());
