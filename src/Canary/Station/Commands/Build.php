@@ -367,7 +367,9 @@ class Build extends Command {
 
 			foreach($panel_data['elements'] as $elem_name => $elem_data)
 			{
-				if(isset($elem_data['data']['relation']) && in_array($elem_data['data']['relation'], $this->valid_relationships))
+				if(isset($elem_data['data']['relation']) 
+					&& in_array($elem_data['data']['relation'], $this->valid_relationships)
+					&& !isset($elem_data['data']['no_model']))
 				{	
 					$is_subpanel 	= $elem_data['type'] == 'subpanel';
 					$order_by		= '';

@@ -123,18 +123,6 @@ class StationFileController extends \BaseController {
 			$success 		= $manipulations['n_sent'] > 0;
 			$message 		= $manipulations['n_sent'].' manipulations made and sent to S3';
 
-			// Now that we're all good with it in S3, we insert to media table
-			$medium = new Medium;
-
-			$medium->ownertype = 1; // hard set to be owned by userid
-			$medium->ownerid = Session::get('user_data.id');
-			$medium->filesize = $size;
-			$medium->filename = $new_file_name;
-			$medium->filetype = 1;	// 1 = image
-			$medium->used_at = '["'.$panel_name.'"]';
-
-			$medium->save();
-
 		} else { // file?
 
 			// TODO: deal with non-images here. check for allowed types. then just move and send to S3.
