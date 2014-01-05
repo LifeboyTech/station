@@ -520,3 +520,10 @@ ul.is-reorderable {
     line-height: 7px;
     background-color: #ddd;
 }
+ul.in-subpanel span.switch-cont {
+	float: right;
+	margin: 1px 0 0 19px;
+}
+ul.in-subpanel > li > span {
+	margin: 0 0 0 16px
+}

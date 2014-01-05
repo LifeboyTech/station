@@ -319,6 +319,12 @@ class StationPanelController extends \BaseController {
 		return Response::json($response);
 	}
 
+	public function do_update_element_in_subpanel($panel_name, $parent_panel, $parent_id, $element_name, $id){
+
+		$this->init_subpanel('U', $panel_name, $parent_panel, $parent_id);
+		return $this->do_update_element($panel_name, $element_name, $id);
+	}
+
 	public function do_update_in_subpanel($panel_name, $id, $parent_panel, $parent_id){
 
 		$this->init_subpanel('U', $panel_name, $parent_panel, $parent_id);

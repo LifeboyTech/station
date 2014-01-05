@@ -17,7 +17,7 @@
 @else
 
 	@if ($can_create)
-		<button type="button" class="btn btn-default btn-xs sub-panel-adder for-sub-list-header" 
+		<button type="button" class="btn btn-success btn-xs sub-panel-adder for-sub-list-header" 
 				data-panel-name="{{ $panel_name }}" 
 				data-single-item-name="{{ $config['panel_options']['single_item_name'] }}"
 				data-initial-label="Add a New {{{ $config['panel_options']['single_item_name'] }}}">
@@ -28,7 +28,8 @@
 
 	<? 
 		$is_reorderable = count($data) > 1 && isset($config['panel_options']['reorderable_by']) && $config['panel_options']['reorderable_by'];
-		$reorder_class = $is_reorderable ? 'is-reorderable' : ''; 
+		$reorder_class = $is_reorderable ? 'is-reorderable' : '';
+		$sub_config = ['config' => $config];
 	?>
 
 	<ul data-panel-name="{{ $panel_name }}" 
@@ -45,45 +46,7 @@
 					</a>
 				</span>
 
-				<? $c = 1; ?>
-
-				@foreach($config['elements'] as $elem_name => $elem_data)
-					
-					@if (isset($elem_data['display']) && strpos($elem_data['display'], 'L') !== FALSE)
-						
-						{{-- If the data is an array, we need to loop though THAT and get the names --}}
-						@if(isset($row[$elem_name]) && is_array($row[$elem_name]))
-							<span class="col-{{ $c }}">
-								@foreach($row[$elem_name] as $i => $sub_data)
-									{{ $i > 0 ? '| ' : '' }}{{ $sub_data['name'] }} 
-								@endforeach
-							</span>
-
-						{{-- we have some static options in an array --}}
-						@elseif (isset($row[$elem_name]) && isset($elem_data['data']['options'][$row[$elem_name]]))
-							
-							<span>
-								{{ $elem_data['data']['options'][$row[$elem_name]] }}
-							</span>
-
-						{{-- display the ones that are belongsTo --}}
-						@elseif (isset($foreign_data[$elem_name]))
-							<span class="col-{{ $c }}">
-								{{ $foreign_data[$elem_name][$row[$elem_name]] }}
-							</span>
-
-						{{-- just show the value --}}
-						@elseif (isset($row[$elem_name]))
-							<span class="col-{{ $c }}">
-								{{ $row[$elem_name] }}
-							</span>
-						@endif
-
-						<? $c++; ?>
-
-					@endif
-			
-				@endforeach
+				@include('station::partials.list_item_row_content', ['row' => $row, 'data' => $sub_config, 'item_element' => 'span'])
 
 				{{-- We need our button for delete --}}
 				<span class="td-for-delete col-delete">

@@ -52,6 +52,7 @@ Route::group(array('before' => 'station.session', 'prefix' => $root_uri_segment)
     Route::get('/panel/{panel_name}/update/{id}', $path.'StationPanelController@update');
     Route::put('/panel/{panel_name}/update/{id}', $path.'StationPanelController@do_update');
     Route::put('/panel/{panel_name}/update_element/{element_name}/{id}', $path.'StationPanelController@do_update_element');
+    Route::put('/panel/{panel_name}/{parent_panel}/{parent_id}/update_element/{element_name}/{id}', $path.'StationPanelController@do_update_element_in_subpanel');
     Route::get('/panel/{panel_name}/update/{id}/for/{parent_panel}/{parent_id}', $path.'StationPanelController@update_in_subpanel');
     Route::put('/panel/{panel_name}/update/{id}/for/{parent_panel}/{parent_id}', $path.'StationPanelController@do_update_in_subpanel');
     Route::put('/panel/{panel_name}/reorder/', $path.'StationPanelController@do_reorder');

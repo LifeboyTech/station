@@ -52,9 +52,8 @@ $(document).ready(function() {
     if ($('.is-reorderable').length) {
 
         $(".is-reorderable").sortable({
-            connectToSortable: ".is-reorderable",
+
             revert: "invalid",
-            containment: ".is-reorderable",
             cursor: "move",
             axis: "y",
 
@@ -114,7 +113,7 @@ $(document).ready(function() {
 
     $('.station-list-boolean').live('change', function(event) {
         
-        var element_name        = $(this).attr('name');
+        var element_name        = $(this).attr('data-element-name');
         var id                  = $(this).attr('data-id');
         var put_data            = {};
         put_data[element_name]  = $(this).is(':checked') ? '1' : '0'; 
@@ -128,9 +127,11 @@ $(document).ready(function() {
         .done(function() {
             
             // do nothing.
-        });
-        
+        }); 
     });
+
+    $('.station-list .switch').parent().addClass('switch-cont');
+    
 });
 
 $(window).load(function() {
