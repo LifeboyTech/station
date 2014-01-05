@@ -27,15 +27,17 @@
 	@elseif (isset($row[$elem_name]))
 	  <{{ $item_element }} class="col-{{ $c }}">
 	    @if ($elem_data['type'] == 'date')
-	      {{ date('n/j/y',strtotime($row[$elem_name])) }}
+	      {{ date('m/j/y',strtotime($row[$elem_name])) }}
 	    @elseif ($elem_data['type'] == 'datetime')
-	      {{ date('n/j/y g:ia',strtotime($row[$elem_name])) }}
+	      {{ date('m/j/y g:ia',strtotime($row[$elem_name])) }}
 	    @elseif ($elem_data['type'] == 'image')
 	      @if ($row[$elem_name] != '')
 	        <img class="inline-thumb" width="100px" height="100px" src="{{ $base_img_uri.'station_thumbs_sm/'.$row[$elem_name] }}" />             
 	      @else
 	        <img class="inline-thumb" width="100px" height="100px" src="/packages/canary/station/img/file-placeholder.png" />
-	      @endif            
+	      @endif
+	    @elseif ($elem_data['type'] == 'boolean' && strpos($elem_data['display'], 'U') !== FALSE)
+	      {{ Form::checkbox($elem_name, '1', $row[$elem_name], ['data-field' => $elem_name, 'data-id' => $row['id'], 'class' => 'station-list-boolean', 'data-toggle' => 'switch']) }}
 	    @else
 	      {{ $row[$elem_name] }}  
 	    @endif

@@ -156,6 +156,26 @@ class Panel {
     }
 
     /**
+     * reduce the elements in user_scope down to only ones specified
+     *
+     * @param  array  $user_scope
+     * @param  array  $element_names_to_keep  // list of key names
+     * @return array  // $user_scope
+     */
+    public function filter_scope_elements($user_scope, $element_names_to_keep = []){
+
+        foreach ($user_scope['config']['elements'] as $key => $value) {
+            
+            if (!in_array($key, $element_names_to_keep)){
+
+                unset($user_scope['config']['elements'][$key]);
+            }
+        }
+
+        return $user_scope;
+    }
+
+    /**
      * for each element of a panel that a user can access
      * and which references a foreign table for data, get that data!
      *

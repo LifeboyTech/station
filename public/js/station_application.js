@@ -2,7 +2,7 @@ var sidebar   = null;
 
 $(document).ready(function() { 
 
-    /**
+	/**
      * delete button clicked. launch modal and mark for deletion
      * this will work for both list views and subpanel lists within an edit form
      *
@@ -100,6 +100,36 @@ $(document).ready(function() {
                 window.location = '/' + base_uri + 'panel/' +  curr_panel + '/update/' + ui.item.id;
             }
         }
+    });
+
+    /**
+     * boolean switches in list view
+     *
+     */
+    $('.station-list .switch').live('click', function(event) {
+        
+        event.stopPropagation();
+        return false;
+    });
+
+    $('.station-list-boolean').live('change', function(event) {
+        
+        var element_name        = $(this).attr('name');
+        var id                  = $(this).attr('data-id');
+        var put_data            = {};
+        put_data[element_name]  = $(this).is(':checked') ? '1' : '0'; 
+
+        $.ajax({
+            url: $(this).closest('.station-list').attr('data-relative-uri') + '/update_element/' + element_name + '/' + id,
+            type: 'PUT',
+            dataType: 'json',
+            data: put_data,
+        })
+        .done(function() {
+            
+            // do nothing.
+        });
+        
     });
 });
 

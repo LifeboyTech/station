@@ -286,6 +286,39 @@ class StationPanelController extends \BaseController {
 		}
 	}
 
+	/**
+	 * response to AJAX PUT request where user is attempting to update a single field
+	 *
+	 * @param  string  $panel_name 
+	 * @param  string  $element_name 
+	 * @param  int $id
+	 * @return Response::json
+	 */
+	public function do_update_element($panel_name, $element_name, $id){
+
+		$panel			= new Panel;
+		$user_scope 	= $panel->user_scope($panel_name, 'U', $this->subpanel_parent); // can we update? which fields?
+
+		if (!$user_scope) return Redirect::back()->with('error', 'You do not have access to that area.');
+
+		$this->init($panel_name, 'U', $id);
+
+		$user_scope 	= $panel->filter_scope_elements($user_scope, [$element_name]);
+		$validator		= $panel->validates_against($panel_name, $user_scope, $id);
+
+		if ($validator->fails()){
+
+			$response = ['status' => 0, 'message' => $validator->getMessageBag()->toArray()];
+
+		} else {
+
+			$panel->update_record_for($panel_name, $user_scope, $id);
+			$response = ['status' => 1, 'message' => 'Update was successful'];
+		}
+
+		return Response::json($response);
+	}
+
 	public function do_update_in_subpanel($panel_name, $id, $parent_panel, $parent_id){
 
 		$this->init_subpanel('U', $panel_name, $parent_panel, $parent_id);
