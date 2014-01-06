@@ -22,7 +22,7 @@
 		{{-- display the ones that are belongsTo --}}
 		@elseif (isset($foreign_data[$elem_name]))
 		  <{{ $item_element }} class="col-{{ $c }}">
-		    {{ $row[$elem_name] > 0 ? $foreign_data[$elem_name][$row[$elem_name]] : '' }}
+		    {{ $row[$elem_name] > 0 && isset($foreign_data[$elem_name][$row[$elem_name]]) ? $foreign_data[$elem_name][$row[$elem_name]] : '' }}
 		  </{{ $item_element }}>
 
 		{{-- just show the value --}}
