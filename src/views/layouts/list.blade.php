@@ -60,10 +60,21 @@
 
 							@foreach($data['config']['elements'] as $elem_name => $elem_data)
 								<th>
-									@if (isset($elem_data['is_filterable']) && isset($foreign_data[$elem_name]) && count($foreign_data[$elem_name]) > 0)
+									<?
+										$filter_data = FALSE; 
+
+										if (isset($elem_data['is_filterable']) && isset($foreign_data[$elem_name]) && count($foreign_data[$elem_name]) > 0){
+
+											$filter_data = $foreign_data[$elem_name];
+										
+										} elseif (isset($elem_data['is_filterable']) && isset($elem_data['data']['options']) && count($elem_data['data']['options'])) {
+
+											$filter_data = $elem_data['data']['options'];
+										}
+									?>
+									@if ($filter_data)
 										<? $initial_filter_val = isset($user_filters[$elem_name]) ? $user_filters[$elem_name] : null ?>
-										<? $options = $foreign_data[$elem_name]; ?>
-										<? $options = array('' => '') + $options ?> {{-- this is needed to display the harvest/chosen placeholder --}}
+										<? $options = array('' => '') + $filter_data ?> {{-- this is needed to display the harvest/chosen placeholder --}}
 										{{ Form::select('filter-'.$elem_name, $options, $initial_filter_val, ['class'=>'table-filter chosen-select', 'style' => 'width: 150px', 'data-placeholder' => $elem_data['label']]) }}
 									@else 
 										{{ $elem_data['label'] }}
