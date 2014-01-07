@@ -10,7 +10,7 @@ use Illuminate\Filesystem\Filesystem as File;
 
 class StationFileController extends \BaseController {
 
-	private $tmp_dir = './tmp';
+	public $tmp_dir = './tmp';
 
 	private $mock_width = 445;
 
@@ -81,6 +81,68 @@ class StationFileController extends \BaseController {
 
 		return Response::json(compact('mock_orig_ratio'));
     }
+
+    public function manipulate_sizes_and_send_each($file, $sizes_needed, $app_config, $allow_upsize = TRUE){
+
+		if (count($sizes_needed) == 0) return FALSE;
+
+		$i			= 0;
+		$max_resize	= 99999;
+
+		// Setting connection to S3
+		//$this->s3 = new S3($app_config['media_options']['AWS']['key'], $app_config['media_options']['AWS']['secret']);
+
+		foreach ($sizes_needed as $directory => $version) {
+
+			if (!isset($version['size']) || $version['size'] == ''){ // no sizing needed, just send original version
+
+				$this->send_to_s3($file, $directory,$app_config, TRUE);
+				continue;
+			} 
+
+			$specs				= explode('x', $version['size']);
+			$x_val				= intval($specs[0]);
+			$x_val				= $x_val == 0 ? $max_resize : $x_val;
+			$y_val				= intval($specs[1]);
+			$y_val				= $y_val == 0 ? $max_resize : $y_val;
+			$letterbox_color	= isset($version['letterbox']) && $version['letterbox'] ? $version['letterbox'] : FALSE;
+			$method				= ($x_val == $max_resize || $y_val == $max_resize || $letterbox_color) ? 'resize' : 'resize_crop';
+			
+			if ($x_val == $max_resize && $y_val == $max_resize) continue; // nothing defined. not a well defined spec.
+
+			$image = new Image_moo;
+			$image->load($this->tmp_dir.'/'.$file);
+			$image->set_background_colour($letterbox_color ?: '#000000');
+			$image->set_jpeg_quality(100);
+			$image->$method($x_val, $y_val, $letterbox_color ? TRUE : FALSE);
+			$image->save($this->tmp_dir.'/_'.$file, TRUE); // save, keep original, prepend new file with underscore.
+			$this->send_to_s3('_'.$file, $directory,$app_config); // send new file.
+
+			$i++;
+		}
+		
+		// make station large thumb, send to S3
+		$image = new Image_moo;
+		$image->load($this->tmp_dir.'/'.$file);
+		$image->resize($this->mock_width, $max_resize); // station large thumb spec
+		$image->set_jpeg_quality(100);
+		$image->save($this->tmp_dir.'/_'.$file, TRUE);
+		$this->send_to_s3('_'.$file, 'station_thumbs_lg',$app_config);
+
+		// make station small thumb, send to S3
+		$image = new Image_moo;
+		$image->load($this->tmp_dir.'/'.$file);
+		$image->resize_crop(100, 100); // station large thumb spec
+		$image->set_jpeg_quality(100);
+		$image->save($this->tmp_dir.'/_'.$file, TRUE);
+		$this->send_to_s3('_'.$file, 'station_thumbs_sm',$app_config);
+		
+		// delete upload from tmp directory. we are done with it
+		unlink($this->tmp_dir.'/'.$file);
+		unlink($this->tmp_dir.'/_'.$file);
+
+		return array('n_sent' => $i, 'file_name' => $file);
+	}
 
 	public function upload()
 	{
@@ -157,73 +219,22 @@ class StationFileController extends \BaseController {
 		fclose($fp);
     }
 
-	private function manipulate_sizes_and_send_each($file, $sizes_needed, $app_config, $allow_upsize = TRUE){
-
-		if (count($sizes_needed) == 0) return FALSE;
-
-		$i			= 0;
-		$max_resize	= 99999;
-
-		// Setting connection to S3
-		//$this->s3 = new S3($app_config['media_options']['AWS']['key'], $app_config['media_options']['AWS']['secret']);
-
-		foreach ($sizes_needed as $directory => $version) {
-
-			if (!isset($version['size']) || $version['size'] == ''){ // no sizing needed, just send original version
-
-				$this->send_to_s3($file, $directory,$app_config, TRUE);
-				continue;
-			} 
-
-			$specs				= explode('x', $version['size']);
-			$x_val				= intval($specs[0]);
-			$x_val				= $x_val == 0 ? $max_resize : $x_val;
-			$y_val				= intval($specs[1]);
-			$y_val				= $y_val == 0 ? $max_resize : $y_val;
-			$letterbox_color	= isset($version['letterbox']) && $version['letterbox'] ? $version['letterbox'] : FALSE;
-			$method				= ($x_val == $max_resize || $y_val == $max_resize || $letterbox_color) ? 'resize' : 'resize_crop';
-			
-			if ($x_val == $max_resize && $y_val == $max_resize) continue; // nothing defined. not a well defined spec.
-
-			$image = new Image_moo;
-			$image->load($this->tmp_dir.'/'.$file);
-			$image->set_background_colour($letterbox_color ?: '#000000');
-			$image->set_jpeg_quality(100);
-			$image->$method($x_val, $y_val, $letterbox_color ? TRUE : FALSE);
-			$image->save($this->tmp_dir.'/_'.$file, TRUE); // save, keep original, prepend new file with underscore.
-			$this->send_to_s3('_'.$file, $directory,$app_config); // send new file.
-
-			$i++;
-		}
-		
-		// make station large thumb, send to S3
-		$image = new Image_moo;
-		$image->load($this->tmp_dir.'/'.$file);
-		$image->resize($this->mock_width, $max_resize); // station large thumb spec
-		$image->set_jpeg_quality(100);
-		$image->save($this->tmp_dir.'/_'.$file, TRUE);
-		$this->send_to_s3('_'.$file, 'station_thumbs_lg',$app_config);
-
-		// make station small thumb, send to S3
-		$image = new Image_moo;
-		$image->load($this->tmp_dir.'/'.$file);
-		$image->resize_crop(100, 100); // station large thumb spec
-		$image->set_jpeg_quality(100);
-		$image->save($this->tmp_dir.'/_'.$file, TRUE);
-		$this->send_to_s3('_'.$file, 'station_thumbs_sm',$app_config);
-		
-		// delete upload from tmp directory. we are done with it
-		unlink($this->tmp_dir.'/'.$file);
-		unlink($this->tmp_dir.'/_'.$file);
-
-		return array('n_sent' => $i, 'file_name' => $file);
-	}
-
 	private function send_to_s3($file, $s3_directory = '',$app_config, $is_orig = FALSE){
 
 		$target = $is_orig ? $s3_directory."/".$file : $s3_directory."/".substr($file,1);
 		$this->s3 = new S3($app_config['media_options']['AWS']['key'], $app_config['media_options']['AWS']['secret']);
-		$this->s3->putObject(file_get_contents($this->tmp_dir.'/'.$file), $app_config['media_options']['AWS']['bucket'], $target, 'public-read',array(),$this->mime);
+
+		if (!isset($this->mime)){
+
+			$size_tmp = getimagesize($this->tmp_dir.'/'.$file);
+			$mime = $size_tmp['mime'];
+
+		} else {
+
+			$mime = $this->mime;
+		}
+
+		$this->s3->putObject(file_get_contents($this->tmp_dir.'/'.$file), $app_config['media_options']['AWS']['bucket'], $target, 'public-read',array(),$mime);
 		unset($this->s3);
 	}
 

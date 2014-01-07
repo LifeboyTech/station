@@ -1,6 +1,6 @@
 <?php namespace Canary\Station\Models;
 
-use Config, Session, URL, DB, Input, Validator, Hash, Request;
+use Config, Session, URL, DB, Input, Validator, Hash, Request, App;
 use Canary\Station\Models\Group as Group;
 use Canary\Station\Config\StationConfig as StationConfig;
 
@@ -444,7 +444,7 @@ class Panel {
 
         $ret               = array();
         $panels            = $this->all_by_group();
-        $primary_role      = Session::get('user_data.primary_group');
+        $primary_role      = App::runningInConsole() ? 'admin' : Session::get('user_data.primary_group');
         $has_panel_access  = FALSE;
         $has_parent_access = FALSE;
 
