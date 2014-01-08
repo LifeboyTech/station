@@ -123,7 +123,7 @@
 					
 
 					{{-- plain jane text entry, textarea, or hidden field --}}
-					@if(in_array($element_info['type'],['integer','text','email','date','time','datetime','textarea','hidden','float']))
+					@if(in_array($element_info['type'],['integer','text','email','date','time','datetime','textarea','hidden','float','tags']))
 						<? 
 							$with_spinner 		= $append_classes == 'spinner';
 							$with_append		= isset($element_info['append']) && $element_info['append'] != '' ? 'with-append' : FALSE;
@@ -132,11 +132,13 @@
 							$with_append_icon	= isset($element_info['append_icon']) && $element_info['append_icon'] != '' ? $element_info['append_icon'] : FALSE;
 							$with_input_wrap	= $with_append_icon || $with_prepend_icon || $with_append || $with_prepend;
 							$append_classes 	.= $element_info['type'] == 'datetime' ? ' with-time' : '';
+							$append_classes 	.= $element_info['type'] == 'tags' ? ' tagsinput tagsinput-primary' : '';
 							$attributes			= array('id' => $id, 'class'=>'form-control '.$append_classes, 'autocomplete' => 'off');
 							
 							if ($element_info['type'] == 'textarea' && isset($element_info['rows'])) $attributes['rows'] = $element_info['rows']; 
 							if ($element_info['type'] == 'float' || $element_info['type'] == 'integer') $element_info['type'] = 'text';
 							if ($element_info['type'] == 'datetime') $element_info['type'] = 'date';
+							if ($element_info['type'] == 'tags') $element_info['type'] = 'text';
 							if (isset($element_info['disabled']) && $element_info['disabled']) $attributes['disabled'] = 'disabled'; 
 						?>
 						{{ $with_input_wrap ? '<div class="input-group '.$with_append.'">' : '' }}

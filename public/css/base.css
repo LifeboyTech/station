@@ -126,6 +126,7 @@
 }
 #sidebar {
 	margin-bottom: 20px;
+	padding-top: 5px;
 }
 .input-group.with-append {
 	width: 340px;
@@ -287,8 +288,9 @@ ul.is-reorderable {
     margin: -3px -6px 0 0;
 }
 .nav-list .active .badge.pull-right {
-    margin-top: -1px;
+    margin-top: -3px;
 	
+    font-size: 9px;
 }
 .station-list span.col-1 {
     margin-left: 6px;
