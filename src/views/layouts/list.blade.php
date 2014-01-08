@@ -73,8 +73,8 @@
 										}
 									?>
 									@if ($filter_data)
-										<? $initial_filter_val = isset($user_filters[$elem_name]) ? $user_filters[$elem_name] : null ?>
-										<? $options = array('' => '') + $filter_data ?> {{-- this is needed to display the harvest/chosen placeholder --}}
+										<?php $initial_filter_val = isset($user_filters[$elem_name]) ? $user_filters[$elem_name] : null ?>
+										<?php $options = array('' => '') + $filter_data ?> {{-- this is needed to display the harvest/chosen placeholder --}}
 										{{ Form::select('filter-'.$elem_name, $options, $initial_filter_val, ['class'=>'table-filter chosen-select', 'style' => 'width: 150px', 'data-placeholder' => $elem_data['label']]) }}
 									@else 
 										{{ $elem_data['label'] }}
@@ -91,7 +91,7 @@
 				
 				{{ $list_inner_wrap[0] }}
 
-					<? 
+					<?php 
 						$list_data 		= compact('data', 'panel_data', 'row_opener', 'row_closer', 'user_can_update', 'user_can_delete', 'item_element');
 						$partial 		= $is_nestable ? 'list_nestables' : 'list_items'; 
 					?>

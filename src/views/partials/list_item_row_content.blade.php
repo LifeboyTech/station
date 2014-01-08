@@ -1,4 +1,4 @@
-<? $c = 1; ?>
+<?php $c = 1; ?>
 
 @foreach($data['config']['elements'] as $elem_name => $elem_data)
 	
@@ -46,7 +46,7 @@
 		  </{{ $item_element }}>
 		@endif
 
-		<? $c++; ?>
+		<?php $c++; ?>
 	
 	@endif
 

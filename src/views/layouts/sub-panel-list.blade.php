@@ -26,7 +26,7 @@
 		</button>
 	@endif
 
-	<? 
+	<?php 
 		$is_reorderable = count($data) > 1 && isset($config['panel_options']['reorderable_by']) && $config['panel_options']['reorderable_by'];
 		$reorder_class = $is_reorderable ? 'is-reorderable' : '';
 		$sub_config = ['config' => $config];

@@ -1,13 +1,13 @@
 <div class="dd">
 
-	<? 
+	<?php 
 		$curr_depth = 0;
 		$last_node_index = count($data['data']) -1;
 	?>
 
 	@foreach($data['data'] as $index => $row)
 
-	  	<? $row = (array) $row;	?>
+	  	<?php $row = (array) $row;	?>
 
 	  	{{-- level down? or the first one --}}
 	  	@if ($row['depth'] > $curr_depth || $index == 0)
@@ -43,7 +43,7 @@
 	  	@endif
 
 	  	{{-- set the current depth level to this depth --}}
-	  	<? $curr_depth = $row['depth'] ?>
+	  	<?php $curr_depth = $row['depth'] ?>
 
 	  	{{-- is this the last node? --}}
 	  	@if ($index == $last_node_index)

@@ -33,7 +33,7 @@
 	
 	<div id="form-for-{{ $curr_panel }}">
 		
-		<? 
+		<?php 
 			if (isset($subpanel_parent_uri) && $subpanel_parent_uri){
 
 				$anchor = isset($curr_record_id) ? '#'.$curr_subpanel.'-record-'.$curr_record_id : '';
@@ -100,7 +100,7 @@
 
 				<div class="form-group station-element-group" data-element-name="{{ $element_name }}" {{ $element_info['type'] == 'hidden' ? 'style="display: none;"' : '' }}>
 					
-					<? 
+					<?php 
 						$id				= 'station-'.$element_name;
 						$help			= isset($element_info['help']) && $element_info['help'] != '' ? $element_info['help'] : FALSE;
 						$helper			= isset($element_info['helper']) && $element_info['helper'] != '' ? $element_info['helper'] : FALSE;
@@ -124,7 +124,7 @@
 
 					{{-- plain jane text entry, textarea, or hidden field --}}
 					@if(in_array($element_info['type'],['integer','text','email','date','time','datetime','textarea','hidden','float','tags']))
-						<? 
+						<?php 
 							$with_spinner 		= $append_classes == 'spinner';
 							$with_append		= isset($element_info['append']) && $element_info['append'] != '' ? 'with-append' : FALSE;
 							$with_prepend		= isset($element_info['prepend']) && $element_info['prepend'] != '' ? 'with-prepend' : FALSE;
@@ -185,7 +185,7 @@
 
 					{{-- radio buttons --}}
 					@if ($element_info['type'] == 'radio' && (isset($foreign_data[$element_name]) || (isset($element_info['data']['options']))))
-						<? $options = isset($foreign_data[$element_name]) ? $foreign_data[$element_name] : $element_info['data']['options'] ?>
+						<?php $options = isset($foreign_data[$element_name]) ? $foreign_data[$element_name] : $element_info['data']['options'] ?>
 						<div class="radio-wrap">
 							@foreach ($options as $item_id => $item_val)
 								<label class="radio">{{ Form::radio($element_name, $item_id, null, ['id' => $id.'_'.$item_id]) }} {{ $item_val }}</label>
@@ -195,8 +195,8 @@
 
 					{{-- single select --}}
 					@if ($element_info['type'] == 'select' && (isset($foreign_data[$element_name]) || (isset($element_info['data']['options']))))
-						<? $options = isset($foreign_data[$element_name]) ? $foreign_data[$element_name] : $element_info['data']['options'] ?>
-						<? $options = array('' => '') + $options ?> {{-- this is needed to display the harvest/chosen placeholder --}}
+						<?php $options = isset($foreign_data[$element_name]) ? $foreign_data[$element_name] : $element_info['data']['options'] ?>
+						<?php $options = array('' => '') + $options ?> {{-- this is needed to display the harvest/chosen placeholder --}}
 						{{ Form::select($element_name, $options, null,['class'=>'chosen-select', 'style' => 'width: 400px', 'id' => $id, 'data-placeholder' => 'Please choose one...']) }}
 					@endif
 
@@ -241,7 +241,7 @@
 
 					{{-- sub panel list --}}
 					@if ($element_info['type'] == 'subpanel')
-						<? 
+						<?php 
 							$sub_panel_data = [
 
 								'panel_name'		=> $element_name, 
