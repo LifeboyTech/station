@@ -60,7 +60,7 @@
 
 							@foreach($data['config']['elements'] as $elem_name => $elem_data)
 								<th>
-									<?
+									<?php
 										$filter_data = FALSE; 
 
 										if (isset($elem_data['is_filterable']) && isset($foreign_data[$elem_name]) && count($foreign_data[$elem_name]) > 0){

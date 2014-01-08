@@ -1,4 +1,4 @@
-<?
+<?php
 	Form::macro('date', function($element_name, $default_value, $attributes)
 	{	
 		$attribs = array(

@@ -32,7 +32,7 @@
                   {{ Form::close() }}
 	            </div>
 	            <div class="tab-pane" id="gallery-tab">
-	              	<p>Coming Soon!</p>
+	              	<p>Nothing here yet.</p>
 	            </div>
         	</div>
       	</div>
