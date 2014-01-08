@@ -97,8 +97,16 @@ class StationFileController extends \BaseController {
 			if (!isset($version['size']) || $version['size'] == ''){ // no sizing needed, just send original version
 
 				$this->send_to_s3($file, $directory,$app_config, TRUE);
+
+				if ($i == 0 && isset($version['trim_bg'])){
+
+					$im = new \Imagick($this->tmp_dir.'/'.$file);
+					$im->trimImage(0); 
+					$im->writeImage($this->tmp_dir.'/'.$file);
+				}
+
 				continue;
-			} 
+			}
 
 			$specs				= explode('x', $version['size']);
 			$x_val				= intval($specs[0]);
@@ -238,4 +246,88 @@ class StationFileController extends \BaseController {
 		unset($this->s3);
 	}
 
+	private function trim_bg($source_img){
+
+		//load the image
+		$img = $this->imageCreateFromAny($source_img);
+
+		//find the size of the borders
+		$b_top = 0;
+		$b_btm = 0;
+		$b_lft = 0;
+		$b_rt = 0;
+
+		//top
+		for(; $b_top < imagesy($img); ++$b_top) {
+		  for($x = 0; $x < imagesx($img); ++$x) {
+		    if(imagecolorat($img, $x, $b_top) != 0xFFFFFF) {
+		       break 2; //out of the 'top' loop
+		    }
+		  }
+		}
+
+		//bottom
+		for(; $b_btm < imagesy($img); ++$b_btm) {
+		  for($x = 0; $x < imagesx($img); ++$x) {
+		    if(imagecolorat($img, $x, imagesy($img) - $b_btm-1) != 0xFFFFFF) {
+		       break 2; //out of the 'bottom' loop
+		    }
+		  }
+		}
+
+		//left
+		for(; $b_lft < imagesx($img); ++$b_lft) {
+		  for($y = 0; $y < imagesy($img); ++$y) {
+		    if(imagecolorat($img, $b_lft, $y) != 0xFFFFFF) {
+		       break 2; //out of the 'left' loop
+		    }
+		  }
+		}
+
+		//right
+		for(; $b_rt < imagesx($img); ++$b_rt) {
+		  for($y = 0; $y < imagesy($img); ++$y) {
+		    if(imagecolorat($img, imagesx($img) - $b_rt-1, $y) != 0xFFFFFF) {
+		       break 2; //out of the 'right' loop
+		    }
+		  }
+		}
+
+		//copy the contents, excluding the border
+		$newimg = imagecreatetruecolor(
+		    imagesx($img)-($b_lft+$b_rt), imagesy($img)-($b_top+$b_btm));
+
+			imagecopy($newimg, $img, 0, 0, $b_lft, $b_top, imagesx($newimg), imagesy($newimg));
+
+		imagejpeg($newimg, $source_img);
+	}
+
+	function imageCreateFromAny($filepath) { 
+
+	    $type = exif_imagetype($filepath); // [] if you don't have exif you could use getImageSize() 
+	    $allowedTypes = array( 
+	        1,  // [] gif 
+	        2,  // [] jpg 
+	        3,  // [] png 
+	        6   // [] bmp 
+	    ); 
+	    if (!in_array($type, $allowedTypes)) { 
+	        return false; 
+	    } 
+	    switch ($type) { 
+	        case 1 : 
+	            $im = imageCreateFromGif($filepath); 
+	        break; 
+	        case 2 : 
+	            $im = imageCreateFromJpeg($filepath); 
+	        break; 
+	        case 3 : 
+	            $im = imageCreateFromPng($filepath); 
+	        break; 
+	        case 6 : 
+	            $im = imageCreateFromBmp($filepath); 
+	        break; 
+	    }    
+	    return $im;  
+	}
 }
