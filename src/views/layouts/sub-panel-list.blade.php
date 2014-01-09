@@ -1,4 +1,4 @@
-<?
+<?php
 	$can_create = isset($panel_definition['permissions']) && strpos($panel_definition['permissions'], 'C') !== FALSE;
 ?>
 
