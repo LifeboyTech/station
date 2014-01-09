@@ -7,8 +7,14 @@
 		{{-- If the data is an array, we need to loop though THAT and get the names --}}
 		@if(isset($row[$elem_name]) && is_array($row[$elem_name]))
 		  <{{ $item_element }} class="col-{{ $c }}">
+		  	<?php $n_visible = 3 ?>
 		    @foreach($row[$elem_name] as $i => $sub_data)
-		      {{ $i > 0 ? '| ' : '' }}{{ $sub_data['name'] }} 
+		      <span class="st-it" {{ $i > ($n_visible - 1) ? 'style="display: none;"' : '' }}>
+		      	{{ $i > 0 ? '| ' : '' }}{{ $sub_data['name'] }}
+		      </span>
+		      @if ($i == ($n_visible + 1))
+		      	<a href="javascript:;" class="st-it-more">&nbsp; more...</a>
+		      @endif
 		    @endforeach
 		  </{{ $item_element }}>
 

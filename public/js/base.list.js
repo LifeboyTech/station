@@ -174,6 +174,16 @@ $(document).ready(function() {
 	    	$('.nestables-collapse-all').show();
 	    }
 	}
+
+	/**
+	 * lists of foreign data items in row
+	 */
+	$('.st-it-more').click(function(event) {
+		
+		$(this).parent().find('span.st-it').show();
+		$(this).remove();
+		return false;
+	});
 });
 
 /**
