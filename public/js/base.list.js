@@ -9,7 +9,8 @@ $(document).ready(function() {
 	 */
 	$('.station-list tr td').live('click', function(event) {
 		
-		window.location = $(this).closest('tr').find('a:first').attr('href');
+		var first_link = $(this).closest('tr').find('a:first');
+		if (first_link.length) window.location = first_link.attr('href');
 		return false;
 	});
 
