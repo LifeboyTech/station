@@ -48,7 +48,8 @@ class StationSessionController extends ObjectBaseController {
 		$username			= Input::get('username');
 		$password			= Input::get('password');
 		$remember_me		= (boolean) Input::get('remember_me');
-		$login_succeeded	= Auth::attempt(array('username' => $username, 'password' => $password), $remember_me);
+		$username_col 		= strpos($username, '@') !== FALSE ? 'email' : 'username';
+		$login_succeeded	= Auth::attempt(array($username_col => $username, 'password' => $password), $remember_me);
 
 		if ($login_succeeded) {
 
