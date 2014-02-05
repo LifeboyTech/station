@@ -1205,7 +1205,9 @@ class Panel {
 
         foreach ($user_scope['config']['elements'] as $element_name => $element) {
             
-            if (!in_array($element['type'], $this->non_writable_field_types) && !isset($element['data']['pivot'])){
+            if (!in_array($element['type'], $this->non_writable_field_types) 
+                && !isset($element['data']['pivot'])
+                && !isset($element['disabled'])){
 
                 $ret[] = $element_name;
             }
