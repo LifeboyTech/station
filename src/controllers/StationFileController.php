@@ -3,6 +3,7 @@
 use Input, Response, Config, Session, Medium;
 use Canary\Station\Models\Panel as Panel;
 use Canary\Station\Models\Image_moo as Image_moo;
+use Canary\Station\Models\OpenGraph as OpenGraph;
 use Canary\Station\Models\S3 as S3;
 use Canary\Station\Config\StationConfig as StationConfig;
 //use Canary\Station\Models\Medium as Medium;
@@ -152,6 +153,49 @@ class StationFileController extends \BaseController {
 		return array('n_sent' => $i, 'file_name' => $file);
 	}
 
+	public function process_url($panel_name, $element_name){
+
+		$url = Input::get('url');
+
+		if ($url){
+
+			$graph = OpenGraph::fetch($url);
+			$graph_arr = [];
+
+			foreach ($graph as $key => $value) {
+				
+				if ($key == 'image') $value = $this->process_foreign_image_for($panel_name, $element_name, $value);
+
+				$graph_arr[$key] = $value;
+			}
+
+			return Response::json(['status' => 1, 'graph' => $graph_arr]);
+		}
+
+		return Response::json(['status' => 0, 'message' => 'This is not a valid URL.']);
+	}
+
+	public function process_foreign_image_for($panel_name, $element_name, $source_url){
+
+		$app_config        = StationConfig::app();
+        $panel             = new Panel;
+        $user_scope        = $panel->user_scope($panel_name, 'U');
+        $element           = $user_scope['config']['elements'][$element_name];
+        $allow_upsize      = isset($element['allow_upsize']) && $element['allow_upsize'];
+        $all_sizes         = $panel->img_sizes_for($user_scope, $app_config);
+        $sizes_needed      = isset($all_sizes[$element_name]) ? $all_sizes[$element_name] : $all_sizes['standard'];
+        $ext               = pathinfo($source_url, PATHINFO_EXTENSION);
+        $ext               = $ext == '' ? 'jpg' : $ext;
+        $file_name         = md5(time().$source_url).'.'.$ext;
+        $new_path          = $this->tmp_dir."/".$file_name;
+
+        $this->fetch_source($source_url, $new_path);
+        
+        $manipulations     = $this->manipulate_sizes_and_send_each($file_name, $sizes_needed, $app_config, $allow_upsize);
+
+        return $file_name;
+	}
+
 	public function upload()
 	{
 
@@ -225,6 +269,19 @@ class StationFileController extends \BaseController {
 		curl_exec($ch);
 		curl_close($ch);
 		fclose($fp);
+    }
+
+    private function fetch_source($source_url, $new_path){
+
+        $ch = curl_init($source_url);
+        $fp = fopen($new_path, "w");
+
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+
+        curl_exec($ch);
+        curl_close($ch);
+        fclose($fp);
     }
 
 	private function send_to_s3($file, $s3_directory = '',$app_config, $is_orig = FALSE){

@@ -113,6 +113,9 @@ class Build extends Command {
 			case 'textarea':
 				$ret = ':text';
 				break;
+			case 'parsed_url':
+				$ret = ':string';
+				break;
 			case 'float':
 				$ret = ':float';
 				break;

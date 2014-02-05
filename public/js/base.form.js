@@ -99,7 +99,7 @@ $(document).ready(function() {
         //$('#mediaTab').tab();
         $('#mediaTab a[href="#'+$type[0]+'-tab"]').tab('show');
         //var $elem_name = $(this).parent().next().attr('class').replace('target-','','gi');
-        var $elem_name = $(this).parent().parent().prev().children(':first').attr('id').replace('target-','','gi');
+        var $elem_name = $(this).closest('.station-file-upload-wrap').find('.station-img-thumbnail:first').attr('id').replace('target-','','gi');
         var $label = $('[for="station-'+$elem_name+'"]').html();
         $('#mediaModal [name="upload_element_name"]').val($elem_name);
         $('#mediaModal .modal-title').html($label);
@@ -161,7 +161,7 @@ $(document).ready(function() {
 
         $("#postiframe").load(function () {
                 $iframeContents = $("#postiframe")[0].contentWindow.document.body.innerHTML;
-                console.log($iframeContents);
+                // console.log($iframeContents);
                 $results = $.parseJSON($iframeContents);
                 if ($results.success) 
                 {
@@ -315,7 +315,114 @@ $(document).ready(function() {
         
         $('#markdown-helper-modal').modal();
     });
+
+    /**
+     * URL fetching
+     */
+    $('.url-fetch-target').change(function(event) {
+        
+        $('.fetch-status').remove();
+        $(this).closest('.input-group').find('.fetcher').append('<span class="fetch-status"> loading...</span>');
+        var element_name = $(this).attr('data-element');
+
+        $.ajax({
+
+            url: '/' + base_uri + 'panel/' + curr_panel + '/process_url/' + element_name,
+            type: 'PUT',
+            dataType: 'json',
+            data: {url: $(this).val()},
+        })
+        .done(function(r) {
+            
+            $('.fetch-status').remove();
+            disperse_fetched_url_parts(r, element_name);
+            set_fetched_url_data(element_name);
+        });
+    });
+
+    $('.url-fetch-target').each(function(index, el) {
+        
+        $(this).keypress(function(event) { return event.keyCode != 13; });
+        var element_name = $(this).attr('data-element');
+        set_fetched_url_data(element_name);
+    });
+
+    $('.url-fetch-target').click(function(event) {
+        
+        $(this).select();
+    });
+
+    $('.fetcher').click(function(event) {
+        
+        $(this).closest('.input-group').find('.url-fetch-target').change();
+    });
 });
+
+/**
+ * for url fetching
+ */
+    function disperse_fetched_url_parts(parts, element_name){
+
+        eval('var mapping = ' + $('.parsed-results[data-element="' + element_name + '"]').attr('data-mapping'));
+        
+        $.each(mapping, function(index, val) {
+            
+            if (typeof parts.graph != 'undefined' && typeof parts.graph[index] != 'undefined') {
+
+                $('input[name="' + val + '"]').val(parts.graph[index]);
+            
+            } else {
+
+                $('input[name="' + val + '"]').val('');
+            }
+
+            if (index == 'image'){
+
+                var thumbnail = $('.station-element-group[data-element-name="' + element_name + '"] .station-img-thumbnail');
+
+                if (typeof parts.graph != 'undefined' && typeof parts.graph[index] != 'undefined') {
+
+                    var src = 'http://' + thumbnail.attr('bucket') + '.s3.amazonaws.com/station_thumbs_sm/' + parts.graph[index];
+                    
+                } else {
+
+                    var src = '/packages/canary/station/img/file-placeholder.png';
+                }
+
+                thumbnail.attr('src', src);
+            }
+        });
+    }
+
+    function set_fetched_url_data(element_name){
+
+        eval('var mapping = ' + $('.parsed-results[data-element="' + element_name + '"]').attr('data-mapping'));
+
+        $.each(mapping, function(index, val) {
+
+            var parent = $('.station-element-group[data-element-name="' + element_name + '"]');
+            var field_value = $('input[name="' + val + '"]').val();
+
+            if (index == 'title'){
+
+                parent.find('.parsed-results').html('<span class="label label-default">' + field_value + '</span>');
+            }
+
+            if (index == 'url'){
+
+                parent.find('.url-fetch-target').val(field_value);
+
+                if (field_value == ''){
+
+                    parent.find('.station-file-upload-controls').hide();
+                
+                } else {
+
+                    parent.find('.station-file-upload-controls').show();
+                }
+            }
+        });
+    }
 
 /**
  * ajax form handling
@@ -468,27 +575,30 @@ $(document).ready(function() {
         //console.log($img_sizes);
     }
 
-function mysqlTimeStampToDate(timestamp) {
-    
-    if (timestamp == '0000-00-00'){
-
-        return '';
-    }
-
-    if (timestamp.length > 10){
-
-        var regex=/^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9]) (?:([0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?$/;
-        var parts=timestamp.replace(regex,"$1 $2 $3 $4 $5 $6").split(' ');
-
-        return new Date(parts[0],parts[1]-1,parts[2],parts[3],parts[4],parts[5]);
-    
-    } else {
+/**
+ * misc 
+ */
+    function mysqlTimeStampToDate(timestamp) {
         
-        var regex=/^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9]) ?$/;
-        var parts=timestamp.replace(regex,"$1 $2 $3").split(' ');
-        return new Date(parts[0],parts[1]-1,parts[2]);
+        if (timestamp == '0000-00-00'){
+
+            return '';
+        }
+
+        if (timestamp.length > 10){
+
+            var regex=/^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9]) (?:([0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?$/;
+            var parts=timestamp.replace(regex,"$1 $2 $3 $4 $5 $6").split(' ');
+
+            return new Date(parts[0],parts[1]-1,parts[2],parts[3],parts[4],parts[5]);
+        
+        } else {
+            
+            var regex=/^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9]) ?$/;
+            var parts=timestamp.replace(regex,"$1 $2 $3").split(' ');
+            return new Date(parts[0],parts[1]-1,parts[2]);
+        }
     }
-}
 
 /*
     Masked Input plugin for jQuery

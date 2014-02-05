@@ -212,6 +212,16 @@
 							<div class="col-sm-2">
 								<img src="/packages/canary/station/img/file-placeholder.png" bucket="{{ $bucket_name }}" class="img-thumbnail station-img-thumbnail" id="target-{{ $element_name }}">
 							</div>
+							@if (isset($element_info['fetch_url']))
+								<div class="col-sm-8 station-parsed-url-controls">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon">Source URL</span>
+										<input type="text" data-element="{{ $element_name }}" class="url-fetch-target form-control" id="{{ $element_name.'_url' }}" />
+										<span class="input-group-addon fetcher"><span class="glyphicon glyphicon-cloud-download"></span></span>
+									</div>
+									<div class="parsed-results" data-element="{{ $element_name }}" data-mapping='{{{ json_encode($element_info['fetch_url']) }}}'></div>
+								</div>
+							@endif
 							<div class="col-sm-8 station-file-upload-controls">
 								<div class="btn-group">
 									<button type="button" class="btn btn-default station-media" style="display:none;" id="edit_for_{{ $element_name }}">
@@ -223,7 +233,6 @@
 										Remove Image
 									</button>
 								</div>								
-									&nbsp;
 								<div class="btn-group">								
 									<button type="button" class="btn btn-default station-media" id="upload_for_{{ $element_name }}">
 										<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;

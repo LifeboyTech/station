@@ -529,3 +529,10 @@ ul.in-subpanel span.switch-cont {
 ul.in-subpanel > li > span {
 	margin: 0 0 0 16px
 }
+.station-parsed-url-controls {
+	margin: 5px 0 10px 0px;
+	padding: 0;
+}
+.fetcher {
+	cursor: pointer;
+}
