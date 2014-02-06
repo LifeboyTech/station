@@ -699,7 +699,7 @@ class Panel {
      * @param  mixed  $terms 
      * @return string // SQL clause
      */
-    private function concat_clause($terms){
+    private function concat_clause($terms, $output_field = 'value'){
 
         if (is_array($terms)){
 
@@ -707,14 +707,14 @@ class Panel {
 
             foreach ($terms as $term) {
                 
-                $arr[] = strlen($term) < 2 ? "'".$term."'" : $term;
+                $arr[] = substr_count($term, '.') != 1 ? "'".$term."'" : $term;
             }
 
-            $ret = "CONCAT(".implode(',', $arr).") AS value";
+            $ret = "CONCAT(".implode(',', $arr).") AS ".$output_field;
 
         } else {
 
-            $ret = $terms.' AS value';
+            $ret = $terms.' AS '.$output_field;
         }
 
         return $ret;
@@ -786,8 +786,9 @@ class Panel {
      */
     private function fields_for_select($panel){
 
-        $table_name = $panel['config']['panel_options']['table'];
-        $ret = [$table_name.'.id'];
+        $table_name  = $panel['config']['panel_options']['table'];
+        $preview_url = isset($panel['config']['panel_options']['preview_url']) ? $panel['config']['panel_options']['preview_url'] : FALSE;
+        $ret         = [$table_name.'.id'];
 
         foreach ($panel['config']['elements'] as $element_name => $element) {
             
@@ -811,6 +812,11 @@ class Panel {
                 
                 $ret[] = $table_name.'.'.$col;
             }
+        }
+
+        if ($preview_url){
+
+            $ret[] = DB::raw($this->concat_clause($preview_url, 'preview_url'));
         }
 
         return $ret;

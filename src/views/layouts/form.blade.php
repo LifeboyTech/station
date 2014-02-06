@@ -58,32 +58,42 @@
 		{{-- header bar --}}
 		<div class="clearfix station-form-header">
 			<div class="pull-left"><h5>{{ $layout_title }}</h5></div>
-			@if (isset($adjacents) && $adjacents && (!isset($subpanel_parent_uri) || !$subpanel_parent_uri))
-				<div class="pull-right">
-					<a href="{{ '/'.$base_uri.'panel/'.$curr_panel.'/update/'.$adjacents['next'] }}" class="btn btn-lg btn-default list-new">
-						Next {{ $single_item_name }} <span class="fui-arrow-right"></span>
-					</a>
-				</div>
-				<div class="pull-right">
-					<a href="{{ '/'.$base_uri.'panel/'.$curr_panel.'/update/'.$adjacents['prev'] }}" class="btn btn-lg btn-default list-new">
-						<span class="fui-arrow-left"></span> Prev
-					</a>
-				</div>
-			@endif
-			@if (isset($n_items_in_panel) && $n_items_in_panel > 0)
-				<div class="pull-right">
-					<a href="{{ $go_back_uri }}" class="btn btn-lg btn-default list-new">
-						<span class="fui-arrow-left"></span> Back To List
-					</a>
-				</div>
-			@endif
-			@if (isset($subpanel_parent_uri) && $subpanel_parent_uri)
-				<div class="pull-right">
-					<a href="{{ $go_back_uri }}" class="btn btn-lg btn-default list-new">
-						<span class="fui-arrow-left"></span> Back
-					</a>
-				</div>
-			@endif
+
+			<div class="station-form-options">
+				@if (isset($adjacents) && $adjacents && (!isset($subpanel_parent_uri) || !$subpanel_parent_uri))
+					<div class="pull-right">
+						<a href="{{ '/'.$base_uri.'panel/'.$curr_panel.'/update/'.$adjacents['next'] }}" class="btn btn-xs btn-default list-new">
+							Next {{ $single_item_name }} <span class="glyphicon glyphicon-chevron-right"></span>
+						</a>
+					</div>
+					<div class="pull-right">
+						<a href="{{ '/'.$base_uri.'panel/'.$curr_panel.'/update/'.$adjacents['prev'] }}" class="btn btn-xs btn-default list-new">
+							<span class="glyphicon glyphicon-chevron-left"></span> Prev
+						</a>
+					</div>
+				@endif
+				@if (isset($n_items_in_panel) && $n_items_in_panel > 0)
+					<div class="pull-right">
+						<a href="{{ $go_back_uri }}" class="btn btn-xs btn-default list-new">
+							<span class="glyphicon glyphicon-chevron-up"></span> Back To List
+						</a>
+					</div>
+				@endif
+				@if (isset($subpanel_parent_uri) && $subpanel_parent_uri)
+					<div class="pull-right">
+						<a href="{{ $go_back_uri }}" class="btn btn-xs btn-default list-new">
+							<span class="fui-arrow-left"></span> Back
+						</a>
+					</div>
+				@endif
+				@if (isset($passed_model->preview_url))
+					<div class="pull-right">
+						<a href="{{ $passed_model->preview_url }}" class="btn btn-xs btn-inverse list-new" target="_blank">
+							<span class="glyphicon glyphicon-new-window"></span>&nbsp; Preview
+						</a>
+					</div>
+				@endif
+			</div>
 		</div>
 
 		@if($form_purpose=='create')

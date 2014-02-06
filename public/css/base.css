@@ -536,3 +536,7 @@ ul.in-subpanel > li > span {
 .fetcher {
 	cursor: pointer;
 }
+.station-form-options {
+    float: right;
+    margin: 15px 0 0 0;
+}

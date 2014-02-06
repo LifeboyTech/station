@@ -141,7 +141,7 @@ class StationFileController extends \BaseController {
 		// make station small thumb, send to S3
 		$image = new Image_moo;
 		$image->load($this->tmp_dir.'/'.$file);
-		$image->resize_crop(100, 100); // station large thumb spec
+		$image->resize(100, 100, '#FFFFFF'); // station large thumb spec
 		$image->set_jpeg_quality(100);
 		$image->save($this->tmp_dir.'/_'.$file, TRUE);
 		$this->send_to_s3('_'.$file, 'station_thumbs_sm',$app_config);
