@@ -184,7 +184,7 @@ $(window).load(function() {
 
     function audit_sidebar(){
 
-        if ($(window).scrollTop() > 65 && $(window).width() > 980) {
+        if ($(window).scrollTop() > 125 && $(window).width() > 980) {
             sidebar.css('position', 'fixed');
             sidebar.css('top', '10px');
             sidebar.css('width', sidebar.parent().width());
