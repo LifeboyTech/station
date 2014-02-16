@@ -132,6 +132,11 @@ $(document).ready(function() {
 
     $('.station-list .switch').parent().addClass('switch-cont');
     
+    $('.station-list .checkbox').live('click', function(event) {
+        
+        event.stopPropagation();
+        return false;
+    });
 });
 
 $(window).load(function() {

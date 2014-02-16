@@ -54,6 +54,12 @@
 				@if (!$is_reorderable && !$is_nestable)
 					<thead>
 						<tr>
+							@if ($user_can_bulk_delete)
+								<th class="bulk-check-all">
+									<label class="checkbox primary"><input type="checkbox" value="" id="checkbox1" data-toggle="checkbox"></label>
+								</th>
+							@endif
+
 							@if ($user_can_update)
 								<th>{{-- For our update/edit buttons column --}}</th>
 							@endif
@@ -92,7 +98,8 @@
 				{{ $list_inner_wrap[0] }}
 
 					<?php 
-						$list_data 		= compact('data', 'panel_data', 'row_opener', 'row_closer', 'user_can_update', 'user_can_delete', 'item_element');
+						$list_data 		= compact('data', 'panel_data', 'row_opener', 'row_closer', 'user_can_update', 
+											'user_can_delete', 'user_can_bulk_delete', 'item_element');
 						$partial 		= $is_nestable ? 'list_nestables' : 'list_items'; 
 					?>
 
@@ -115,6 +122,12 @@
 
 			@if ($user_can_delete) {{-- our modal for deletion confirmation is standing by --}}
 				@include('station::partials.deleter')
+			@endif
+
+			@if ($user_can_bulk_delete) {{-- have a bottom tooltip ready to cofirm --}}
+				<div class="fixed-bottom-tooltip for-bulk-delete">
+					<p data-toggle="tooltip" title="..."></p>
+				</div>
 			@endif
 
 

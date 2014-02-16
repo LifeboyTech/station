@@ -351,10 +351,11 @@ class StationPanelController extends \BaseController {
 
 		$this->foreign_data = $panel->add_all_to_array($this->foreign_data);
 
-		$user_can_create = $this->can_create($panel_name);
-		$user_can_update = $this->can_update($panel_name);
-		$user_can_delete = $this->can_delete($panel_name);
-		$title	= $this->user_scope['registry']['name'];
+		$user_can_create		= $this->can_create($panel_name);
+		$user_can_update		= $this->can_update($panel_name);
+		$user_can_delete		= $this->can_delete($panel_name);
+		$user_can_bulk_delete	= $user_can_delete && isset($panel_options['allow_bulk_delete']) && $panel_options['allow_bulk_delete'];
+		$title					= $this->user_scope['registry']['name'];
 
 		View::share('raw_count', $raw_count);
 		View::share('is_trying_to_filter', $is_trying_to_filter);
@@ -363,6 +364,7 @@ class StationPanelController extends \BaseController {
 		View::share('user_can_create', $user_can_create);
 		View::share('user_can_update', $user_can_update);
 		View::share('user_can_delete', $user_can_delete);
+		View::share('user_can_bulk_delete', $user_can_bulk_delete);
 		View::share('page_title', $title);
 		View::share('layout_title', $title);
 		View::share('data', $panel_data);

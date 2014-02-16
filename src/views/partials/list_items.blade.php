@@ -3,6 +3,14 @@
 	<?php $row = (array) $row; ?>
 
 	{{ $row_opener }} id="{{ $curr_panel }}-record-{{  $row['id'] }}" data-id="{{  $row['id'] }}">
+
+		@if ($user_can_bulk_delete)
+			{{-- We need our bulk-delete checkbox --}}
+			<{{ $item_element }} class="td-for-bulk-delete col-0-0">
+				<label class="checkbox row-checkbox"><input type="checkbox" value="" id="checkbox1" data-toggle="checkbox"></label>
+			</{{ $item_element }}>
+		@endif
+
 		@if ($user_can_update)
 			{{-- We need our button for edit/update --}}
 			<{{ $item_element }} class="td-for-edit col-0">

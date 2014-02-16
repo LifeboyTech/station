@@ -540,3 +540,19 @@ ul.in-subpanel > li > span {
     float: right;
     margin: 15px 0 0 0;
 }
+.station-list .checkbox {
+	padding: 0;
+	margin: 0 0 0 10px;
+}
+.station-list .checkbox .icons span {
+	border-radius: 13px;
+}
+.fixed-bottom-tooltip {
+	position: fixed;
+	bottom: -100px;
+	z-index: 999;
+	left: 0;
+	width: 100%;
+	height: 1px;
+	background: none;
+}

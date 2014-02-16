@@ -1,5 +1,6 @@
 var station_load_more_locked = false;
 var nestable = false;
+var checkboxes_locked = false;
 
 $(document).ready(function() { 
 	
@@ -185,7 +186,69 @@ $(document).ready(function() {
 		$(this).remove();
 		return false;
 	});
+
+	/**
+	 * checkbox behaviors
+	 */
+	$('.bulk-check-all').click(function(event) {
+		
+		var toggle_all = $(this).find(':checkbox');
+
+		if (!toggle_all.is(':checked')){
+
+			checkboxes_locked = true;
+			$('.row-checkbox :checkbox').checkbox('check');
+			toggle_all.checkbox('uncheck');
+			audit_checkboxes();
+			checkboxes_locked = false;
+
+		} else {
+
+			checkboxes_locked = true;
+			$('.row-checkbox :checkbox').checkbox('uncheck');
+			toggle_all.checkbox('check');
+			audit_checkboxes();
+			checkboxes_locked = false;
+		}
+
+	});
+
+	$('.row-checkbox :checkbox').change(function(event) {
+		
+		audit_checkboxes();
+		audit_bulk_delete_tooltip();
+	});
 });
+
+function audit_checkboxes(){
+
+	var checkboxes = $('.row-checkbox :checkbox');
+	var n_checked = checkboxes.filter(':checked').length;
+
+	if (!checkboxes_locked){
+
+	    var checkAll = checkboxes.length == n_checked;
+	    $('.bulk-check-all :checkbox').checkbox(checkAll ? 'check' : 'uncheck');
+	}
+}
+
+function audit_bulk_delete_tooltip(){
+
+	var n_checked = $('.row-checkbox :checkbox:checked').length;
+
+	if (n_checked > 0){
+
+		var url 	= '';
+		var html 	= '<a href="javascript:;" class="btn btn-xs btn-danger" data-target="#deleter-modal" data-toggle="modal">'
+					+ '<i class="fui-cross"></i> Delete ' + n_checked + ' Checked Item' + (n_checked > 1 ? 's' : '') + '</a>';
+
+		$('.fixed-bottom-tooltip.for-bulk-delete').stop().animate({ 'bottom' : '2px' }).find('.tooltip-inner').html(html);
+	
+	} else {
+
+		$('.fixed-bottom-tooltip.for-bulk-delete').stop().animate({ 'bottom' : '-100px' });
+	}
+}
 
 /**
  * minified version of https://github.com/douglascrockford/JSON-js/blob/master/json2.js
