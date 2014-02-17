@@ -28,16 +28,10 @@ $(document).ready(function() {
      */
     $('.bulk-record-deleter').live('click', function(event) {
 
-        ids_to_delete = [];
         var parent = $('.station-list');
         $('.pending-deletion').removeClass('pending-deletion');
 
-        parent.find('.td-for-bulk-delete :checkbox:checked').each(function(index, el) {
-            
-            var item = $(this).closest('tr, li');
-            ids_to_delete.push(item.data('id'));
-            item.addClass('pending-deletion');
-        });
+        set_ids_to_delete();
 
         var n_checked = ids_to_delete.length;
         $('#deleter-modal .single-item-name').html(n_checked > 1 ? parent.data('plural-item-name') : parent.data('single-item-name'));
@@ -51,6 +45,7 @@ $(document).ready(function() {
     /**
      * record deletion has been confirmed.
      * send DELETE request to panel and id route
+     * works for single and bulk-delete requests
      * 
      */
     $('.deletion-confirmer').click(function(event) {
@@ -59,17 +54,24 @@ $(document).ready(function() {
         var pending_deletion = $('.pending-deletion');
         pending_deletion.css('background-color', '#ffffcc').fadeOut(900);
         pending_deletion.find('td').css('background-color', '#ffffcc');
-        var relative_uri = $('.pending-deletion').closest('.station-list').attr('data-relative-uri');
+        var relative_uri = $('.pending-deletion:first').closest('.station-list').attr('data-relative-uri');
+        
+        set_ids_to_delete();
+
+        var id_string = pending_deletion.length > 1 ? ids_to_delete.join() : $('.pending-deletion').data('id');
 
         $.ajax({
 
-            url: relative_uri + '/delete/' + $('.pending-deletion').attr('data-id'),
+            url: relative_uri + '/delete/' + id_string,
             type: 'DELETE',
             success: function(result) {
                 
-                // don't do anything. we will assume deleting was allowed and occured
+                // don't do anything. we will assume deleting was allowed and it occured on the back-end
             }
         });
+
+        // for bulk-delete, make the tooltip go away
+        $('.fixed-bottom-tooltip.for-bulk-delete').stop().animate({ 'bottom' : '-100px' });
 
         return false;
     });
@@ -193,6 +195,20 @@ $(window).load(function() {
         }
     });
 });
+
+function set_ids_to_delete(){
+
+    ids_to_delete = [];
+
+    $('.td-for-bulk-delete :checkbox:checked').each(function(index, el) {
+        
+        var item = $(this).closest('tr, li');
+        ids_to_delete.push(item.data('id'));
+        item.addClass('pending-deletion');
+    });
+
+    return ids_to_delete;
+}
 
 /**
  * sidebar follow

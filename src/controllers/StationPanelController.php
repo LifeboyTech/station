@@ -141,19 +141,25 @@ class StationPanelController extends \BaseController {
 		return $this->do_create($panel_for_user_create);
 	}
 
-	public function do_delete($panel_name, $id){
+	public function do_delete($panel_name, $ids){
 
-		$this->init($panel_name, 'D', $id);
+		$this->init($panel_name, 'D', $ids);
 		$user_can_delete = $this->can_delete($panel_name);
+		$ids_arr = explode(',', $ids);
 
-		if ($user_can_delete) {
+		if ($user_can_delete && count($ids_arr) > 0) {
 			
 			$panel = new Panel;
-			$panel->delete_record_for($panel_name, $id);
-			return Response::json(array('status' => '1', 'message' => 'The record was deleted'));
+
+			foreach ($ids_arr as $id) {
+
+				$panel->delete_record_for($panel_name, $id);
+			}
+			
+			return Response::json(array('status' => '1', 'message' => count($ids_arr).' record(s) were deleted'));
 		}
 
-		return Response::json(array('status' => '0', 'message' => 'The record was not deleted'));
+		return Response::json(array('status' => '0', 'message' => 'The record(s) were not deleted'));
 	}
 
 	public function do_delete_in_subpanel($panel_name, $parent_panel, $parent_id, $id){
