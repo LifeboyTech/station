@@ -1,6 +1,6 @@
 # Station
 
-## A Backend CRUD, Content and User Management System For Laravel 4.1
+## Incredibly Flexible CRUD, Content and User Management System For Laravel 4.1
 
 Tired of creating and configuring similar models and controllers which deal with basic CRUD, validation and user role-based capabilities? Station allows developers to setup and configure a backend CMS for a Laravel app/site very quickly. 
 
