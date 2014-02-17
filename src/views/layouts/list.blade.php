@@ -65,7 +65,7 @@
 							@endif
 
 							@foreach($data['config']['elements'] as $elem_name => $elem_data)
-								<th>
+								<th class="element-col-head-{{{ $elem_name }}}">
 									<?php
 										$filter_data = FALSE; 
 
