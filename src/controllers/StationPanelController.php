@@ -566,8 +566,9 @@ class StationPanelController extends \BaseController {
 								&& $this->panel_config['panel_options']['nestable_by'];
 
 		$list_attribs			= 'data-relative-uri="'.$this->panel_config['relative_uri'].'" '
-								. 'data-single-item-name="'.$this->single_item_name.'"'
-								. 'data-panel-name="'.$this->curr_panel.'"';
+								. 'data-single-item-name="'.$this->single_item_name.'" '
+								. 'data-plural-item-name="'.str_plural($this->single_item_name).'" '
+								. 'data-panel-name="'.$this->curr_panel.'" ';
 
 		$table_wrap				= array('<table class="table table-hover station-list" '.$list_attribs.'>', '</table>');
 		$tbody_wrap				= array('<tbody>', '</tbody>');

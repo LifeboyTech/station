@@ -7,12 +7,12 @@
       </div>
 
       <div class="modal-body">
-        <p>Do you definitely want to delete this <span class="single-item-name"></span>?</p>
+        <p>Do you definitely want to delete <span class="modifier">this</span> <span class="single-item-name"></span>?</p>
       </div>
 
       <div class="modal-footer">
         <a href="javascript:;" class="btn btn-default" data-dismiss="modal">Cancel</a>
-        <a href="javascript:;" class="btn btn-danger deletion-confirmer">Delete It</a>
+        <a href="javascript:;" class="btn btn-danger deletion-confirmer">Delete</a>
       </div>
     </div>
   </div>  

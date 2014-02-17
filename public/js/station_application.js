@@ -1,4 +1,5 @@
 var sidebar   = null;
+var ids_to_delete = [];
 
 $(document).ready(function() { 
 
@@ -14,7 +15,35 @@ $(document).ready(function() {
         $('.pending-deletion').removeClass('pending-deletion');
         $('#' + id_to_delete).addClass('pending-deletion');
         $('#deleter-modal .single-item-name').html(parent.attr('data-single-item-name'));
+        $('#deleter-modal .modifier').html('this');
         $('#deleter-modal').modal('show');
+        event.stopPropagation();
+        return false;
+    });
+
+    /**
+     * delete bulk item button clicked. launch modal and mark for deletion
+     * this will work for both list views only.
+     *
+     */
+    $('.bulk-record-deleter').live('click', function(event) {
+
+        ids_to_delete = [];
+        var parent = $('.station-list');
+        $('.pending-deletion').removeClass('pending-deletion');
+
+        parent.find('.td-for-bulk-delete :checkbox:checked').each(function(index, el) {
+            
+            var item = $(this).closest('tr, li');
+            ids_to_delete.push(item.data('id'));
+            item.addClass('pending-deletion');
+        });
+
+        var n_checked = ids_to_delete.length;
+        $('#deleter-modal .single-item-name').html(n_checked > 1 ? parent.data('plural-item-name') : parent.data('single-item-name'));
+        $('#deleter-modal .modifier').html(n_checked > 1 ? 'these ' + n_checked : 'this');
+        $('#deleter-modal').modal('show');
+
         event.stopPropagation();
         return false;
     });

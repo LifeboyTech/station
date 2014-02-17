@@ -238,11 +238,14 @@ function audit_bulk_delete_tooltip(){
 
 	if (n_checked > 0){
 
-		var url 	= '';
-		var html 	= '<a href="javascript:;" class="btn btn-xs btn-danger" data-target="#deleter-modal" data-toggle="modal">'
-					+ '<i class="fui-cross"></i> Delete ' + n_checked + ' Checked Item' + (n_checked > 1 ? 's' : '') + '</a>';
+		var url					= '';
+		var plural_item_name	= $('.station-list').data('plural-item-name');
+		var single_item_name	= $('.station-list').data('single-item-name');
+		var item_names			= n_checked > 1 ? plural_item_name : single_item_name;
+		var html 				= '<a href="" class="btn btn-xl btn-danger btn-block bulk-record-deleter" data-target="#deleter-modal" data-toggle="modal">'
+								+ '<i class="fui-cross pull-left"></i> Delete ' + n_checked + ' Checked ' + item_names + '</a>';
 
-		$('.fixed-bottom-tooltip.for-bulk-delete').stop().animate({ 'bottom' : '2px' }).find('.tooltip-inner').html(html);
+		$('.fixed-bottom-tooltip.for-bulk-delete').stop().animate({ 'bottom' : '19px' }).find('.tooltip-inner').html(html);
 	
 	} else {
 
