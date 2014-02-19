@@ -51,9 +51,15 @@ $(document).ready(function() {
     $('.deletion-confirmer').click(function(event) {
         
         $('#deleter-modal').modal('hide');
+        
         var pending_deletion = $('.pending-deletion');
-        pending_deletion.css('background-color', '#ffffcc').fadeOut(900);
         pending_deletion.find('td').css('background-color', '#ffffcc');
+
+        pending_deletion.css('background-color', '#ffffcc').fadeOut(900, function(){
+
+            $('.pending-deletion').remove();
+        });
+        
         var relative_uri = $('.pending-deletion:first').closest('.station-list').attr('data-relative-uri');
         
         set_ids_to_delete();
