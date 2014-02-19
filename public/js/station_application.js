@@ -51,7 +51,7 @@ $(document).ready(function() {
     $('.deletion-confirmer').click(function(event) {
         
         $('#deleter-modal').modal('hide');
-        
+
         var pending_deletion = $('.pending-deletion');
         pending_deletion.find('td').css('background-color', '#ffffcc');
 
@@ -171,7 +171,7 @@ $(document).ready(function() {
 
     $("[data-toggle='switch']").livequery(function(){
 
-        if (!$(this).closest('td, li').hasClass('switch-cont')){
+        if (!$(this).next().hasClass('switch-left')){
 
             $(this).wrap('<div class="switch" />').parent().bootstrapSwitch();
         }
