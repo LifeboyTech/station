@@ -300,7 +300,7 @@ class StationPanelController extends \BaseController {
 	 * @param  int $id
 	 * @return Response::json
 	 */
-	public function do_update_element($panel_name, $element_name, $id){
+	public function do_update_element($panel_name, $element_name, $id, $response_type = 'response'){
 
 		$panel			= new Panel;
 		$user_scope 	= $panel->user_scope($panel_name, 'U', $this->subpanel_parent); // can we update? which fields?
@@ -322,6 +322,21 @@ class StationPanelController extends \BaseController {
 			$response = ['status' => 1, 'message' => 'Update was successful'];
 		}
 
+		return $response_type == 'response' ? Response::json($response) : $response;
+	}
+
+	public function do_update_element_for_ids($panel_name, $element_name, $ids){
+
+		$ids_arr = explode(',', $ids);
+		$n_updated = 0;
+
+		foreach ($ids_arr as $id) {
+			
+			$update_status = $this->do_update_element($panel_name, $element_name, $id, 'array');
+			$n_updated += $update_status['status'] == 1 ? 1 : 0;
+		}
+
+		$response = ['status' => 1, 'message' => 'Updated '.$n_updated.' item(s).'];
 		return Response::json($response);
 	}
 
