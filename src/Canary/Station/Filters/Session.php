@@ -1,6 +1,6 @@
 <?php namespace Canary\Station\Filters;
 
-use Auth, Redirect, Config, Session as Laravel_Session;
+use Auth, Redirect, Config, Request, Session as Laravel_Session;
 use Canary\Station\Models\User as User;
 use Canary\Station\Models\Panel as Panel;
 use Canary\Station\Config\StationConfig as StationConfig;
@@ -16,7 +16,11 @@ class Session {
     {
     	$this->base_uri = StationConfig::app('root_uri_segment').'/';
 
-        if (Auth::guest()) return Redirect::to($this->base_uri.'login');
+        if (Auth::guest()) {
+
+            Laravel_Session::put('desired_uri', '/'.Request::path());
+            return Redirect::to($this->base_uri.'login');
+        }
 
 		if (!Laravel_Session::has('user_data')) $this->hydrate();
     }

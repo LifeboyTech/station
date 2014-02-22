@@ -19,7 +19,7 @@ class StationSessionController extends ObjectBaseController {
 	public function create()
 	{
 		if (Auth::check()) return $this->bootstrap();
-
+		
 		return View::make('station::sessions.create');
 	}
 
@@ -32,6 +32,14 @@ class StationSessionController extends ObjectBaseController {
 		if (Auth::guest()) return Redirect::to($this->base_uri.'login');
 
 		Session_Filter::hydrate();
+
+		if (Session::has('desired_uri')) {
+
+			$desired_uri = Session::get('desired_uri');
+			Session::forget('desired_uri');
+			return Redirect::to($desired_uri);
+		}
+
 		$panel_uri = Session::get('user_data.starting_panel_uri');
 		return Redirect::to($panel_uri);
 	}

@@ -39,7 +39,13 @@
             </div>
         @endif
 
-        <h4 class="form-signin-heading">Please sign in</h4>
+        <h4 class="form-signin-heading">
+          @if (Session::has('desired_uri'))
+            Sign in and we'll send you along
+          @else
+            Please sign in
+          @endif
+        </h4>
 
         @if(Session::has('error'))
             <div class="alert alert-danger">

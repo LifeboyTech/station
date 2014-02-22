@@ -259,6 +259,9 @@ class StationFileController extends \BaseController {
 
 	private function fetch_original($filename, $app_config){
 
+		// this may be a problem with progressive jpgs, 
+		// see: http://stackoverflow.com/questions/909374/copy-image-from-remote-server-over-http
+
     	$bucket = $app_config['media_options']['AWS']['bucket'];
     	$ch = curl_init($bucket.".s3.amazonaws.com/original/".$filename);
 		$fp = fopen($this->tmp_dir."/".$filename, "w");
