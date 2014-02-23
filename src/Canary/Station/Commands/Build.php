@@ -60,7 +60,7 @@ class Build extends Command {
 
 		$panel = new Panel;
         $panels = $panel->all(TRUE); // gets subpanels too.
-        if (App::environment() == 'development') $this->generate_migrations($panels); 
+        $this->generate_migrations($panels); 
         $this->call('migrate');
         $this->generate_models($panels);
         $this->call('db:seed',array('--class'=>"StationDatabaseSeeder"));
