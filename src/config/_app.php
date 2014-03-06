@@ -16,9 +16,9 @@
 		'media_options'	=> [
 
 			'AWS'			=> [
-				'bucket'	=> 'timh.test2',
-				'key'    	=> 'AKIAIEE3LRY6URO7IRQQ',
-		    	'secret' 	=> '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'
+				'bucket'	=> 'aws-bucket-name',
+				'key'    	=> 'XXXXXXXXXXXXXXXXXXXX',
+		    	'secret' 	=> 'XXXXXXXXXXXXXXXXXXXXxN7Vn4mJRPkIFCTmKFaP'
 			],
 			'sizes' 		=> [
 

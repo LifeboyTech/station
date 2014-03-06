@@ -89,9 +89,31 @@ class StationPanelController extends \BaseController {
 		
 		} else { // save and redirect
 
+			// Is there a pre_trigger?
+			if(isset($this->panel_config['panel_options']['trigger']['pre']['C']))
+			{
+				$temp = explode('@', $this->panel_config['panel_options']['trigger']['pre']['C']);
+				$override_controller 	= $temp[0];
+				$override_method 		= $temp[1];
+
+				App::make($override_controller)->$override_method(Input::all());
+			}
+
+
 			$record_id = $panel->create_record_for($panel_name, $user_scope, isset($this->is_creating_user), $this->write_data_override);
 
 			if (is_numeric($record_id)){ // record was saved
+
+				// Is there a post_trigger?
+				if(isset($this->panel_config['panel_options']['trigger']['post']['C']))
+				{
+					$temp = explode('@', $this->panel_config['panel_options']['trigger']['post']['C']);
+					$override_controller 	= $temp[0];
+					$override_method 		= $temp[1];
+
+					App::make($override_controller)->$override_method($record_id);
+				}
+
 
 				if (Request::ajax()){
 
@@ -148,6 +170,17 @@ class StationPanelController extends \BaseController {
 		$ids_arr = explode(',', $ids);
 
 		if ($user_can_delete && count($ids_arr) > 0) {
+
+			// Is there a pre_trigger?
+			if(isset($this->panel_config['panel_options']['trigger']['pre']['D']))
+			{
+				$temp = explode('@', $this->panel_config['panel_options']['trigger']['pre']['D']);
+				$override_controller 	= $temp[0];
+				$override_method 		= $temp[1];
+
+				App::make($override_controller)->$override_method($id);
+			}
+
 			
 			$panel = new Panel;
 
@@ -155,6 +188,17 @@ class StationPanelController extends \BaseController {
 
 				$panel->delete_record_for($panel_name, $id);
 			}
+
+			// Is there a post_trigger?
+			if(isset($this->panel_config['panel_options']['trigger']['post']['D']))
+			{
+				$temp = explode('@', $this->panel_config['panel_options']['trigger']['post']['D']);
+				$override_controller 	= $temp[0];
+				$override_method 		= $temp[1];
+
+				App::make($override_controller)->$override_method();
+			}
+
 			
 			return Response::json(array('status' => '1', 'message' => count($ids_arr).' record(s) were deleted'));
 		}
