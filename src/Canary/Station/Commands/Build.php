@@ -485,7 +485,7 @@ class Build extends Command {
 		
 		$ret .= $this->column_type_suffix($data);
 
-		if(isset($data['length'])) $ret .= '['.$data['length'].']';
+		if(isset($data['length'])) $ret .= '('.$data['length'].')';
 
 		if(isset($data['attributes']) && $data['attributes'] != '')
 		{
@@ -502,7 +502,7 @@ class Build extends Command {
 
 	private function table_migrate($table_name, $fields_string){
 
-		$migration_options = array('name' => 'create_'.$table_name.'_table','--fields' => $fields_string);
+		$migration_options = array('migrationName' => 'create_'.$table_name.'_table','--fields' => $fields_string);
         $this->generate_migration($migration_options);
 	}
 }
