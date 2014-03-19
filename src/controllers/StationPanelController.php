@@ -708,7 +708,20 @@ class StationPanelController extends \BaseController {
 	private function override_responded_to($user_scope, $method){
 
 		$override = $this->override($user_scope, $method);
-		if ($override) return App::make($override['controller'])->$override['method']();
+		if ($override)
+		{
+			$override['method'] = str_replace('%user_id%', Session::get('user_data.id'), $override['method']);
+			if(strpos($override['method'], '('))
+			{
+				// need to separate into array
+				$vars = substr($override['method'], strpos($override['method'], '(')+1);
+				$vars = substr($vars, 0,-1); // to trim the closing paranthesis
+				$override['method'] = substr($override['method'],0,strpos($override['method'], '('));
+			}
+			else $vars = '';
+			return App::make($override['controller'])->$override['method']($vars);
+
+		}
 
 		return FALSE;
 	}
@@ -718,6 +731,12 @@ class StationPanelController extends \BaseController {
 		View::share('panel_name', $this->name);
 		View::share('parent_panel_name', $this->subpanel_parent);
 		View::share('subpanel_parent_uri', $this->subpanel_parent ? '/'.$this->base_uri.'panel'.$this->subpanel_parent_uri : FALSE);
+
+		// if has button overrides, we want to pass those vals along
+		if(isset($panel_data['config']['panel_options']['button_override'][$method]))
+		{
+			View::share('button_override',$panel_data['config']['panel_options']['button_override'][$method]);
+		}
 		
 		if (Request::ajax()) return $this->render_ajax($template, $panel_data, $method);
 

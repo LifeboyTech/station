@@ -4,6 +4,36 @@
 
 ### panel_config
 
+#### override
+
+##### Definition
+
+To run your own code for that specific method instead of station. You give it the controller + method name. You can use the wildcard **%user_id%** and pass that to the override if you need to.
+
+##### Example
+
+```
+return [
+			'panel_options'	=> [
+				'override' 				=> ['L' => 'MessagingController@message_inbox'],
+```
+
+
+#### button_override
+
+##### Definition
+
+Sometimes you don't want to use the default text for a button. You always need the **save** and **save_add** keys. If you don't want a **save_add** button at all, set to 0.
+
+##### Example
+
+```
+return [
+			'panel_options'	=> [
+				'button_override'		=> ['C'=>['save'=>'Send Message','save_add'=>0],
+											'U'=>['save'=>'Send Reply','save_add'=>0]],
+```
+
 #### triggers
 
 ##### Definition

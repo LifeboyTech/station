@@ -281,19 +281,40 @@
 
 			<div class="pull-left">
 				<button class="btn btn-success btn-hg station-form-submit">
+					@if(isset($button_override))
+					{{ $button_override['save'] }} <i class="fui-arrow-right"></i>
+					@else
 					{{ $submit_value }} <i class="fui-arrow-right"></i>
+					@endif
 				</button>
 
 				{{-- we check if they are logged in because this appears on the register form! --}}
 				@if ($form_purpose == 'create' && Auth::check())
-					<button name="after_save" value="create" class="btn btn-success btn-hg station-form-submit">
-						Save and add another
-					</button>								
+						@if(isset($button_override))
+							@if($button_override['save_add']!==0)
+							<button name="after_save" value="create" class="btn btn-success btn-hg station-form-submit">
+								{{ $button_override['save_add'] }}
+							</button>	
+							@endif							
+						@else
+							<button name="after_save" value="create" class="btn btn-success btn-hg station-form-submit">
+								Save and add another
+							</button>
+						@endif
 				@endif
 				
 				@if ($form_purpose != 'create')
-					<button name="after_save" value="stay" class="btn btn-success btn-hg station-form-submit">
-						Apply changes but stay here
+					@if(isset($button_override))
+							@if($button_override['save_add']!==0)
+							<button name="after_save" value="stay" class="btn btn-success btn-hg station-form-submit">
+								{{ $button_override['save_add'] }}
+							</button>	
+							@endif							
+						@else
+							<button name="after_save" value="stay" class="btn btn-success btn-hg station-form-submit">
+								Apply changes but stay here
+							</button>
+						@endif
 					</button>								
 				@endif
 			
