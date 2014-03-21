@@ -8,7 +8,7 @@
 
 ##### Definition
 
-To run your own code for that specific method instead of station. You give it the controller + method name. You can use the wildcard **%user_id%** and pass that to the override if you need to.
+To run your own code for that specific method instead of station. You give it the controller + method name. You can use the wildcard **%user_id%** and pass that to the override if you need to. The override **%id%** is also available if you need to pass an id. (Handy when overriding the **U**)
 
 ##### Example
 

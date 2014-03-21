@@ -711,6 +711,7 @@ class StationPanelController extends \BaseController {
 		if ($override)
 		{
 			$override['method'] = str_replace('%user_id%', Session::get('user_data.id'), $override['method']);
+			$override['method'] = str_replace('%id%', $user_scope['data']->id, $override['method']);
 			if(strpos($override['method'], '('))
 			{
 				// need to separate into array
