@@ -17,7 +17,7 @@
 
     <link href="/packages/canary/station/Flat-UI-Pro-1.2.2/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="/packages/canary/station/Flat-UI-Pro-1.2.2/css/flat-ui.css" rel="stylesheet">
-    <link href="/packages/canary/station/css/base.css?v7" rel="stylesheet">
+    <link href="/packages/canary/station/css/base.css?v8" rel="stylesheet">
     {{ $app_data['css_override_file'] != '' ? '<link href="'.$app_data['css_override_file'].'" rel="stylesheet">' : '' }}
 
     <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/jquery-1.8.3.min.js"></script>
@@ -32,7 +32,7 @@
     <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/jquery.tagsinput.js"></script>
     <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/jquery.placeholder.js"></script>
     <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/application.js"></script>
-    <script src="/packages/canary/station/js/station_application.js"></script>
+    <script src="/packages/canary/station/js/station_application.js?v2"></script>
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -64,10 +64,10 @@
     
     	<div class="container">
     		<div class="row">
-    			<div class="col-sm-2">
+    			<div id="sidebar-container" class="col-sm-2">
     				@include('station::layouts.sidebar')
     			</div>
-    			<div class="col-sm-10">
+    			<div id="content-container" class="col-sm-10">
             <div class="row">
               <div class="col-sm-12">
                 {{-- for showing flashes via ajax responses --}}

@@ -63,13 +63,21 @@
 	display: block;
 }
 .gravatar {
-	border: 2px solid #ccc;
-	border-radius: 8px;
+	border: 1px solid #ccc;
+	border-radius: 0;
 }
 .nav-list .nav-header {
 	padding-top: 20px !important;
-	color: #2BA58A !important;
+	color: #F8F7F7 !important;
 	font-weight: normal;
+	cursor: pointer;
+	text-transform: none;
+	font-size: 15px !important;
+	padding-left: 40px;
+	padding-right: 31px;
+}
+.nav-list .nav-header:hover {
+	color: #eee !important;
 }
 .nav-list-vivid .nav-header:first-child {
 	padding-top: 10px !important;
@@ -126,7 +134,22 @@
 }
 #sidebar {
 	margin-bottom: 20px;
-	padding-top: 5px;
+	padding: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #3a3637!important;
+	border-radius: 0;
+	width: 17%;
+	height: 3000px;
+	overflow: hidden;
+}
+#sidebar-container {
+	
+}
+#content-container {
+    margin-top: 25px;
+	
 }
 .input-group.with-append {
 	width: 340px;
@@ -159,6 +182,8 @@
 	margin-bottom: 0;
 	padding-top: 5px;
 	padding-bottom: 5px;
+	margin-left: -20px;
+	padding-left: 27px;
 }
 
 ul.is-reorderable .col-0 {
@@ -232,13 +257,22 @@ ul.is-reorderable {
 	right: 0;
 }
 .nav-list-vivid > li, .nav-list-vivid > li > a {
-	font-size: 12px !important;
+	font-size: 11px !important;
 	font-weight: normal;
 	padding-top: 3px;
 	padding-bottom: 5px;
 	margin-bottom: 0px;
 	margin-top: 0px;
 	line-height: 9px;
+	color: #c5c4c4;
+	padding-left: 20px;
+}
+.nav-list-vivid > li > a:hover {
+	background-color: #333;
+	color: #fff;
+}
+.nav-list-vivid > li span {
+	color: #1c977c;
 }
 .station-list .chosen-container {
     font-size: 12px;
@@ -516,11 +550,12 @@ ul.is-reorderable {
 }
 .station-list-wrap .drag-drop-notice {
     position: absolute;
-    left: 8px;
-    top: -11px;
+    left: 15px;
+    top: -25px;
     font-size: 10px;
     line-height: 7px;
     background-color: #ddd;
+    border-radius: 0;
 }
 ul.in-subpanel span.switch-cont {
 	float: right;
@@ -559,4 +594,25 @@ ul.in-subpanel > li > span {
 .fixed-bottom-tooltip .tooltip-inner {
 	width: 400px;
 	max-width: none;
+}
+.station-form-header {
+	margin: 0 0 20px 0;
+}
+.nav-user-control {
+	height: 48px;
+	/* border-bottom: 1px solid #807478; */
+	/* padding-bottom: 12px !important; */
+	/* line-height: 60px !important; */
+	margin-bottom: 16px !important;
+}
+.nav-list-vivid > li.nav-user-control a {
+	color: #89b3de !important;
+	font-size: 14px !important;
+}
+.nav-user-control a:hover {
+	background: none !important;
+}
+.nav-list-vivid > li.nav-user-control span {
+	color: #807478;
+	margin: 5px 0 0 0;
 }
