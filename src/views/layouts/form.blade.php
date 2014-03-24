@@ -221,7 +221,7 @@
 						?>
 						<div class="station-file-upload-wrap row">
 							<div class="col-sm-2">
-								<img width="100px" height="100px" src="/packages/canary/station/img/file-placeholder.png" bucket="{{ $bucket_name }}" class="img-thumbnail station-img-thumbnail" id="target-{{ $element_name }}">
+								<img width="100px" height="100px" src="/packages/canary/station/img/missing.gif" bucket="{{ $bucket_name }}" class="img-thumbnail station-img-thumbnail" id="target-{{ $element_name }}">
 							</div>
 							@if (isset($element_info['fetch_url']))
 								<div class="col-sm-8 station-parsed-url-controls">
