@@ -226,7 +226,7 @@ function set_ids_to_delete(){
 }
 
 /**
- * sidebar follow
+ * sidebar behaviors
  */
 
     $(function() {
@@ -249,7 +249,8 @@ function set_ids_to_delete(){
 
         $('.nav-header').click(function(event) {
             
-            $(this).nextUntil('.nav-header').toggle();
+            $('.nav-header').nextUntil('.nav-header').hide();
+            $(this).nextUntil('.nav-header').show();
         });
 
         audit_sidebar();
