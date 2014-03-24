@@ -63,7 +63,7 @@
 	display: block;
 }
 .gravatar {
-	border: 1px solid #ccc;
+	border: 1px solid #5F5F5F;
 	border-radius: 0;
 }
 .nav-list .nav-header {
@@ -315,14 +315,17 @@ ul.is-reorderable {
 	color: #333 !important;
 }
 .nav-list .badge.pull-right {
-    background-color: #B3B3B3;
+    background-color: #f0162c;
 	
-    border-radius: 7px;
+    border-radius: 14px;
     font-size: 11px;
-    margin: -3px -6px 0 0;
+    margin: -8px 12px 0 0;
+    line-height: 21px;
+    color: #fff;
+    border: 2px solid #fff;
 }
 .nav-list .active .badge.pull-right {
-    margin-top: -3px;
+    margin-top: -8px;
 	
     font-size: 9px;
 }
@@ -615,4 +618,7 @@ ul.in-subpanel > li > span {
 .nav-list-vivid > li.nav-user-control span {
 	color: #807478;
 	margin: 5px 0 0 0;
+}
+.nav-list-vivid > li.nav-user-control span:hover {
+	color: #fff;
 }
