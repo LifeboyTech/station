@@ -56,7 +56,7 @@
         <input type="text" class="form-control" placeholder="Username" name="username" autocomplete="off" required autofocus>
         <input type="password" class="form-control" placeholder="Password" name="password" required>
         <label class="checkbox" for="remember_me">
-          <input type="checkbox" value="1" name="remember_me" id="remember_me" data-toggle="checkbox"> Remember me
+          <input type="checkbox" value="1" name="remember_me" id="remember_me" data-toggle="checkbox" checked> Remember me
           <a href="javascript:;" class="pull-right forgot-opener">Forgot My Info</a>
         </label>
 
