@@ -41,7 +41,7 @@ class StationFileController extends \BaseController {
 		// fetch the original // TODO: we need to force all image uploads to save an original version. not an option. make it standard.
 		$this->fetch_original($file, $app_config);
 
-		$orig_size			= getimagesize($this->tmp_dir.'/'.$file);
+		$orig_size			= getimagesize($this->tmp_dir.'/'.$file); exit;
 		$orig_width			= $orig_size[0];
 		$orig_height		= $orig_size[1];
 		$this->mime 		= $orig_size['mime'];
@@ -220,10 +220,11 @@ class StationFileController extends \BaseController {
 		$app_config					= StationConfig::app();
 		$success 					= FALSE;
 		$message 					= '';
-		
+		$field_is_uploadable 		= $element['type'] == 'image' || (isset($element['embeddable']) && $element['embeddable']);
+
 		Input::file('uploaded_file')->move($this->tmp_dir, $new_file_name);
 
-		if ($element['type'] == 'image'){
+		if ($field_is_uploadable){
 
 			$allowed_image_extensions	= ['png', 'gif', 'jpg', 'jpeg', 'PNG', 'GIF', 'JPG', 'JPEG'];
 			$bad_image = strpos($mime, 'image') === FALSE || !in_array($extension, $allowed_image_extensions);
@@ -244,34 +245,25 @@ class StationFileController extends \BaseController {
 
 		$response = [
 
-			'success'	=> $success,
-			'message'	=> $message,
-			'insert_id'	=> isset($medium->id) ? $medium->id : FALSE,
-			'file_uri_stub' => 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/',
-			'file_uri'	=> isset($manipulations['file_name']) ? 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/'.'station_thumbs_lg/'.$manipulations['file_name'] : FALSE,
-			'file_name'	=> isset($manipulations['file_name']) ? $manipulations['file_name'] : FALSE
+			'success'		=> $success,
+			'message'		=> $message,
+			'insert_id'		=> isset($medium->id) ? $medium->id : FALSE,
+			'file_uri_stub'	=> 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/',
+			'file_uri'		=> isset($manipulations['file_name']) ? 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/'.'station_thumbs_lg/'.$manipulations['file_name'] : FALSE,
+			'file_name'		=> isset($manipulations['file_name']) ? $manipulations['file_name'] : FALSE
         ];
 
 
-        //return Response::json($response); // was erroring with Resource interpreted as Document but transferred with MIME type application/json: "http://willdoo3.localhost/station/file/upload".
+        //return Response::json($response); // was erroring with Resource interpreted as Document but transferred with MIME type application/json: "/station/file/upload".
         echo json_encode($response);
 	}
 
 	private function fetch_original($filename, $app_config){
 
-		// this may be a problem with progressive jpgs, 
-		// see: http://stackoverflow.com/questions/909374/copy-image-from-remote-server-over-http
-
     	$bucket = $app_config['media_options']['AWS']['bucket'];
-    	$ch = curl_init($bucket.".s3.amazonaws.com/original/".$filename);
-		$fp = fopen($this->tmp_dir."/".$filename, "w");
-
-		curl_setopt($ch, CURLOPT_FILE, $fp);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-
-		curl_exec($ch);
-		curl_close($ch);
-		fclose($fp);
+    	$remote_filename = urlencode($filename);
+    	$source_url = 'http://'.$bucket.".s3.amazonaws.com/original/".$remote_filename;
+		copy($source_url, $this->tmp_dir."/".$filename);
     }
 
     private function fetch_source($source_url, $new_path){

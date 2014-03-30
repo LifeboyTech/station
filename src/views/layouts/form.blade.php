@@ -111,16 +111,21 @@
 				<div class="form-group station-element-group" data-element-name="{{ $element_name }}" {{ $element_info['type'] == 'hidden' ? 'style="display: none;"' : '' }}>
 					
 					<?php 
-						$id				= 'station-'.$element_name;
-						$help			= isset($element_info['help']) && $element_info['help'] != '' ? $element_info['help'] : FALSE;
-						$helper			= isset($element_info['helper']) && $element_info['helper'] != '' ? $element_info['helper'] : FALSE;
-						$help_append 	= $helper == 'markdown' ? '<span class="markdown-helper">Help Formatting</span>' : '';
-						$has_markdown 	= $helper == 'markdown' ? TRUE : $has_markdown;
-						$is_required 	= isset($element_info['rules']) && strpos($element_info['rules'], 'required') !== FALSE;
-						$label			= $element_info['label'];
-						$label 			.= $is_required ? '<sup>*</sup>' : '';
-						$append_classes	= isset($element_info['format']) ? $element_info['format'] : '';
-						$default_value 	= isset($element_info['default']) ? $element_info['default'] : null; // important to keep this as null
+						$id					= 'station-'.$element_name;
+						$help				= isset($element_info['help']) && $element_info['help'] != '' ? $element_info['help'] : FALSE;
+						$helper				= isset($element_info['helper']) && $element_info['helper'] != '' ? $element_info['helper'] : FALSE;
+						$help_append		= $helper == 'markdown' ? '<span class="markdown-helper">Help Formatting</span>' : '';
+						$has_markdown		= $helper == 'markdown' ? TRUE : $has_markdown;
+						$is_required		= isset($element_info['rules']) && strpos($element_info['rules'], 'required') !== FALSE;
+						$label				= $element_info['label'];
+						$label				.= $is_required ? '<sup>*</sup>' : '';
+						$append_classes		= isset($element_info['format']) ? $element_info['format'] : '';
+						$default_value		= isset($element_info['default']) ? $element_info['default'] : null; // important to keep this as null
+						
+						$is_file_uploader 	= in_array($element_info['type'],['image','image_gallery']);
+						$has_file_uploader	= $is_file_uploader	|| (isset($element_info['embeddable']) && $element_info['embeddable']);
+						$is_embedder 		= $has_file_uploader && !$is_file_uploader;
+						$needs_media 		= $needs_media || $has_file_uploader;
 					?>
 
 					{{-- show label if not a hidden field --}}
@@ -128,9 +133,35 @@
 						<div class="label-wrap">
 							{{ Form::rawLabel($id, $label) }}
 							{{ $help || $helper ? '<span>'.$help.' '.$help_append.'</span>' : '' }}
+							@if ($is_embedder)
+								<a href="javascript:;" class="btn btn-xs btn-primary for-embedder">
+									<span class="fui-image for-embedder"></span>&nbsp;&nbsp;Insert an Image or File
+								</a>
+							@endif
 						</div>
 					@endif
-					
+
+
+					{{-- Image/gallery handling --}}
+					@if ($has_file_uploader)
+
+						<?php 
+							$id_attrib			= $is_file_uploader ? $id : $id.'-faked-for-embed';
+							$el_name			= $is_file_uploader ? $element_name : $element_name.'-faked-for-embed'; 
+							$default_val		= $is_file_uploader ? $default_value : '';
+							$append_classes		.= $is_embedder ? ' embedder' : '';
+							$original_el_name	= $element_name;
+							$el_classes			= 'img-hidden-input form-control '.$append_classes;
+							$attributes			= ['id' => $id_attrib, 'class'=> $el_classes, 'autocomplete' => 'off'];
+							$bucket_name		= $app_data['media_options']['AWS']['bucket'];
+							$uploader_data		= compact('el_name', 'bucket_name', 'element_info', 
+													'default_val', 'attributes', 'is_embedder', 'original_el_name');
+						?>
+						
+						@include('station::partials.uploader', $uploader_data)
+
+					@endif
+
 
 					{{-- plain jane text entry, textarea, or hidden field --}}
 					@if(in_array($element_info['type'],['integer','text','email','date','time','datetime','textarea','hidden','float','tags']))
@@ -209,54 +240,6 @@
 						<?php $options = isset($foreign_data[$element_name]) ? $foreign_data[$element_name] : $element_info['data']['options'] ?>
 						<?php $options = array('' => '') + $options ?> {{-- this is needed to display the harvest/chosen placeholder --}}
 						{{ Form::select($element_name, $options, null,['class'=>'chosen-select', 'style' => 'width: 400px', 'id' => $id, 'data-placeholder' => 'Please choose one...']) }}
-					@endif
-
-					{{-- Image/gallery handling --}}
-					@if (in_array($element_info['type'],['image','image_gallery']))
-
-					<?php 
-						$attributes	= array('id' => $id, 'class'=>'img-hidden-input form-control '.$append_classes, 'autocomplete' => 'off');
-						$needs_media = TRUE;
-						$bucket_name = $app_data['media_options']['AWS']['bucket'];
-						?>
-						<div class="station-file-upload-wrap row">
-							<div class="col-sm-2">
-								<img width="100px" height="100px" src="/packages/canary/station/img/missing.gif" bucket="{{ $bucket_name }}" class="img-thumbnail station-img-thumbnail" id="target-{{ $element_name }}">
-							</div>
-							@if (isset($element_info['fetch_url']))
-								<div class="col-sm-8 station-parsed-url-controls">
-									<div class="input-group input-group-sm">
-										<span class="input-group-addon">Source URL</span>
-										<input type="text" data-element="{{ $element_name }}" class="url-fetch-target form-control" id="{{ $element_name.'_url' }}" />
-										<span class="input-group-addon fetcher"><span class="glyphicon glyphicon-cloud-download"></span></span>
-									</div>
-									<div class="parsed-results" data-element="{{ $element_name }}" data-mapping='{{{ json_encode($element_info['fetch_url']) }}}'></div>
-								</div>
-							@endif
-							<div class="col-sm-8 station-file-upload-controls">
-								<div class="btn-group">
-									<button type="button" class="btn btn-default station-media" style="display:none;" id="edit_for_{{ $element_name }}">
-										<span class="fui-new"></span>&nbsp;
-										Edit
-									</button>
-									<button type="button" class="btn btn-default file-remover" style="display:none;" id="remove_for_{{ $element_name }}">
-										<span class="fui-cross-inverted"></span>&nbsp;
-										Remove Image
-									</button>
-								</div>								
-								<div class="btn-group">								
-									<button type="button" class="btn btn-default station-media" id="upload_for_{{ $element_name }}">
-										<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;
-										Upload
-									</button>
-									<button type="button" class="btn btn-default station-media" id="gallery_for_{{ $element_name }}">
-										<span class="glyphicon glyphicon-time"></span>&nbsp;
-										Use A Recent Upload
-									</button>
-								</div>
-							</div>
-						</div>
-						{{ Form::hidden($element_name, $default_value, $attributes) }}
 					@endif
 
 					{{-- sub panel list --}}
