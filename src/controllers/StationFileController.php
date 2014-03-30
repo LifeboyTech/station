@@ -41,7 +41,7 @@ class StationFileController extends \BaseController {
 		// fetch the original // TODO: we need to force all image uploads to save an original version. not an option. make it standard.
 		$this->fetch_original($file, $app_config);
 
-		$orig_size			= getimagesize($this->tmp_dir.'/'.$file); exit;
+		$orig_size			= getimagesize($this->tmp_dir.'/'.$file);
 		$orig_width			= $orig_size[0];
 		$orig_height		= $orig_size[1];
 		$this->mime 		= $orig_size['mime'];
