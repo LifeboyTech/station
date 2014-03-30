@@ -118,6 +118,18 @@
 	margin: 0 4px 0 0;
 	color: #888;
 }
+.station-form .label-wrap span.for-embedder {
+	display: inline;
+	float: none;
+	line-height: 13px;
+	margin: 0 3px 0 0;
+	color: #fff;
+}
+.station-form .label-wrap a.for-embedder {
+    float: right;
+	
+    margin: 8px 19px 0 0;
+}
 .station-form .label-wrap {
     clear: both;
 	
@@ -234,6 +246,13 @@ ul.is-reorderable {
 	background: #FAFAFA;
 	display: block;
 	clear: both;
+}
+.station-file-upload-wrap.snapped-to-textarea {
+    border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+    -moz-border-radius: 6px 6px 0 0;
+    border-bottom: 1px solid #DBDBDB;
+    display: none;
 }
 .station-file-upload-controls {
     margin: 2px 0 20px 0 !important;
@@ -621,4 +640,10 @@ ul.in-subpanel > li > span {
 }
 .nav-list-vivid > li.nav-user-control span:hover {
 	color: #fff;
+}
+textarea.embedder.open {
+    border-radius: 0 0 6px 6px;
+	-moz-border-radius: 0 0 6px 6px;
+	-webkit-border-radius: 0 0 6px 6px;
+    border-top: 0;
 }
