@@ -98,8 +98,7 @@ $(document).ready(function() {
         var $type = $(this).attr('id').split('_');
         //$('#mediaTab').tab();
         $('#mediaTab a[href="#'+$type[0]+'-tab"]').tab('show');
-        //var $elem_name = $(this).parent().next().attr('class').replace('target-','','gi');
-        var $elem_name = $(this).closest('.station-file-upload-wrap').find('.station-img-thumbnail:first').attr('id').replace('target-','','gi');
+        var $elem_name = $(this).closest('.station-file-upload-wrap').find('.station-img-thumbnail:first').data('target');
         var $label = $('[for="station-'+$elem_name+'"]').html();
         $('#mediaModal [name="upload_element_name"]').val($elem_name);
         $('#mediaModal .modal-title').html($label);
@@ -126,10 +125,22 @@ $(document).ready(function() {
             $('.station-file-options').html('<h5><span class="label label-primary">Loading...</span></h5>').show();
 
             // call func to gen tool buttons
-            create_media_side_controls($parts[0],$parts[1],$elem_name);
+            create_media_side_controls($parts[0] + '/',$parts[1],$elem_name);
 
             $('#mediaTab a:first').click();
         }
+    });
+
+    // embedder uploader, for embedding files into textareas
+    $('.station-form .label-wrap a.for-embedder').click(function(event) {
+        
+        var parent = $(this).closest('.form-group');
+        var embedder = parent.find('.snapped-to-textarea');
+        embedder.show();
+        //embedder.find('.station-media-upload-btn').click();
+        parent.find('textarea').addClass('open');
+        //$(this).remove();
+        return false;
     });
 
     $('.img-hidden-input').each(function()
@@ -205,10 +216,17 @@ $(document).ready(function() {
         // we need the img filename and the uri
         var $parts = $('#station-fileupload-hud').children(':first').attr('src').split('/station_thumbs_lg/');
         $('#target-'+$elem_name).attr('src',$parts[0]+'/station_thumbs_sm/'+$parts[1]).show();
-        $('#edit_for_' + $elem_name + ', #remove_for_' + $elem_name).show();
-
+        
         // pop in for hidden element on main form
-        $('[name='+$elem_name+']').val($parts[1]);
+        if ($('[name='+$elem_name+']').is('textarea')){
+
+            $('#edit_for_' + $elem_name + ', #remove_for_' + $elem_name).show();
+
+        } else {
+
+            $('#edit_for_' + $elem_name + ', #remove_for_' + $elem_name).show();
+            $('[name='+$elem_name+']').val($parts[1]);
+        }
     });
 
     $('.file-remover').live('click', function(event) {
@@ -224,7 +242,16 @@ $(document).ready(function() {
     $('.station-img-thumbnail').live('click', function(event) {
         
         var parent = $(this).closest('.station-file-upload-wrap');
-        parent.find('button:visible:first').click();
+
+        if (parent.find('button:visible:first').length){
+
+            parent.find('button:visible:first').click();
+        
+        } else {
+
+            parent.find('.station-media-upload-btn').click();
+        }
+        
         return false;
     });
     
@@ -560,7 +587,7 @@ $(document).ready(function() {
                     + '<button type="button" class="btn btn-xs btn-primary station-crop-start" id="station-filecrop-'+$this_img_sizes[$j][0]+'">'
                         + '<span class="glyphicon glyphicon-pencil"></span>'
                     + '</button>\n'
-                    + '<a target="_blank" href="' + $stub + '/' + $this_img_sizes[$j][0] + '/' + $filename + '" class="btn btn-xs btn-default" '
+                    + '<a target="_blank" href="' + $stub + $this_img_sizes[$j][0] + '/' + $filename + '" class="btn btn-xs btn-default" '
                             + 'id="station-fileview-'+ $this_img_sizes[$j][0] + '">'
                         + '<span class="glyphicon glyphicon-eye-open img-crop-version-eyeball">&nbsp;</span> '
                         + '<span class="img-crop-version-label">' + $this_img_sizes[$j][1] + '</span>'
