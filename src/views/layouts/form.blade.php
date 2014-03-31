@@ -137,6 +137,9 @@
 								<a href="javascript:;" class="btn btn-xs btn-primary for-embedder">
 									<span class="fui-image for-embedder"></span>&nbsp;&nbsp;Insert an Image or File
 								</a>
+								<a href="javascript:;" class="btn btn-xs btn-default for-embedder" style="display: none;">
+									<span class="fui-cross for-embedder"></span>&nbsp;&nbsp;Close the Uploader Tool
+								</a>
 							@endif
 						</div>
 					@endif

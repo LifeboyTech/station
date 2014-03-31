@@ -255,7 +255,7 @@ ul.is-reorderable {
     display: none;
 }
 .station-file-upload-controls {
-    margin: 2px 0 20px 0 !important;
+    margin: 2px 0 18px 0 !important;
     padding: 0 !important;
 }
 .station-img-thumbnail {
@@ -646,4 +646,13 @@ textarea.embedder.open {
 	-moz-border-radius: 0 0 6px 6px;
 	-webkit-border-radius: 0 0 6px 6px;
     border-top: 0;
+}
+.embedder-versions {
+	float: left;
+}
+.embedder-versions h5 {
+    font-size: 12px;
+	
+    margin: -14px 0 0 0;
+    color: #AAA;
 }

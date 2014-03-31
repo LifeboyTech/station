@@ -136,10 +136,21 @@ $(document).ready(function() {
         
         var parent = $(this).closest('.form-group');
         var embedder = parent.find('.snapped-to-textarea');
-        embedder.show();
-        //embedder.find('.station-media-upload-btn').click();
-        parent.find('textarea').addClass('open');
-        //$(this).remove();
+
+        if (embedder.is(':hidden')){
+
+            parent.find('textarea').addClass('open');
+            embedder.show();
+            //embedder.find('.station-media-upload-btn').click();
+
+        } else {
+
+            parent.find('textarea').removeClass('open');
+            embedder.hide();
+        }
+
+        $('.station-form .label-wrap a.for-embedder').toggle();
+
         return false;
     });
 
@@ -217,12 +228,13 @@ $(document).ready(function() {
         var $parts = $('#station-fileupload-hud').children(':first').attr('src').split('/station_thumbs_lg/');
         $('#target-'+$elem_name).attr('src',$parts[0]+'/station_thumbs_sm/'+$parts[1]).show();
         
-        // pop in for hidden element on main form
-        if ($('[name='+$elem_name+']').is('textarea')){
+        if ($('[name='+$elem_name+']').is('textarea')){ // using the embedder tool
 
             $('#edit_for_' + $elem_name + ', #remove_for_' + $elem_name).show();
+            $('.embedders-for-' + $elem_name).show();
+            populate_embedder_buttons($elem_name, $parts);
 
-        } else {
+        } else { // standard field upload tool
 
             $('#edit_for_' + $elem_name + ', #remove_for_' + $elem_name).show();
             $('[name='+$elem_name+']').val($parts[1]);
@@ -383,6 +395,8 @@ $(document).ready(function() {
         
         $(this).closest('.input-group').find('.url-fetch-target').change();
     });
+
+    load_clipboard_behaviors();
 });
 
 /**
@@ -600,6 +614,37 @@ $(document).ready(function() {
         $('.btn-group.w-no-size .station-crop-start').remove();
         //console.log($this_img_sizes);
         //console.log($img_sizes);
+    }
+
+
+/**
+ * for clipboard behaviors
+ */
+
+    function load_clipboard_behaviors(){
+
+        var clip = new ZeroClipboard($('.embedder-btn'), { moviePath: "/packages/canary/station/js/zeroclipboard-1.3.5/ZeroClipboard.swf" });
+
+        clip.on( 'complete', function(client, args) {
+
+            $('.embedder-btn').removeClass('btn-warning').removeClass('btn-success').addClass('btn-default').find('span.copied-message').remove();
+            $(this).addClass('btn-success');
+            $(this).append('<span class="copied-message"> | Code Copied to Clipboard!</span>');
+            $(this).blur();
+            return false;
+        });
+    }
+
+    function populate_embedder_buttons($elem_name, $parts){
+
+        $('.embedders-for-' + $elem_name + ' .embedder-btn').data('clipboard-template', $parts[0]+'/%stub%/'+$parts[1]);
+
+        $('.embedders-for-' + $elem_name + ' .embedder-btn').each(function(index, el) {
+            
+            var url = encodeURI($(this).data('clipboard-template').replace('%stub%', $(this).data('stub')));
+            var markdown = '![Image Title](' + url + ')';
+            $(this).attr('data-clipboard-text', markdown);
+        });
     }
 
 /**

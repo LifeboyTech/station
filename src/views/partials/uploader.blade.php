@@ -35,5 +35,18 @@
 			</button>
 		</div>
 	</div>
+
+	@if ($is_embedder && isset($element_info['sizes']) && count($element_info['sizes']) > 0)
+		<div class="embedder-versions embedders-for-{{ $original_el_name }}" style="display: none;">
+			<h5>Choose the version to embed, it will copy to your clipboard, then paste it below where you want it</h5>
+			@foreach ($element_info['sizes'] as $stub => $item)
+				<a href="javascript:;" class="btn btn-xs btn-warning embedder-btn" 
+					data-clipboard-template="" data-clipboard-text="" data-stub="{{{ $stub }}}">
+					<span class="fui-image for-embedder"></span>&nbsp;&nbsp;{{ $item['label'] }}
+				</a>
+			@endforeach
+		</div>
+	@endif
+	
 </div>
 {{ Form::hidden($el_name, $default_val, $attributes) }}

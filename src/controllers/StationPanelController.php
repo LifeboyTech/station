@@ -612,10 +612,11 @@ class StationPanelController extends \BaseController {
 
 	private function configure_form_view($panel_data){
 
-		$this->assets['js'][]	= 'base.form.js';
+		$this->assets['js'][]	= 'base.form.js?v2';
 		$this->assets['js'][]	= 'chosen_v1.0.0/chosen.jquery.min.js';
 		$this->assets['js'][]	= 'tapmodo-Jcrop-1902fbc/js/jquery.Jcrop.min.js';
 		$this->assets['js'][]	= 'query-datetime/jquery.datetimeentry.min.js';
+		$this->assets['js'][]	= 'zeroclipboard-1.3.5/ZeroClipboard.js';
 		$this->assets['css'][]	= 'chosen.css';
 		$this->assets['css'][]	= 'jquery.Jcrop.min.css';
 	}
