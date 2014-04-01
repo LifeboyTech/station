@@ -623,16 +623,19 @@ $(document).ready(function() {
 
     function load_clipboard_behaviors(){
 
-        var clip = new ZeroClipboard($('.embedder-btn'), { moviePath: "/packages/canary/station/js/zeroclipboard-1.3.5/ZeroClipboard.swf" });
+        if ($('.embedder-btn').length){
 
-        clip.on( 'complete', function(client, args) {
+            var clip = new ZeroClipboard($('.embedder-btn'), { moviePath: "/packages/canary/station/js/zeroclipboard-1.3.5/ZeroClipboard.swf" });
 
-            $('.embedder-btn').removeClass('btn-warning').removeClass('btn-success').addClass('btn-default').find('span.copied-message').remove();
-            $(this).addClass('btn-success');
-            $(this).append('<span class="copied-message"> | Code Copied to Clipboard!</span>');
-            $(this).blur();
-            return false;
-        });
+            clip.on( 'complete', function(client, args) {
+
+                $('.embedder-btn').removeClass('btn-warning').removeClass('btn-success').addClass('btn-default').find('span.copied-message').remove();
+                $(this).addClass('btn-success');
+                $(this).append('<span class="copied-message"> | Code Copied to Clipboard!</span>');
+                $(this).blur();
+                return false;
+            });
+        }
     }
 
     function populate_embedder_buttons($elem_name, $parts){
