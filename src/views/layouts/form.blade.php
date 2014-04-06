@@ -183,7 +183,8 @@
 							if ($element_info['type'] == 'float' || $element_info['type'] == 'integer') $element_info['type'] = 'text';
 							if ($element_info['type'] == 'datetime') $element_info['type'] = 'date';
 							if ($element_info['type'] == 'tags') $element_info['type'] = 'text';
-							if (isset($element_info['disabled']) && $element_info['disabled']) $attributes['disabled'] = 'disabled'; 
+							if (isset($element_info['disabled']) && $element_info['disabled']) $attributes['readonly'] = 'readonly'; 
+							if (isset($element_info['read_only']) && $element_info['read_only']) $attributes['readonly'] = 'readonly'; 
 						?>
 						{{ $with_input_wrap ? '<div class="input-group '.$with_append.'">' : '' }}
 						{{ $with_spinner ? '<div class="control-group">' : '' }}
