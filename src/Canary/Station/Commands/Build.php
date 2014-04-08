@@ -169,6 +169,12 @@ class Build extends Command {
 	 */
 	private function generate_migration($options){
 
+		if (isset($options['name'])){ // support the legacy usage of this call
+
+			$options['migrationName'] = $options['name'];
+			unset($options['name']);
+		}
+
 		$this->call('generate:migration', $options);
 		$this->call('migrate'); // see comments
 	}
