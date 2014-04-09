@@ -190,24 +190,41 @@ class Panel {
             
             if ($element['type'] == 'subpanel'){
 
-                // TODO: kill this? not really 'foreign data' options.
-                //$ret[$element_name] = $this->get_data_for($element_name); // element name IS the panel name here.
+                $subpanel = StationConfig::panel($element_name);
+                
+                foreach ($subpanel['elements'] as $sub_element_name => $sub_element) {
+                    
+                    if ($this->has_foreign_data($sub_element)){
 
-            } else if (isset($element['data']['table']) && isset($element['data']['display'])){
+                        $ret[$sub_element_name] = $this->foreign_data($sub_element);
+                    }
+                }
 
-                $table              = $element['data']['table'];
-                $display            = $this->concat_clause($element['data']['display']);
-                $where              = isset($element['data']['where']) ? $element['data']['where'] : FALSE;
-                $order              = isset($element['data']['order']) ? $element['data']['order'] : FALSE;
-                $query              = DB::table($table)->select('id', DB::raw($display));
-                $query              = $where ? $query->whereRaw($this->inject_vars($where)) : $query;
-                $query              = $order ? $query->orderBy($order) : $query;
-                $data               = $query->get();
-                $ret[$element_name] = $this->to_array($data);
+            } else if ($this->has_foreign_data($element)){
+
+                $ret[$element_name] = $this->foreign_data($element);
             }
         }
 
         return $ret;
+    }
+
+    private function foreign_data($element){
+
+        $table              = $element['data']['table'];
+        $display            = $this->concat_clause($element['data']['display']);
+        $where              = isset($element['data']['where']) ? $element['data']['where'] : FALSE;
+        $order              = isset($element['data']['order']) ? $element['data']['order'] : FALSE;
+        $query              = DB::table($table)->select('id', DB::raw($display));
+        $query              = $where ? $query->whereRaw($this->inject_vars($where)) : $query;
+        $query              = $order ? $query->orderBy($order) : $query;
+        $data               = $query->get();
+        return              $this->to_array($data);
+    }
+
+    private function has_foreign_data($element){
+
+       return isset($element['data']['table']) && isset($element['data']['display']);
     }
 
     /**
