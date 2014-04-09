@@ -209,24 +209,6 @@ class Panel {
         return $ret;
     }
 
-    private function foreign_data($element){
-
-        $table              = $element['data']['table'];
-        $display            = $this->concat_clause($element['data']['display']);
-        $where              = isset($element['data']['where']) ? $element['data']['where'] : FALSE;
-        $order              = isset($element['data']['order']) ? $element['data']['order'] : FALSE;
-        $query              = DB::table($table)->select('id', DB::raw($display));
-        $query              = $where ? $query->whereRaw($this->inject_vars($where)) : $query;
-        $query              = $order ? $query->orderBy($order) : $query;
-        $data               = $query->get();
-        return              $this->to_array($data);
-    }
-
-    private function has_foreign_data($element){
-
-       return isset($element['data']['table']) && isset($element['data']['display']);
-    }
-
     /**
      * for each element of a panel that a user can access
      * and which references a foreign panel, get the panel config!
@@ -911,6 +893,19 @@ class Panel {
         return $result;
     }
 
+    private function foreign_data($element){
+
+        $table              = $element['data']['table'];
+        $display            = $this->concat_clause($element['data']['display']);
+        $where              = isset($element['data']['where']) ? $element['data']['where'] : FALSE;
+        $order              = isset($element['data']['order']) ? $element['data']['order'] : FALSE;
+        $query              = DB::table($table)->select('id', DB::raw($display));
+        $query              = $where ? $query->whereRaw($this->inject_vars($where)) : $query;
+        $query              = $order ? $query->orderBy($order) : $query;
+        $data               = $query->get();
+        return              $this->to_array($data);
+    }
+
     private function get_nested_columns($columns){
 
         $i = 0;
@@ -923,6 +918,11 @@ class Panel {
         }
 
         return $columns_to_use;
+    }
+
+    private function has_foreign_data($element){
+
+       return isset($element['data']['table']) && isset($element['data']['display']);
     }
 
     private function inject_vars_for_elements($elements){
