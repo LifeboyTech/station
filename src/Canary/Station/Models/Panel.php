@@ -253,9 +253,9 @@ class Panel {
         $fields_for_select         = $ids_only ? [$table_name.'.id'] : $this->fields_for_select($panel);
         $fields_for_select         = $keyword ? [$table_name.'.id', DB::raw($primary_element.' AS name')] : $fields_for_select;
         $where_clause              = $this->where_clause_for($panel); 
-        $order_by                  = $this->order_by_clause_for($panel); 
         $joins                     = $this->joins_for($panel); 
         $user_filters              = $is_filtered ? $this->user_filters_for($panel_name) : array();
+        $order_by                  = $this->order_by_clause_for($panel, $user_filters); 
 
         $query                     = $model::select($fields_for_select); 
         $query                     = $where_clause ? $query->whereRaw($where_clause) : $query;
@@ -992,8 +992,10 @@ class Panel {
         return $ret;
     }
 
-    private function order_by_clause_for($panel){
+    private function order_by_clause_for($panel, $user_filters){
 
+        // TODO, see about filters and use one for sorting.
+        
         if (isset($panel['config']['panel_options']['default_order_by']) && $panel['config']['panel_options']['default_order_by'] != '') {
             
             $field     = $panel['config']['panel_options']['default_order_by'];
