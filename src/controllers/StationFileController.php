@@ -11,13 +11,16 @@ use Illuminate\Filesystem\Filesystem as File;
 
 class StationFileController extends \BaseController {
 
-	public $tmp_dir = './tmp';
+	public $tmp_dir = '';
 
 	private $mock_width = 445;
 
 	public function __construct()
     {
     	// make the tmp directory where we can access the uploads
+
+    	$this->tmp_dir = storage_path().'/tmp';
+    	
         if (!is_dir($this->tmp_dir)){
 
 			mkdir($this->tmp_dir);
