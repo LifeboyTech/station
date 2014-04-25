@@ -97,6 +97,10 @@
       </div>
 
     @endif
+
+    @if (isset($app_data['html_append_file']) && $app_data['html_append_file'] != '')
+      @include($app_data['html_append_file'])
+    @endif
     
   </body>
 </html>
