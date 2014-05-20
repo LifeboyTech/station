@@ -189,7 +189,7 @@
 	background: #EBEBEB !important;
 }
 .nav-list-vivid > li.active > a, .nav-list-vivid > li.active > a:hover, .nav-list-vivid > li.active > a:focus {
-	background: #B3B3B3 !important;
+	background: #1c977c!important;
 	margin-top: 0;
 	margin-bottom: 0;
 	padding-top: 5px;
@@ -655,4 +655,13 @@ textarea.embedder.open {
 	
     margin: -14px 0 0 0;
     color: #AAA;
+}
+.nav-list-vivid > li.nav-user-control {
+	margin-top: 13px;
+	padding-right: 18px;
+}
+#station-branding a {
+	font-size: 20px !important;
+	color: #fff;
+	line-height: 30px
 }
