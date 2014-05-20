@@ -188,6 +188,16 @@ $(document).ready(function() {
 	});
 
 	/**
+	 * inline list links w/ outbound targets
+	 */
+	$('.station-list td a[target="_blank"]').click(function(event) {
+		
+		event.stopPropagation();
+		window.open($(this).attr('href'));
+		return false;
+	});
+
+	/**
 	 * checkbox behaviors
 	 */
 	$('.bulk-check-all').click(function(event) {
