@@ -665,3 +665,6 @@ textarea.embedder.open {
 	color: #fff;
 	line-height: 30px
 }
+.tagsinput-primary {
+	border-color: #bdc3c7;
+}
