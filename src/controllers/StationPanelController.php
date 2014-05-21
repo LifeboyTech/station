@@ -40,6 +40,8 @@ class StationPanelController extends \BaseController {
 		View::share('form_purpose','create');
 		View::share('submit_value', 'Save this '.$this->single_item_name);
 
+		if ($this->subpanel_parent) $this->load_js_include($this->user_scope);
+
 		return $this->render('form', $panel_data_with_count, $method);
 	}
 
