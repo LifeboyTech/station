@@ -189,7 +189,7 @@
 	background: #EBEBEB !important;
 }
 .nav-list-vivid > li.active > a, .nav-list-vivid > li.active > a:hover, .nav-list-vivid > li.active > a:focus {
-	background: #1c977c!important;
+	background: #B3B3B3 !important;
 	margin-top: 0;
 	margin-bottom: 0;
 	padding-top: 5px;
@@ -579,9 +579,10 @@ ul.is-reorderable {
     background-color: #ddd;
     border-radius: 0;
 }
-ul.in-subpanel span.switch-cont {
+ul.in-subpanel span.switch-cont, span.switch-cont {
 	float: right;
 	margin: 1px 0 0 19px;
+	margin-top: 3px !important;
 }
 ul.in-subpanel > li > span {
 	margin: 0 0 0 16px
@@ -655,16 +656,4 @@ textarea.embedder.open {
 	
     margin: -14px 0 0 0;
     color: #AAA;
-}
-.nav-list-vivid > li.nav-user-control {
-	margin-top: 13px;
-	padding-right: 18px;
-}
-#station-branding a {
-	font-size: 20px !important;
-	color: #fff;
-	line-height: 30px
-}
-.tagsinput-primary {
-	border-color: #bdc3c7;
 }
