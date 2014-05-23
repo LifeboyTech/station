@@ -273,7 +273,8 @@ class Panel {
         } else {
 
             $is_nestable         = isset($panel['config']['panel_options']['nestable_by']) && $panel['config']['panel_options']['nestable_by'];
-            $should_not_paginate = $panel['has_user_filters'] || $ids_only || $keyword || $is_nestable;
+            $is_reorderable      = isset($panel['config']['panel_options']['reorderable_by']) && $panel['config']['panel_options']['reorderable_by'];
+            $should_not_paginate = $panel['has_user_filters'] || $ids_only || $keyword || $is_nestable || $is_reorderable;
             $query               = $should_not_paginate ? $query : $this->paginate($query, $panel_name);
             $panel['data']       = $query->get()->toArray(); 
         }
