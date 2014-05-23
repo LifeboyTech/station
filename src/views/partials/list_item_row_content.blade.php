@@ -21,7 +21,7 @@
 		{{-- we have some static options in an array --}}
 		@elseif (isset($row[$elem_name]) && isset($elem_data['data']['options'][$row[$elem_name]]))
 		  
-		  <{{ $item_element }}>
+		  <{{ $item_element }} class="col-{{ $c }}">
 		    {{ $elem_data['data']['options'][$row[$elem_name]] }}
 		  </{{ $item_element }}>
 
