@@ -233,7 +233,8 @@ class Build extends Command {
 
         if (!Schema::hasTable('password_reminders')) {
         	
-        	$this->call('auth:reminders'); // this is needed for using auth. 
+        	$this->call('auth:reminders-table'); // this is needed for using auth. 
+        	$this->call('auth:reminders-controller'); // this is needed for using auth. 
         }
 
         return TRUE;

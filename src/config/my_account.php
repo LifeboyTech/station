@@ -39,14 +39,6 @@
 					'rules'			=>	'required|email|unique:users,email|max:90',
 					'display'		=>	'CRUDL'
 				],
-				'paypal_email'	=> [
-					'label'			=> 'Paypal Email',
-					'type'			=> 'email',
-					'length'		=> 90,
-					'attributes'	=> 'unique|index',
-					'rules'			=>	'required|email|unique:users,paypal_email|max:90',
-					'display'		=>	'CRUDL'
-				],
 				'first_name'	=> [
 					'label'			=> 'First Name',
 					'type'			=> 'text',
@@ -63,27 +55,6 @@
 					'rules'			=>	'required|max:90',
 					'display'		=>	'CRUDL'
 				],
-				'img_user_hero' => [
-					'label'			=> 'Artist Hero Image',
-					'help' 			=> 'This is the big image on the artist page',
-					'type'			=> 'image',
-					'rules'			=> '',
-					'display'		=> 'CRUD',
-					'allow_upsize' 	=> TRUE,
-					'sizes' 		=> [
-						'original' 	=> ['label'=>'Original'],	
-						'large'		=> ['label'=>'Large Version','size'=>'483x0']			
-					]
-				],
-				'brief_bio'	=> [
-					'label'			=> 'Brief Bio',
-					'help' 			=> 'Artist Biography.',
-					'type'			=> 'textarea',
-					'rows' 			=> 3,
-					'attributes'	=> '',
-					'rules'			=> 'required',
-					'display'		=> 'CRUD'
-				],
 				'phone'	=> [
 					'label'			=> 'Phone',
 					'type'			=> 'text',
@@ -93,19 +64,5 @@
 					'rules'			=>	'',
 					'display'		=>	'CRUDL'
 				],
-				'skills'	=> [
-					'label'			=> 'Medium',
-					'type'			=> 'multiselect',
-					'multiple'		=> TRUE,
-					'display'		=>	'CRUDL',
-					'data'			=> [
-						'join'		=> TRUE,
-						'relation'	=> 'belongsToMany',
-						'table'		=> 'skills',
-						'pivot'		=> 'skills',
-						'display'	=> 'skills.name',
-						'order'		=> 'skills.name'
-					]
-				]
 			]
 	];
