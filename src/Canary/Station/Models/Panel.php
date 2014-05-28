@@ -394,7 +394,7 @@ class Panel {
 
             $data_to_update = [
 
-                $columns_to_use[0] => $key, // 'position' column
+                $columns_to_use[0] => ($key+1), // 'position' column // start at 1, not 0 so new items will float to the top.
                 $columns_to_use[1] => $parent_id, // 'parent_id' column
                 $columns_to_use[2] => $depth // 'depth' column
             ];
