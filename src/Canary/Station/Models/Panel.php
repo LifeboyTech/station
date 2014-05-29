@@ -372,7 +372,7 @@ class Panel {
 
     public function reorder($table, $column = 'position', $ids = array()){
 
-        $i = 0;
+        $i = 1;
 
         foreach ($ids as $id) {
             
