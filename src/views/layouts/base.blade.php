@@ -72,7 +72,12 @@
               <div class="col-sm-12">
                 {{-- for showing flashes via ajax responses --}}
                 <div class="empty-flash-holder" style="display: none;"></div>
+                @if (isset($app_data['html_prepend_content_file']) && $app_data['html_prepend_content_file'] != '')
+                  @include($app_data['html_prepend_content_file'])
+                @endif
+
                 @include('station::layouts.header')
+                
                 @yield('content')
               </div>
             </div>
