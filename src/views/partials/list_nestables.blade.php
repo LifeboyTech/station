@@ -33,6 +33,10 @@
 					</a>
 		  		@endif
 
+		  		@if (FALSE && $user_can_create)
+		  			<a class="nestable-adder" href="javascript:;">add</a>
+		  		@endif
+
 		  		<div class="dd-handle" id="{{ $curr_panel }}-record-{{  $row['id'] }}">
 		  			@include('station::partials.list_item_row_content', compact('row'))
 		  		</div>
