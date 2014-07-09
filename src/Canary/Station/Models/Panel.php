@@ -138,6 +138,35 @@ class Panel {
         return $insert_id;
     }
 
+    public function custom_view_vars(){
+
+        $custom_view_vars = StationConfig::app('custom_view_vars');
+        $ret = [];
+
+        if ($custom_view_vars && is_array($custom_view_vars)){
+
+            foreach ($custom_view_vars as $var => $custom_value_declaration) {
+
+                if (strpos($custom_value_declaration, '::') || strpos($custom_value_declaration, '->')){
+
+                    // it's a function call
+                    $args           = preg_match('#\((.*?)\)#', $custom_value_declaration, $match);
+                    $args_injected  = isset($match[1]) ? explode(',', $this->inject_vars($match[1], TRUE)) : [];
+                    $function       = preg_replace("/\([^)]+\)/", "", $custom_value_declaration);
+                    $value          = call_user_func_array($function, $args_injected);
+                
+                } else {
+
+                    $value = $custom_value_declaration;
+                }
+
+                $ret[$var] = $value;
+            }
+        }
+
+        return $ret;
+    }
+
     /**
      * delete specific record for this panel
      *
@@ -372,7 +401,7 @@ class Panel {
 
     public function reorder($table, $column = 'position', $ids = array()){
 
-        $i = 0;
+        $i = 1;
 
         foreach ($ids as $id) {
             

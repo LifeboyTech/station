@@ -550,6 +550,7 @@ class StationPanelController extends \BaseController {
 		$this->panel_config['relative_uri']	= $this->base_uri.'panel/'.$this->name;
 		$this->panel_config['relative_uri']	= URL::to($this->panel_config['relative_uri']);
 
+		View::share('custom_vars', $panel->custom_view_vars());
 		View::share('base_uri', $this->base_uri);
 		View::share('base_img_uri', 'http://'.$this->app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/');
 		View::share('curr_panel', $this->curr_panel);
