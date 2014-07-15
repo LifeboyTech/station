@@ -555,6 +555,7 @@ class StationPanelController extends \BaseController {
 		View::share('base_img_uri', 'http://'.$this->app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/');
 		View::share('curr_panel', $this->curr_panel);
 		View::share('curr_method', $method);
+		View::share('curr_id', $id);
 		View::share('single_item_name', $this->single_item_name);
         View::share('app_data', $this->app_config);
         View::share('panel_data', $this->panel_config);
