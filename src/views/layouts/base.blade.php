@@ -51,6 +51,7 @@
       var base_uri    = '{{ $base_uri }}';
       var curr_panel  = '{{ $curr_panel }}';
       var curr_method = '{{ $curr_method }}';
+      var curr_id = '{{ $curr_id }}';
     </script>
 
 	@show
