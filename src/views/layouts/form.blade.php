@@ -175,8 +175,10 @@
 							$with_prepend_icon	= isset($element_info['prepend_icon']) && $element_info['prepend_icon'] != '' ? $element_info['prepend_icon'] : FALSE;
 							$with_append_icon	= isset($element_info['append_icon']) && $element_info['append_icon'] != '' ? $element_info['append_icon'] : FALSE;
 							$with_input_wrap	= $with_append_icon || $with_prepend_icon || $with_append || $with_prepend;
+							$has_mask 			= isset($element_info['mask']) && $element_info['mask'];
 							$append_classes 	.= $element_info['type'] == 'datetime' ? ' with-time' : '';
 							$append_classes 	.= $element_info['type'] == 'tags' ? ' tagsinput tagsinput-primary' : '';
+							$append_classes 	.= $has_mask ? ' with-text-mask' : '';
 							$attributes			= array('id' => $id, 'class'=>'form-control '.$append_classes, 'autocomplete' => 'off');
 							
 							if ($element_info['type'] == 'textarea' && isset($element_info['rows'])) $attributes['rows'] = $element_info['rows']; 
@@ -185,6 +187,7 @@
 							if ($element_info['type'] == 'tags') $element_info['type'] = 'text';
 							if (isset($element_info['disabled']) && $element_info['disabled']) $attributes['readonly'] = 'readonly'; 
 							if (isset($element_info['read_only']) && $element_info['read_only']) $attributes['readonly'] = 'readonly'; 
+							if ($has_mask) $attributes['data-mask'] = $element_info['mask']; 
 						?>
 						{{ $with_input_wrap ? '<div class="input-group '.$with_append.'">' : '' }}
 						{{ $with_spinner ? '<div class="control-group">' : '' }}
