@@ -164,7 +164,7 @@ $(document).ready(function() {
 	    	$('.nestables-collapse-all, .nestables-expand-all').toggle();
 	    });
 
-	    if ($('.dd-item .dd-item').length > 30 && !$('.flash-response.dialog-success .more-edits').length){
+	    if ($('.dd-item .dd-item').length > 75 && !$('.flash-response.dialog-success .more-edits').length){
 
 	    	$('.dd').nestable('collapseAll');
 	    	$('.nestables-expand-all').show();
