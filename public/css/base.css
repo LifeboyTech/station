@@ -570,6 +570,12 @@ ul.is-reorderable {
 .dd-dragel .fui-new {
 	margin-right: 10px;
 }
+.virtual-field {
+    position: absolute;
+    z-index: 99;
+    right: 50px;
+    top: 5px;
+}
 .station-list-wrap .drag-drop-notice {
     position: absolute;
     left: 15px;
