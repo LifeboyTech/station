@@ -27,8 +27,12 @@ $(document).ready(function() {
 			$(this).data('orig_html', $(this).html());
 			$(this).html('loading...');
 
+			var curr_url 	= document.location.href;
+			var url_append 	= 'station_page=next';
+			var target_url	= curr_url.indexOf('?') > -1 ? curr_url + '&' + url_append : curr_url + '?' + url_append;
+
 			$.ajax({
-				url: window.location.pathname + '?station_page=next',
+				url: target_url,
 				type: 'GET',
 				dataType: 'html'
 			})
@@ -175,6 +179,12 @@ $(document).ready(function() {
 	    	$('.nestables-expand-all').hide();
 	    	$('.nestables-collapse-all').show();
 	    }
+
+	    $('.dd-handle span a').each(function(index, el) {
+	    	
+	    	var parent_id = $(this).closest('li').attr('id');
+	    	$(this).addClass('virtual-field').appendTo('#' + parent_id);
+	    });
 	}
 
 	/**

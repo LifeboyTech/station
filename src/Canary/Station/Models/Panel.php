@@ -303,7 +303,7 @@ class Panel {
 
             $is_nestable         = isset($panel['config']['panel_options']['nestable_by']) && $panel['config']['panel_options']['nestable_by'];
             $is_reorderable      = isset($panel['config']['panel_options']['reorderable_by']) && $panel['config']['panel_options']['reorderable_by'];
-            $should_not_paginate = $panel['has_user_filters'] || $ids_only || $keyword || $is_nestable || $is_reorderable;
+            $should_not_paginate = $ids_only || $keyword || $is_nestable || $is_reorderable;
             $query               = $should_not_paginate ? $query : $this->paginate($query, $panel_name);
             $panel['data']       = $query->get()->toArray(); 
         }
@@ -1078,26 +1078,27 @@ class Panel {
         $n_per_page     = 50;
         $requested_page = Input::get($var_name);
         $incrementer    = 0;
+        $key            = $var_name.'.'.$panel_name;
 
         if ($requested_page == 'next') $incrementer = 1;
 
-        if (!Session::has($var_name.'.'.$panel_name) && $requested_page != FALSE){
+        if (!Session::has($key) && $requested_page != FALSE){ // page requested but no session yet
 
             $page = is_numeric($requested_page) ? $requested_page : 1;
-            Session::put($var_name.'.'.$panel_name, $page);
+            Session::put($key, $page);
 
-        } else if (Session::has($var_name.'.'.$panel_name) && $requested_page != FALSE){
+        } else if (Session::has($key) && $requested_page != FALSE){ // page requested + already a session 
 
-            $curr_page = Session::get($var_name.'.'.$panel_name);
+            $curr_page = Session::get($key);
             $page = $incrementer > 0 ? $curr_page + $incrementer : $requested_page;
-            Session::put($var_name.'.'.$panel_name, $page);
+            Session::put($key, $page);
 
-        } else if (Session::has($var_name.'.'.$panel_name)){
+        } else if (Session::has($key)){ // no page requested + already a session 
 
-            $page = Session::get($var_name.'.'.$panel_name) + $incrementer;
-            if ($incrementer > 0) Session::put($var_name.'.'.$panel_name, $page);
+            $page = Session::get($key) + $incrementer;
+            if ($incrementer > 0) Session::put($key, $page);
 
-        } else { 
+        } else { // no page requested + no session
 
             $page = 0;
         }

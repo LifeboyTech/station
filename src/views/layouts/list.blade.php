@@ -111,7 +111,7 @@
 
 
 			{{-- we have more data in this list that we are not showing --}}
-			@if ($raw_count > count($data['data']) && !$is_trying_to_filter)
+			@if ($raw_count > count($data['data']))
 				<div class="station-list-load-more">
 					<button class="btn btn-default btn-wide">
 						Load More {{ str_plural($single_item_name) }}

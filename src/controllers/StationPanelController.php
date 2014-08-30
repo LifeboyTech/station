@@ -650,7 +650,7 @@ class StationPanelController extends \BaseController {
 		$list_inner_wrap		= !$is_reorderable ? $tbody_wrap : $ul_wrap;
 		$list_inner_wrap		= $is_nestable ? $nestable_wrap : $list_inner_wrap;
 
-		$this->assets['js'][]	= 'base.list.js';
+		$this->assets['js'][]	= 'base.list.js?v2';
 		$this->assets['js'][]	= 'chosen_v1.0.0/chosen.jquery.min.js';
 		$this->assets['css'][]	= 'chosen.css';
 		$this->assets['css'][]	= 'jquery-ui-1.10.3.custom.min.css'; // TODO: generate new one & remove datepicker styles - can't have in form view
