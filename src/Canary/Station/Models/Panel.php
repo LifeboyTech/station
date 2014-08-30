@@ -268,7 +268,7 @@ class Panel {
      * @param  string  $panel_name
      * @return array or false // if not found or user does not have access
      */
-    public function get_data_for($panel_name, $count_only = FALSE, $subpanel_parent = FALSE, $ids_only = FALSE, $keyword = FALSE){
+    public function get_data_for($panel_name, $count_only = FALSE, $subpanel_parent = FALSE, $ids_only = FALSE, $keyword = FALSE, $filter_on_count = FALSE){
 
         $panel = $this->user_scope($panel_name, 'L', $subpanel_parent);
 
@@ -277,7 +277,7 @@ class Panel {
         $model_name                = $this->model_name_for($panel_name);
         $table_name                = $panel['config']['panel_options']['table'];
         $model                     = new $model_name;
-        $is_filtered               = !$count_only && !$keyword;
+        $is_filtered               = (!$count_only && !$keyword) || ($count_only && $filter_on_count);
         $primary_element           = $table_name.'.'.$this->primary_element_for($panel);
         $fields_for_select         = $ids_only ? [$table_name.'.id'] : $this->fields_for_select($panel);
         $fields_for_select         = $keyword ? [$table_name.'.id', DB::raw($primary_element.' AS name')] : $fields_for_select;
