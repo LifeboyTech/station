@@ -39,10 +39,11 @@
 		    @elseif ($elem_data['type'] == 'datetime')
 		      {{ date('m/j/Y g:ia',strtotime($row[$elem_name])) }}
 		    @elseif ($elem_data['type'] == 'image')
+		      <?php $thumb_size = isset($elem_data['thumb_size']) ? $elem_data['thumb_size'] : '100' ?>
 		      @if ($row[$elem_name] != '')
-		        <img class="inline-thumb" width="100px" height="100px" src="{{ $base_img_uri.'station_thumbs_sm/'.$row[$elem_name] }}" />             
+		        <img class="inline-thumb" style="width: {{ $thumb_size }}px; height: {{ $thumb_size }}px;" src="{{ $base_img_uri.'station_thumbs_sm/'.$row[$elem_name] }}" />             
 		      @else
-		        <img class="inline-thumb" width="100px" height="100px" src="/packages/canary/station/img/missing.gif" />
+		        <img class="inline-thumb" width="{{ $thumb_size }}px" height="{{ $thumb_size }}px" src="/packages/canary/station/img/missing.gif" />
 		      @endif
 		    @elseif ($elem_data['type'] == 'boolean' && strpos($elem_data['display'], 'U') !== FALSE)
 		      {{ Form::checkbox($data['config']['panel_options']['table'].'_'.$elem_name.'_'.$row['id'], '1', $row[$elem_name], ['data-element-name' => $elem_name, 'data-id' => $row['id'], 'class' => 'station-list-boolean', 'data-toggle' => 'switch']) }}
