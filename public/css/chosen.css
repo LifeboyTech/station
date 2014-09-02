@@ -61,6 +61,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-top: -11px;
+  font-weight: 500;
 }
 .chosen-container-single .chosen-single-with-deselect span {
   margin-right: 38px;

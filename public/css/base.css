@@ -11,13 +11,13 @@
 }
 .station-list td.col-1 {
 	font-weight: bold;
-	font-size: 14px;
+	font-size: 12px;
 	color: #444;
 	text-decoration: underline;
 }
 .station-list td.col-2 {
-	font-weight: bold;
-	font-size: 14px;
+	font-weight: 400;
+	font-size: 12px;
 	color: #777;
 }
 .station-list td, .station-list th {
@@ -61,6 +61,8 @@
 	margin: 30px 6px 0 0;
 	float: left;
 	display: block;
+	font-size: 16px;
+	font-weight: 300;
 }
 .gravatar {
 	border: 1px solid #5F5F5F;
@@ -69,7 +71,7 @@
 .nav-list .nav-header {
 	padding-top: 20px !important;
 	color: #F8F7F7 !important;
-	font-weight: normal;
+	font-weight: 200;
 	cursor: pointer;
 	text-transform: none;
 	font-size: 15px !important;
@@ -136,6 +138,8 @@
     width: 100%;
     /* float: left; */
     display: block;
+    font-weight: 300;
+    font-size: 16px;
 }
 .station-form .label-wrap sup {
 	color: #de342e;
@@ -277,7 +281,7 @@ ul.is-reorderable {
 }
 .nav-list-vivid > li, .nav-list-vivid > li > a {
 	font-size: 11px !important;
-	font-weight: normal;
+	font-weight: 200;
 	padding-top: 3px;
 	padding-bottom: 5px;
 	margin-bottom: 0px;
@@ -352,8 +356,9 @@ ul.is-reorderable {
     margin-left: 6px;
 }
 .station-list span.col-2 {
-    font-size: 15px;
+    font-size: 13px;
     margin: 0 0 0 16px;
+    font-weight: 500;
 }
 .station-list span.col-3, .station-list span.col-4, .station-list span.col-5, .station-list span.col-6 {
     font-size: 12px;
@@ -389,6 +394,7 @@ ul.is-reorderable {
 }
 .station-list-head-right > div, .station-list-head-right > a {
 	float: right;
+	font-size: 15px;
 }
 .station-list-head-right {
 	width: 50%;
