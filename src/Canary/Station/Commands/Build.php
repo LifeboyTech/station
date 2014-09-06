@@ -196,7 +196,8 @@ class Build extends Command {
         			
         			if (!Schema::hasColumn($table_name, $att_name) // we don't have column,
         				&& !isset($att_data['data']['pivot']) // and it's not a PIVOT join
-        				&& $att_data['type'] != 'subpanel') { // and it's not a sub panel element type
+        				&& $att_data['type'] != 'subpanel'  // and it's not a sub panel element type
+        				&& $att_data['type'] != 'virtual') { // and it's not a virtual element type
 
         				// ... add migration for it.
         				$migration_name = 'add_'.$att_name.'_column_to_'.$table_name.'_table'; // must keep 'column_to'!
