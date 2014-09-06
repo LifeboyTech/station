@@ -118,6 +118,11 @@ $(document).ready(function() {
 		window.location = $target_url;
 	});
 
+	$('.station-list .row-link').click(function(event) {
+		
+		event.stopPropagation();
+	});
+
 	// enable harvest/chosen JS lib on selects
     if ($(".chosen-select").length){
 
