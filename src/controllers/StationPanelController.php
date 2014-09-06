@@ -753,6 +753,8 @@ class StationPanelController extends \BaseController {
 		$override_response	= $this->override_responded_to($panel_data, $method);
 		$view = $override_response ? $override_response : View::make('station::layouts.'.$template);
 
+		if (isset($view['is_redirect']) && isset($view['target_uri'])) return Redirect::to($view['target_uri']);
+
 		View::share('assets', $this->assets);
 		$this->layout->content 	= $view;
 	}
