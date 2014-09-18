@@ -9,7 +9,7 @@ use Canary\Station\Config\StationConfig as StationConfig;
 //use Canary\Station\Models\Medium as Medium;
 use Illuminate\Filesystem\Filesystem as File;
 
-class StationFileController extends \BaseController {
+class StationFileController extends BaseController {
 
 	public $tmp_dir = '';
 

@@ -6,7 +6,7 @@ use Canary\Station\Filters\Session as Station_Session;
 use Illuminate\Filesystem\Filesystem as File;
 use Canary\Station\Config\StationConfig as StationConfig;
 
-class StationPanelController extends \BaseController {
+class StationPanelController extends BaseController {
 
 	protected $layout					= 'station::layouts.base';
 	protected $subpanel_parent			= FALSE;
