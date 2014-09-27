@@ -182,7 +182,8 @@ class StationFileController extends BaseController {
 
 		$app_config        = StationConfig::app();
         $panel             = new Panel;
-        $user_scope        = $panel->user_scope($panel_name, 'U');
+        $subpanel_name	   = Input::has('subpanel') && Input::get('subpanel') != '' ? Input::get('subpanel') : FALSE;
+        $user_scope        = $panel->user_scope($subpanel_name ?: $panel_name, 'U', $subpanel_name ? $panel_name : FALSE);
         $element           = $user_scope['config']['elements'][$element_name];
         $allow_upsize      = isset($element['allow_upsize']) && $element['allow_upsize'];
         $all_sizes         = $panel->img_sizes_for($user_scope, $app_config);

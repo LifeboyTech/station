@@ -369,7 +369,7 @@ $(document).ready(function() {
             url: '/' + base_uri + 'panel/' + curr_panel + '/process_url/' + element_name,
             type: 'PUT',
             dataType: 'json',
-            data: {url: $(this).val()},
+            data: { url: $(this).val(), subpanel: curr_subpanel },
         })
         .done(function(r) {
             
