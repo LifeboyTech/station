@@ -8,7 +8,7 @@ $(document).ready(function() {
 	 * a click on a list row will trigger the edit button for that row
 	 *
 	 */
-	$('.station-list tr td').live('click', function(event) {
+	$('body').on('click', '.station-list tr td', function(event) {
 		
 		var first_link = $(this).closest('tr').find('a:first');
 		if (first_link.length) window.location = first_link.attr('href');
@@ -86,7 +86,7 @@ $(document).ready(function() {
 	/**
 	 * user filtering of data
 	 */
-	$('.station-list .table-filter').live('change',function()
+	$('body').on('change', '.station-list .table-filter', function()
 	{
 		var $get_data = new Array();
 		var $url_without_hash = window.location.href.split('#')[0];
@@ -161,13 +161,13 @@ $(document).ready(function() {
 	    	return false;
 	    });
 
-	    $('a.nestables-collapse-all').live('click', function(event) {
+	    $('body').on('click', 'a.nestables-collapse-all', function(event) {
 	    	
 	    	$('.dd').nestable('collapseAll');
 	    	$('.nestables-collapse-all, .nestables-expand-all').toggle();
 	    });
 
-	    $('a.nestables-expand-all').live('click', function(event) {
+	    $('body').on('click', 'a.nestables-expand-all', function(event) {
 	    	
 	    	$('.dd').nestable('expandAll');
 	    	$('.nestables-collapse-all, .nestables-expand-all').toggle();
@@ -238,7 +238,7 @@ $(document).ready(function() {
 
 	});
 
-	$('.row-checkbox :checkbox').change(function(event) {
+	$('body').on('change', '.row-checkbox :checkbox', function(event) {
 		
 		audit_checkboxes();
 		audit_bulk_delete_tooltip();

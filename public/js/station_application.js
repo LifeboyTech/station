@@ -27,7 +27,7 @@ $(document).ready(function() {
      * this will work for both list views only.
      *
      */
-    $('.bulk-record-deleter').live('click', function(event) {
+    $('body').on('click', '.bulk-record-deleter', function(event) {
 
         var parent = $('.station-list');
         $('.pending-deletion').removeClass('pending-deletion');
@@ -143,13 +143,13 @@ $(document).ready(function() {
      * boolean switches in list view
      *
      */
-    $('.station-list .switch').live('click', function(event) {
+    $('body').on('click', '.station-list .switch', function(event) {
         
         event.stopPropagation();
         return false;
     });
 
-    $('.station-list-boolean').live('change', function(event) {
+    $('body').on('change', '.station-list-boolean', function(event) {
         
         var element_name        = $(this).attr('data-element-name');
         var id                  = $(this).attr('data-id');
@@ -178,9 +178,20 @@ $(document).ready(function() {
         }
     });
     
-    $('.station-list .checkbox').live('click', function(event) {
+    $('body').on('click', '.station-list .checkbox', function(event) {
         
         event.stopPropagation();
+        var input = $(this).find(':checkbox');
+
+        if (input.is(':checked')) {
+
+            input.checkbox('uncheck');
+
+        } else {
+
+            input.checkbox('check');
+        }
+        
         return false;
     });
 });

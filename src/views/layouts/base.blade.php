@@ -20,8 +20,9 @@
     <link href="/packages/canary/station/css/base.css?v10" rel="stylesheet">
     {{ $app_data['css_override_file'] != '' ? '<link href="'.$app_data['css_override_file'].'" rel="stylesheet">' : '' }}
 
-    <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/jquery-1.8.3.min.js"></script>
-		<script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/bootstrap.min.js"></script>
+    <script src="/packages/canary/station/js/jquery-1.11.2.min.js"></script>
+    <script src="/packages/canary/station/js/radiocheck.js"></script>
+    <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/bootstrap.min.js"></script>
     <script src="/packages/canary/station/js/jquery-ui-1.10.3.custom.min.js"></script>
     <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/jquery.ui.touch-punch.min.js"></script>
     <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/bootstrap.min.js"></script>
@@ -34,12 +35,12 @@
     <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/application.js"></script>
     <script src="/packages/canary/station/js/station_application.js?v2"></script>
 
-		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	  <!--[if lt IE 9]>
-	  	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-	  	<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-	  <![endif]-->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
 
     @if (isset($assets['js']) and count($assets['js']) > 0)
       @foreach ($assets['js'] as $js_file)
@@ -55,21 +56,21 @@
       var curr_id = '{{ $curr_id }}';
     </script>
 
-	@show
+  @show
 
   </head>
   <body>
     
     @if(Auth::check())
 
-  	  @include('station::layouts.navbar')
+      @include('station::layouts.navbar')
     
-    	<div class="container">
-    		<div class="row">
-    			<div id="sidebar-container" class="col-sm-2">
-    				@include('station::layouts.sidebar')
-    			</div>
-    			<div id="content-container" class="col-sm-10">
+      <div class="container">
+        <div class="row">
+          <div id="sidebar-container" class="col-sm-2">
+            @include('station::layouts.sidebar')
+          </div>
+          <div id="content-container" class="col-sm-10">
             <div class="row">
               <div class="col-sm-12">
                 {{-- for showing flashes via ajax responses --}}
@@ -83,10 +84,10 @@
                 @yield('content')
               </div>
             </div>
-    				
-    			</div>
-    		</div>
-    	</div>
+            
+          </div>
+        </div>
+      </div>
 
     @else
 

@@ -88,12 +88,12 @@ $(document).ready(function() {
     /**
      * media modal stuff!
      */
-    $('#mediaTab a').live('click',function (e) {
+    $('body').on('click', '#mediaTab a', function (e) {
         e.preventDefault();
         $(this).tab('show');
     });
 
-    $('.station-media').live('click',function()
+    $('body').on('click', '.station-media', function()
     {
         var $type = $(this).attr('id').split('_');
         //$('#mediaTab').tab();
@@ -166,7 +166,7 @@ $(document).ready(function() {
         }
     });
 
-    $('.trigger_img_upload').live('click',function()
+    $('body').on('click', '.trigger_img_upload', function()
     {
         $('[name="uploaded_file"]').click();
     });
@@ -219,7 +219,7 @@ $(document).ready(function() {
         });
     });
 
-    $('.file-upload-save').live('click',function()
+    $('body').on('click', '.file-upload-save', function()
     {
         // Display on the main form
         var $elem_name = $('#mediaModal [name="upload_element_name"]').val();
@@ -241,7 +241,7 @@ $(document).ready(function() {
         }
     });
 
-    $('.file-remover').live('click', function(event) {
+    $('body').on('click', '.file-remover', function(event) {
         
         var parent = $(this).closest('.station-element-group');
         var element_name = parent.attr('data-element-name');
@@ -251,7 +251,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $('.station-img-thumbnail').live('click', function(event) {
+    $('body').on('click', '.station-img-thumbnail', function(event) {
         
         var parent = $(this).closest('.station-file-upload-wrap');
 
@@ -271,7 +271,7 @@ $(document).ready(function() {
      * manual cropping process using Jcrop
      *
      */
-    $('.station-crop-start').live('click', function(event) {
+    $('body').on('click', '.station-crop-start', function(event) {
         
         if (manual_crop_is_pending){
 
@@ -309,7 +309,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $('.station-crop-saver').live('click', function(event) {
+    $('body').on('click', '.station-crop-saver', function(event) {
         
         $.ajax({
           url: '/' + base_uri + 'file/crop/',
@@ -332,7 +332,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $('.station-crop-canceler').live('click', function(event) {
+    $('body').on('click', '.station-crop-canceler', function(event) {
         
         stop_crop_process();
         return false;
