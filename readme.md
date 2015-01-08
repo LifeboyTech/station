@@ -64,7 +64,7 @@ At this time you can (optionally) edit `/app/config/packages/canary/station/_app
 This will generate migrations, run migrations, generate models, and seed the database.
 
 ```sh
-php artisan station.build 
+php artisan station:build 
 ```
 
 ### 4. Publish The Package's Assets To Your App
