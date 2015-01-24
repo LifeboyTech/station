@@ -31,6 +31,10 @@ class Panel {
      */
     public function adjacents_for($id, $panel_name){
 
+        $count        = $this->get_data_for($panel_name, TRUE, FALSE, TRUE);
+
+        if ($count['data'] > 10000) return FALSE; // simply too many records to handle adjacent navigation :(
+
         $data         = $this->get_data_for($panel_name, FALSE, FALSE, TRUE);
         $records      = $data['data'];
         $ret          = FALSE;

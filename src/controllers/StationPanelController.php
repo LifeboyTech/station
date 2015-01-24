@@ -500,8 +500,8 @@ class StationPanelController extends BaseController {
 
 		$title					= 'Edit This '.$this->single_item_name;
 		$title					.= $this->primary_element_value ? ' for "'.$this->primary_element_value.'"' : '';
-		$panel_data_with_count	= $panel->get_data_for($panel_name, TRUE); 
-		$adjacents 				= $panel->adjacents_for($id, $panel_name); 
+		$panel_data_with_count	= $panel->get_data_for($panel_name, TRUE);
+		$adjacents 				= $panel->adjacents_for($id, $panel_name);
 
 		View::share('adjacents', $adjacents);
 		View::share('curr_record_id', $id);
