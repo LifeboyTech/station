@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Config;
 use Schema;
 use App;
+use Storage;
 use Canary\Station\Models\Panel as Panel;
 use Canary\Station\Config\StationConfig as StationConfig;
 
@@ -232,12 +233,6 @@ class Build extends Command {
 
         $this->generate_pivots();
 
-        if (!Schema::hasTable('password_reminders')) {
-        	
-        	$this->call('auth:reminders-table'); // this is needed for using auth. 
-        	$this->call('auth:reminders-controller'); // this is needed for using auth. 
-        }
-
         return TRUE;
 	}
 
@@ -251,8 +246,14 @@ class Build extends Command {
 	 */
 	private function generate_models($panels){
 
+		$base_path = app_path() . '/Models';
 		$this->file = new File;
 		$this->panel_model = new Panel;
+
+		if (!file_exists($base_path)) {
+
+			$this->file->makeDirectory($base_path);
+		}
 
 		foreach($panels as $panel_name)
 		{
@@ -263,7 +264,7 @@ class Build extends Command {
 			$className		= $panel_data['panel_options']['single_item_name'];
 			$modelName		= $this->panel_model->model_name_for($panel_name);
 			$tableName		= $panel_data['panel_options']['table'];
-			$filePath		= app_path() . '/models/'.$modelName.'.php';
+			$filePath		= $base_path.'/'.$modelName.'.php';
 
 			if($this->file->exists($filePath))	// we are just going to rebuild the section that is generated
 			{

@@ -1,6 +1,4 @@
-# Station
-
-## Incredibly Flexible CRUD, Content and User Management System For Laravel 4.1
+## Laravel 5: Backend UI for Content & User Management
 
 Tired of creating and configuring similar models and controllers which deal with basic CRUD, validation and user role-based capabilities? Station allows developers to setup and configure a backend CMS for a Laravel app/site very quickly. 
 
@@ -16,12 +14,12 @@ Tired of creating and configuring similar models and controllers which deal with
 ## Installation 
 
 The Station Service Provider can be installed via [Composer](http://getcomposer.org) by requiring the
-`canary/station` package in your project's `composer.json`.
+`canary/laravel-station` package in your project's `composer.json`.
 
 ```json
 {
     "require": {
-        "canary/station": "0.1.*"
+        "canary/laravel-station": "dev-master"
     }
 }
 ```
@@ -33,7 +31,7 @@ composer update
 
 ## Configuration & Setup
 
-This assumes you have a working dev or production environment with Laravel 4 already installed.
+This assumes you have a working dev or production environment with Laravel 5 and a database already installed.
 
 ### 1. Register Station in app/config/app.php
 
@@ -44,17 +42,26 @@ Find the `providers` key in your `app/config/app.php` and register the Station S
 ```php
     'providers' => array(
         // ...
-        'Canary\Station\StationServiceProvider',
+        'Illuminate\Html\HtmlServiceProvider',
+		'Canary\Station\StationServiceProvider',
         'Way\Generators\GeneratorsServiceProvider',
-    )
+    ),
 ```
 
-### 2. Use artisan to set up Station's default config files within your app
+Also update the `aliases` array 
 
-Then publish the package configuration files using Artisan. This will copy Station's default configuration to your app. You can then change and add to these configuration files as needed.
+```php 
+	'aliases' => [
+		// ...
+		'Form' 		=> 'Illuminate\Html\FormFacade', 
+		'HTML'		=> 'Illuminate\Html\HtmlFacade',
+	],
+```
+
+### 2. Publish Station's assets over to your app.
 
 ```sh
-php artisan config:publish canary/station 
+php artisan vendor:publish
 ```
 
 At this time you can (optionally) edit `/app/config/packages/canary/station/_app.php` and change the `root_admin_email`
@@ -67,13 +74,7 @@ This will generate migrations, run migrations, generate models, and seed the dat
 php artisan station:build 
 ```
 
-### 4. Publish The Package's Assets To Your App
-
-```sh
-php artisan asset:publish canary/station 
-```
-
-### 5. Test Installation
+### 4. Test Installation
 
 You should now be able to browse to your app at:
 

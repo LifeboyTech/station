@@ -31,7 +31,7 @@
 
     <div class="container">
 
-      {{ Form::open(array('url' => $app_data['root_uri_segment'].'/sessions', 'class' => 'form-signin main-login', 'autocomplete' => 'off')) }}
+      {!! Form::open(array('url' => $app_data['root_uri_segment'].'/sessions', 'class' => 'form-signin main-login', 'autocomplete' => 'off')) !!}
 
         @if(Session::has('success'))
             <div class="alert alert-success">
@@ -65,10 +65,10 @@
           <p>&nbsp;</p>
           <a href="{{ '/'.$app_data['root_uri_segment'].'/register' }}">Register a new Account</a>
         </div>
-      {{ Form::close() }}
+      {!! Form::close() !!}
 
 
-      {{ Form::open(array('url' => $app_data['root_uri_segment'].'/forgot', 'class' => 'form-signin forgot')) }}
+      {!! Form::open(array('url' => $app_data['root_uri_segment'].'/forgot', 'class' => 'form-signin forgot')) !!}
 
         <h4 class="form-signin-heading">Forgot your info?</h4>
 
@@ -83,7 +83,7 @@
           <p>&nbsp;</p>
           <a href="javascript:;" class="forgot-closer">Back to Login</a>
         </div>
-      {{ Form::close() }}
+      {!! Form::close() !!}
 
     </div> <!-- /container -->
 
