@@ -9,9 +9,12 @@ class StationConfig {
 		$key = $key != '' ? '.'.$key : '';
 		$is_vendor = self::is_vendor();
 		$namespace = $is_vendor ? 'station_vendor_config' : 'station';
-		return Config::get($is_vendor && !$for_build ? 'packages/canary/station/_app'.$key : $namespace.'::_app'.$key);
+		return Config::get($is_vendor && !$for_build ? '_app'.$key : $namespace.'::_app'.$key);
 	}
 
+	/**
+	 * for detecting if config is being loaded from internal build process, or outside request.
+	 */
 	static function is_vendor(){
 
 		return strpos(realpath(__FILE__), '/vendor/') !== FALSE;
@@ -22,6 +25,6 @@ class StationConfig {
 		$is_vendor = self::is_vendor();
 		$namespace = $is_vendor ? 'station_vendor_config' : 'station';
 		
-		return Config::get($is_vendor && !$for_build ? 'packages/canary/station/'.$panel_name : $namespace.'::'.$panel_name);
+		return Config::get($is_vendor && !$for_build ? $panel_name : $namespace.'::'.$panel_name);
 	}
 }
