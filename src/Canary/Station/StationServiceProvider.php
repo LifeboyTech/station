@@ -22,7 +22,8 @@ class StationServiceProvider extends ServiceProvider {
 		//$this->package('canary/station', 'station');
 		//Config::addNamespace('station_vendor_config', './app/config/packages/canary/station/');
 
-		$this->publishes([__DIR__.'/../../../public/' => base_path('/public/packages/canary/station')]);
+		$this->publishes([__DIR__.'/../../../public/' => base_path('/public/packages/canary/station'), 'public']);
+		$this->publishes([__DIR__.'/../../config/' => base_path('/config/packages/canary/station'), 'config']);
 		include __DIR__.'/../../routes.php';
 	}
 
