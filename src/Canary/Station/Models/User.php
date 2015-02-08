@@ -1,6 +1,8 @@
 <?php namespace Canary\Station\Models;
 
-class User extends \User {
+use \App\User as App_user;
+
+class User extends App_user {
 
 	public function __construct()
     {

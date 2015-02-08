@@ -366,8 +366,8 @@ class Build extends Command {
 		$panel  = new Panel;
 
 		$code 	= "";
-		$code	.= $is_new ? "<?php\n\n"
-				. "class $modelName extends Eloquent {\n\t" : "";
+		$code	.= $is_new ? "<?php namespace App\Models; \n\n"
+				. "class $modelName extends \Eloquent {\n\t" : "";
 
 		$code	.= $this->gen_begin."\n\n\t"
 				. "protected \$table = '$tableName';\n\tprotected \$guarded = array('id');\n\n";
