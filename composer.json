@@ -13,9 +13,7 @@
         "php": ">=5.4.0",
         "illuminate/support": "~5.0",
         "illuminate/html": "~5.0",
-        "morrislaptop/laravel-five-package-bridges": "1.0.1"
-    },
-    "require-dev": {
+        "morrislaptop/laravel-five-package-bridges": "1.0.1",
         "way/generators": "~3.0"
     },
     "autoload": {
