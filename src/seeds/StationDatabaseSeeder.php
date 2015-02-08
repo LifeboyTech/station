@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
+use \Illuminate\Database\Seeder;
 
-class StationDatabaseSeeder extends Seeder {
+class StationDatabaseSeeder extends \Illuminate\Database\Seeder {
 
 	/**
 	 * Run the database seeds.

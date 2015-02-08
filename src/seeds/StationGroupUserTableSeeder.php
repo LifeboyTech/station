@@ -1,6 +1,8 @@
 <?php
 
-class StationGroupUserTableSeeder extends Seeder {
+use \Illuminate\Database\Seeder;
+
+class StationGroupUserTableSeeder extends \Illuminate\Database\Seeder {
 
 	public function run()
 	{

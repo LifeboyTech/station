@@ -66,7 +66,11 @@ php artisan vendor:publish
 
 At this time you can (optionally) edit `/app/config/packages/canary/station/_app.php` and change the `root_admin_email`
 
-### 3. Run Station's Build Command. 
+### 3. Run default migrations if you haven't already. 
+
+`php artisan migrate` 
+
+### 4. Run Station's Build Command. 
 
 This will generate migrations, run migrations, generate models, and seed the database.
 
@@ -74,7 +78,7 @@ This will generate migrations, run migrations, generate models, and seed the dat
 php artisan station:build 
 ```
 
-### 4. Test Installation
+### 5. Test Installation
 
 You should now be able to browse to your app at:
 

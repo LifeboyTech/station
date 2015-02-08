@@ -65,7 +65,6 @@ class Build extends Command {
         $this->call('migrate');
         $this->generate_models($panels);
         $this->call('db:seed',array('--class'=>"StationDatabaseSeeder"));
-        $this->call('dump-autoload');
         echo $this->print_output();
 	}
 

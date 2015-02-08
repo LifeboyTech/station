@@ -1,8 +1,9 @@
 <?php
 
 use Canary\Station\Config\StationConfig as StationConfig;
+use \Illuminate\Database\Seeder;
 
-class StationUserTableSeeder extends Seeder {
+class StationUserTableSeeder extends \Illuminate\Database\Seeder {
 
 	public function run()
 	{
