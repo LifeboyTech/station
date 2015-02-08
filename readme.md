@@ -45,6 +45,8 @@ Find the `providers` key in your `app/config/app.php` and register the Station S
         'Illuminate\Html\HtmlServiceProvider',
 		'Canary\Station\StationServiceProvider',
         'Way\Generators\GeneratorsServiceProvider',
+        'Morrislaptop\LaravelFivePackageBridges\ConfigServiceProvider',
+        'Morrislaptop\LaravelFivePackageBridges\Bridges\GeneratorsServiceProvider',
     ),
 ```
 
@@ -57,6 +59,25 @@ Also update the `aliases` array
 		'HTML'		=> 'Illuminate\Html\HtmlFacade',
 	],
 ```
+
+Then `bootstrap/app.php` replace
+
+```php
+$app = new Illuminate\Foundation\Application(
+    realpath(__DIR__.'/../')
+);
+```
+
+with
+
+```php
+$app = new Morrislaptop\LaravelFivePackageBridges\Application(
+    realpath(__DIR__.'/../')
+);
+```
+
+(this is a temporary hack until the Way/Generators package is updated for Laravel 5
+)
 
 ### 2. Publish Station's assets over to your app.
 
