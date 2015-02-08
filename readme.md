@@ -43,8 +43,8 @@ Find the `providers` key in your `app/config/app.php` and register the Station S
     'providers' => array(
         // ...
         'Illuminate\Html\HtmlServiceProvider',
-		'Canary\Station\StationServiceProvider',
-        'Way\Generators\GeneratorsServiceProvider',
+	'Canary\Station\StationServiceProvider',
+        //'Way\Generators\GeneratorsServiceProvider', // add back when we can remove bridge
         'Morrislaptop\LaravelFivePackageBridges\ConfigServiceProvider',
         'Morrislaptop\LaravelFivePackageBridges\Bridges\GeneratorsServiceProvider',
     ),
@@ -76,8 +76,7 @@ $app = new Morrislaptop\LaravelFivePackageBridges\Application(
 );
 ```
 
-(this is a temporary hack until the Way/Generators package is updated for Laravel 5
-)
+(this is a temporary hack until the Way/Generators package is updated for Laravel 5. We will switch it back afterwards)
 
 ### 2. Publish Station's assets over to your app.
 
