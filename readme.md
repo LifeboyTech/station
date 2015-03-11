@@ -1,5 +1,7 @@
 ## Laravel 5: Backend UI for Content & User Management
 
+**Note: This is still unstable as we continue to make the upgrade from L4: https://github.com/thecanarycollective/station**
+
 Tired of creating and configuring similar models and controllers which deal with basic CRUD, validation and user role-based capabilities? Station allows developers to setup and configure a backend CMS for a Laravel app/site very quickly. 
 
 ## Features
