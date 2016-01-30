@@ -15,10 +15,11 @@ class StationFileController extends BaseController {
 
 	private $mock_width = 445;
 
-	public function __construct()
+	public function __construct(Request $request)
     {
     	// make the tmp directory where we can access the uploads
 
+    	$this->request = $request;
     	$this->tmp_dir = storage_path().'/tmp';
     	
         if (!is_dir($this->tmp_dir)){
@@ -29,12 +30,12 @@ class StationFileController extends BaseController {
 
     public function crop(){
 
-    	$file				= Input::get('filename');
-    	$panel_name			= Input::get('panel_name');
-		$element_name		= Input::get('element_name');
-		$method				= Input::get('method');
-		$coords				= Input::get('coords');
-		$size_name			= Input::get('size_name');
+    	$file				= $this->request->get('filename');
+    	$panel_name			= $this->request->get('panel_name');
+		$element_name		= $this->request->get('element_name');
+		$method				= $this->request->get('method');
+		$coords				= $this->request->get('coords');
+		$size_name			= $this->request->get('size_name');
 		$panel				= new Panel;
 		$user_scope			= $panel->user_scope($panel_name, $method);
 		$element			= $user_scope['config']['elements'][$element_name];
@@ -158,7 +159,7 @@ class StationFileController extends BaseController {
 
 	public function process_url($panel_name, $element_name){
 
-		$url = Input::get('url');
+		$url = $this->request->get('url');
 
 		if ($url){
 
@@ -182,7 +183,7 @@ class StationFileController extends BaseController {
 
 		$app_config        = StationConfig::app();
         $panel             = new Panel;
-        $subpanel_name	   = Input::has('subpanel') && Input::get('subpanel') != '' ? Input::get('subpanel') : FALSE;
+        $subpanel_name	   = $this->request->has('subpanel') && $this->request->get('subpanel') != '' ? $this->request->get('subpanel') : FALSE;
         $user_scope        = $panel->user_scope($subpanel_name ?: $panel_name, 'U', $subpanel_name ? $panel_name : FALSE);
         $element           = $user_scope['config']['elements'][$element_name];
         $allow_upsize      = isset($element['allow_upsize']) && $element['allow_upsize'];
@@ -203,9 +204,9 @@ class StationFileController extends BaseController {
 	public function upload()
 	{
 
-		if (!Input::hasFile('uploaded_file')) echo json_encode(['success' => FALSE, 'reason' => 'no file uploaded']);
+		if (!$this->request->hasFile('uploaded_file')) echo json_encode(['success' => FALSE, 'reason' => 'no file uploaded']);
 
-		$file						= Input::file('uploaded_file');
+		$file						= $this->request->file('uploaded_file');
 		$original_file_name			= $file->getClientOriginalName();
 		$size						= $file->getSize();
 		$mime						= $file->getMimeType();
@@ -215,10 +216,10 @@ class StationFileController extends BaseController {
 		$orig_name_wo_ext 			= $path['filename'];
 		$new_file_name				= $orig_name_wo_ext.'_'.date('Y-m-d-H-i-s').'.'.$extension;
 		$panel						= new Panel;
-		$panel_name					= Input::get('panel_name');
-		$parent_panel_name			= Input::get('parent_panel_name');
-		$element_name				= Input::get('upload_element_name');
-		$method						= Input::get('method');
+		$panel_name					= $this->request->get('panel_name');
+		$parent_panel_name			= $this->request->get('parent_panel_name');
+		$element_name				= $this->request->get('upload_element_name');
+		$method						= $this->request->get('method');
 		$user_scope					= $panel->user_scope($panel_name, $method, $parent_panel_name);
 		$element					= $user_scope['config']['elements'][$element_name];
 		$app_config					= StationConfig::app();
@@ -226,7 +227,7 @@ class StationFileController extends BaseController {
 		$message 					= '';
 		$field_is_uploadable 		= $element['type'] == 'image' || (isset($element['embeddable']) && $element['embeddable']);
 
-		Input::file('uploaded_file')->move($this->tmp_dir, $new_file_name);
+		$this->request->file('uploaded_file')->move($this->tmp_dir, $new_file_name);
 
 		if ($field_is_uploadable){
 

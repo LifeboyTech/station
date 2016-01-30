@@ -228,7 +228,7 @@
 					@if($element_info['type']=='multiselect' && isset($foreign_data[$element_name]))
 						{{ Form::select($element_name.'[]', 
 							$foreign_data[$element_name], 
-							(Input::old($element_name) || !isset($passed_model)) ? null : $passed_model->$element_name->lists('id'), 
+							(old($element_name) || !isset($passed_model)) ? null : $passed_model->$element_name->lists('id'), 
 							['multiple' => 'multiple','class'=>'chosen-select', 'style' => 'width: 400px', 'id' => $id, 'data-placeholder' => 'Please choose...']) }}
 					@endif
 

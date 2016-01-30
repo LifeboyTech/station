@@ -6,6 +6,7 @@ use Canary\Station\Config\StationConfig as StationConfig;
 
 class Panel {
 
+    public $request                     = FALSE;
     public $non_writable_field_types    = ['multiselect', 'virtual', 'subpanel'];
     public $nestable_default_columns    = ['position', 'parent_id', 'depth'];
     protected $pagination_key           = 'station_page';
@@ -127,7 +128,7 @@ class Panel {
     public function create_record_for($panel_name, $user_scope, $is_for_user = FALSE, $overrides = FALSE){
 
         $writable_fields = $this->writable_fields($user_scope);
-        $data            = Input::only($writable_fields);
+        $data            = $this->request->only($writable_fields);
         $data            = $this->override($data, $overrides);
         $data            = $this->filter_data($data, $user_scope, $writable_fields);
         $model_name      = $this->model_name_for($panel_name);
@@ -450,7 +451,7 @@ class Panel {
     public function update_record_for($panel_name, $user_scope, $id){
         
         $writable_fields = $this->writable_fields($user_scope);
-        $data            = Input::only($writable_fields); 
+        $data            = $this->request->only($writable_fields); 
         $data            = $this->filter_data($data, $user_scope, $writable_fields);
         $model_name      = $this->model_name_for($panel_name);
         $model           = new $model_name;
@@ -575,7 +576,7 @@ class Panel {
             
             if (isset($element['rules'])) {
                 
-                $inputs[$element_name] = Input::get($element_name);
+                $inputs[$element_name] = $this->request->input($element_name);
                 $rules[$element_name]  = $this->filter_element_rules($element['rules'], $unique_id);
 
                 // make pretty error messages using field "labels" not the DB column name / element name
@@ -703,7 +704,7 @@ class Panel {
 
                 // group is set by choice made at registration
                 $str_arr          = explode(':', $starting_group_name);
-                $value_from_input = Input::get($str_arr[1]);
+                $value_from_input = $this->request->input($str_arr[1]);
                 $lowest_group_id  = Group::where('name', '=', 'standard')->pluck('id'); // TODO: change. may not always have a standard group!
                 $group_id         = is_numeric($value_from_input) ? $value_from_input : $lowest_group_id;
 
@@ -720,7 +721,7 @@ class Panel {
 
             foreach ($joins as $join) {
                 
-                $data_for_join = Input::get($join);
+                $data_for_join = $this->request->input($join);
                 $model->$join()->sync($data_for_join == null ? array() : $data_for_join);
             }
         }
@@ -1080,7 +1081,7 @@ class Panel {
         $var_name       = $this->pagination_key;
         $offset         = 0;
         $n_per_page     = 50;
-        $requested_page = Input::get($var_name);
+        $requested_page = $this->request->input($var_name);
         $incrementer    = 0;
         $key            = $var_name.'.'.$panel_name;
 
@@ -1216,11 +1217,11 @@ class Panel {
 
     private function user_filters_for($panel_name){
 
-        if (Input::get('ids')) return array(); // this was a reorder request, not a filter request
+        if ($this->request->input('ids')) return array(); // this was a reorder request, not a filter request
 
-        if (count(Input::all()) > 0){
+        if (count($this->request->all()) > 0){
 
-            $filters = $this->remove_zeroed_values(Input::all());
+            $filters = $this->remove_zeroed_values($this->request->all());
             Session::put('user_filters.'.$panel_name, $filters);
             return $filters;
 

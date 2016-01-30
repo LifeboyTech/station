@@ -5,17 +5,18 @@ use Canary\Station\Config\StationConfig as StationConfig;
 
 class StationUserController extends ObjectBaseController {
 
-	public function __construct()
+	public function __construct(Request $request)
     {
         parent::__construct();
-        $this->base_uri = StationConfig::app('root_uri_segment').'/';
-        $this->app = StationConfig::app();
+        $this->request              = $request;
+        $this->base_uri             = StationConfig::app('root_uri_segment').'/';
+        $this->app                  = StationConfig::app();
         $this->data['is_logged_in'] = Auth::check();
     }
 
     public function do_reset_password(){
 
-        $credentials = Input::only(
+        $credentials = $this->request->only(
             'email', 'password', 'password_confirmation', 'token'
         );
 
@@ -45,7 +46,7 @@ class StationUserController extends ObjectBaseController {
      */
     public function forgot(){
 
-    	switch ($response = Password::remind(Input::only('email')))
+    	switch ($response = Password::remind($this->request->only('email')))
         {
             case Password::INVALID_USER:
                 return Redirect::back()->with('error', Lang::get($response));

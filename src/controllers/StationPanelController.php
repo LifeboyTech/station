@@ -1,6 +1,7 @@
 <?php namespace Canary\Station\Controllers;
 
-use View, App, Config, Session, Auth, Redirect, URL, Input, Response, Request;
+use View, App, Config, Session, Auth, Redirect, URL, Input, Response;
+use Illuminate\Http\Request as Request;
 use Canary\Station\Models\Panel as Panel;
 use Canary\Station\Filters\Session as Station_Session;
 use Illuminate\Filesystem\Filesystem as File;
@@ -16,6 +17,11 @@ class StationPanelController extends BaseController {
 	protected $subpanel_parent_uri		= '';
 	protected $write_data_override		= FALSE;
 
+	public function __construct(Request $request){
+
+		$this->request = $request;
+	}
+
 	public function create($panel_name){
 
 		$method = 'C';
@@ -27,6 +33,7 @@ class StationPanelController extends BaseController {
 		if (!$user_can_create) return Redirect::back()->with('error', 'You do not have access to that area.');
 		
 		$panel					= new Panel;
+		$panel->request 		= $this->request;
 		$panel_data_with_count	= $panel->get_data_for($panel_name, TRUE);
 		$title					= 'Create a new '.$this->single_item_name;
 		$title					.= $this->primary_element_value ? ' for "'.$this->primary_element_value.'"' : '';
@@ -63,6 +70,7 @@ class StationPanelController extends BaseController {
 	public function do_create($panel_name){
 
 		$panel			= new Panel;
+		$panel->request = $this->request;
 		$user_scope 	= $panel->user_scope($panel_name, 'C', $this->subpanel_parent); // can we create? which fields?
 
 		if (!$user_scope) return Redirect::back()->with('error', 'You do not have access to that area.');
@@ -98,7 +106,7 @@ class StationPanelController extends BaseController {
 				$override_controller 	= $temp[0];
 				$override_method 		= $temp[1];
 
-				App::make($override_controller)->$override_method(Input::all());
+				App::make($override_controller)->$override_method($this->request->all());
 			}
 
 
@@ -133,7 +141,7 @@ class StationPanelController extends BaseController {
 
 					} else { // just creating a new record in general
 
-						$user_wants_to_create_another = Input::get('after_save') == 'create';
+						$user_wants_to_create_another = $this->request->get('after_save') == 'create';
 
 						$append 	= $this->subpanel_parent_uri != '' ? $this->subpanel_parent_uri : '/'.$panel_name;
 						$uri		= '/'.$this->base_uri.'panel'.$append;
@@ -185,6 +193,7 @@ class StationPanelController extends BaseController {
 
 			
 			$panel = new Panel;
+			$panel->request = $this->request;
 
 			foreach ($ids_arr as $id) {
 
@@ -216,7 +225,7 @@ class StationPanelController extends BaseController {
 
 	public function do_reorder($panel_name){
 		
-		if (!Input::get('ids')) return Response::json(array('status' => 0, 'reason' => 'no reorder instructions'));
+		if (!$this->request->get('ids')) return Response::json(array('status' => 0, 'reason' => 'no reorder instructions'));
 
 		$this->init($panel_name, 'L'); // let's say the user is allowed to reorder if they can access the list
 		
@@ -225,19 +234,20 @@ class StationPanelController extends BaseController {
 
 		if (!$reorder_column) return Response::json(array('status' => 0, 'reason' => 'no column to reorder on'));
 
-		$panel		= new Panel;
+		$panel = new Panel;
+		$panel->request = $this->request;
 		$panel_data	= $panel->get_data_for($panel_name, FALSE, $this->subpanel_parent);
 
 		if (!$panel_data) return Response::json(array('status' => 0, 'reason' => 'no panel data to reorder'));
 		
-		$reordered = $panel->reorder($opts['table'], $reorder_column, Input::get('ids'));
+		$reordered = $panel->reorder($opts['table'], $reorder_column, $this->request->get('ids'));
 
 		return Response::json(array('status' => $reordered ? 1 : 0));
 	}
 
 	public function do_reorder_nested($panel_name){
 		
-		if (!Input::get('nested_ids')) return Response::json(array('status' => 0, 'reason' => 'no reorder instructions'));
+		if (!$this->request->get('nested_ids')) return Response::json(array('status' => 0, 'reason' => 'no reorder instructions'));
 
 		$this->init($panel_name, 'L'); // let's say the user is allowed to reorder if they can access the list
 		
@@ -247,11 +257,12 @@ class StationPanelController extends BaseController {
 		if (!$columns) return Response::json(array('status' => 0, 'reason' => 'no columns to write to or not configured'));
 
 		$panel		= new Panel;
+		$panel->request = $this->request;
 		$panel_data	= $panel->get_data_for($panel_name, FALSE, $this->subpanel_parent); // not allowing nested yet in subpanels.
 
 		if (!$panel_data) return Response::json(array('status' => 0, 'reason' => 'no panel data to reorder'));
 		
-		$reordered = $panel->reorder_nested($opts['table'], $columns, Input::get('nested_ids'));
+		$reordered = $panel->reorder_nested($opts['table'], $columns, $this->request->get('nested_ids'));
 
 		return Response::json(array('status' => $reordered ? 1 : 0));
 	}
@@ -265,6 +276,7 @@ class StationPanelController extends BaseController {
 	public function do_update($panel_name, $id){
 
 		$panel			= new Panel;
+		$panel->request = $this->request;
 		$user_scope 	= $panel->user_scope($panel_name, 'U', $this->subpanel_parent); // can we update? which fields?
 
 		if (!$user_scope) return Redirect::back()->with('error', 'You do not have access to that area.');
@@ -279,7 +291,7 @@ class StationPanelController extends BaseController {
 		$edit_uri		= $uri.'/update/'.$id; // TODO: this is wrong on subpanel edits.
 		$relative_uri 	= '/'.$this->base_uri.'panel'.'/'.$panel_name;
 		$success_uri	= isset($user_scope['registry']['uri_slug']) ? $relative_uri.'/'.$panel->inject_vars($user_scope['registry']['uri_slug']) : $uri; 
-		$user_will_stay = Input::get('after_save') == 'stay';
+		$user_will_stay = $this->request->get('after_save') == 'stay';
 		$redirect_uri 	= $user_will_stay ? $attempt_uri : $success_uri;
 
 		if ($validator->fails()){ // flash error and redirect to form
@@ -349,6 +361,7 @@ class StationPanelController extends BaseController {
 	public function do_update_element($panel_name, $element_name, $id, $response_type = 'response'){
 
 		$panel			= new Panel;
+		$panel->request = $this->request;
 		$user_scope 	= $panel->user_scope($panel_name, 'U', $this->subpanel_parent); // can we update? which fields?
 
 		if (!$user_scope) return Redirect::back()->with('error', 'You do not have access to that area.');
@@ -401,6 +414,7 @@ class StationPanelController extends BaseController {
 	public function index($panel_name){
 
 		$panel			= new Panel;
+		$panel->request = $this->request;
 		$panel_data		= $panel->get_data_for($panel_name);
 
 		if (!$panel_data) return Redirect::back()->with('error', 'You do not have access to that area.');
@@ -443,6 +457,7 @@ class StationPanelController extends BaseController {
 
 		$slug_map						= ['C' => '/create', 'U' => '', 'D' => ''];
 		$panel							= new Panel;
+		$panel->request 				= $this->request;
 		$this->subpanel_parent			= $parent_panel;
 		$parent_record_object			= $panel->get_record_for($parent_panel, $parent_id);
 		$key 							= isset($parent_record_object['config']['elements'][$panel_name]['data']['key']) ? 
@@ -462,13 +477,14 @@ class StationPanelController extends BaseController {
 
 	public function search($panel_name){
 
-		$term = Input::get('term');
+		$term = $this->request->get('term');
 
 		if (!$term || strlen($term) < 3) return Response::json(['status' => 0]);
 
 		$this->init($panel_name, 'L');
 
 		$panel			= new Panel;
+		$panel->request = $this->request;
 		$panel_data		= $panel->get_data_for($panel_name, FALSE, FALSE, FALSE, $term);
 		$ret 			= [];
 
@@ -490,6 +506,7 @@ class StationPanelController extends BaseController {
 	public function update($panel_name, $id){
 
 		$panel		= new Panel;
+		$panel->request = $this->request;
 		$panel_data	= $panel->get_record_for($panel_name, $id, $this->subpanel_parent);
 
 		$method = 'U';
@@ -529,6 +546,7 @@ class StationPanelController extends BaseController {
 	protected function init($panel_name, $method = 'L', $id = 0){
 
     	$panel 					= new Panel;
+    	$panel->request 		= $this->request;
 		$this->id				= $id;
 		$this->name				= $panel_name;
 		$this->app_config		= StationConfig::app();
@@ -744,7 +762,7 @@ class StationPanelController extends BaseController {
 			View::share('button_override',$panel_data['config']['panel_options']['button_override'][$method]);
 		}
 		
-		if (Request::ajax()) return $this->render_ajax($template, $panel_data, $method);
+		if ($this->request->ajax()) return $this->render_ajax($template, $panel_data, $method);
 
 		$configure_method = 'configure_'.$template.'_view';
 		$this->$configure_method($panel_data);
@@ -757,7 +775,7 @@ class StationPanelController extends BaseController {
 		if (is_array($view) && isset($view['is_redirect']) && isset($view['target_uri'])) return Redirect::to($view['target_uri']);
 
 		View::share('assets', $this->assets);
-		$this->layout->content 	= $view;
+		return view($this->layout, ['content' => $view]);
 	}
 
 	private function render_ajax($template = 'list', $panel_data = array(), $method = 'L'){
