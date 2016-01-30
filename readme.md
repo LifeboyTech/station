@@ -1,7 +1,7 @@
 ## TODO 
 
-* Replace `Input::*`
 * Replace `Session::*`
+* Replace `Request::*`
 
 ## Laravel 5: Backend UI for Content & User Management
 

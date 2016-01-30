@@ -505,7 +505,7 @@ class StationPanelController extends BaseController {
 
 	public function update($panel_name, $id){
 
-		$panel		= new Panel;
+		$panel = new Panel;
 		$panel->request = $this->request;
 		$panel_data	= $panel->get_record_for($panel_name, $id, $this->subpanel_parent);
 
@@ -517,7 +517,7 @@ class StationPanelController extends BaseController {
 
 		$title					= 'Edit This '.$this->single_item_name;
 		$title					.= $this->primary_element_value ? ' for "'.$this->primary_element_value.'"' : '';
-		$panel_data_with_count	= $panel->get_data_for($panel_name, TRUE);
+		$panel_data_with_count	= $panel->get_data_for($panel_name, TRUE); 
 		$adjacents 				= $panel->adjacents_for($id, $panel_name);
 
 		View::share('adjacents', $adjacents);
@@ -560,7 +560,7 @@ class StationPanelController extends BaseController {
 		$this->user_data		= Session::get('user_data');
 		$this->assets			= isset($this->assets) ? $this->assets : [];
 		$this->base_uri			= StationConfig::app('root_uri_segment').'/';
-		$this->foreign_data 	= $panel->foreign_data_for($this->user_scope, $method);  
+		$this->foreign_data 	= $panel->foreign_data_for($this->user_scope, $method); 
 		$this->foreign_panels 	= $panel->foreign_panels_for($this->user_scope, $method);
 		$this->array_img_size 	= $panel->img_sizes_for($this->user_scope, $this->app_config);
 		$this->curr_panel 		= $this->subpanel_parent ?: $this->name;
