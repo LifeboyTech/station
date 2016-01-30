@@ -98,17 +98,17 @@
 
 		@if($form_purpose=='create')
 
-			{{ Form::open(array('class' => 'station-form', 'role'=>'form', 'url' => $form_action, 'method' => $form_method, 'autocomplete' => 'off')) }}
+			{!! Form::open(array('class' => 'station-form', 'role'=>'form', 'url' => $form_action, 'method' => $form_method, 'autocomplete' => 'off')) !!}
 
 		@else
 
-			{{ Form::model($passed_model, array('class' => 'station-form', 'url' => $form_action, 'method' => $form_method, 'autocomplete' => 'off')) }}
+			{!! Form::model($passed_model, array('class' => 'station-form', 'url' => $form_action, 'method' => $form_method, 'autocomplete' => 'off')) !!}
 
 		@endif
 
 			@foreach($panel_data['elements'] as $element_name => $element_info)
 
-				<div class="form-group station-element-group" data-element-name="{{ $element_name }}" {{ $element_info['type'] == 'hidden' ? 'style="display: none;"' : '' }}>
+				<div class="form-group station-element-group" data-element-name="{{ $element_name }}" {!! $element_info['type'] == 'hidden' ? 'style="display: none;"' : '' !!}>
 					
 					<?php 
 						$id					= 'station-'.$element_name;
@@ -131,8 +131,8 @@
 					{{-- show label if not a hidden field --}}
 					@if ($element_info['type'] != 'hidden')
 						<div class="label-wrap">
-							{{ Form::rawLabel($id, $label) }}
-							{{ $help || $helper ? '<span>'.$help.' '.$help_append.'</span>' : '' }}
+							{!! Form::rawLabel($id, $label) !!}
+							{!! $help || $helper ? '<span>'.$help.' '.$help_append.'</span>' : '' !!}
 							@if ($is_embedder)
 								<a href="javascript:;" class="btn btn-xs btn-primary for-embedder">
 									<span class="fui-image for-embedder"></span>&nbsp;&nbsp;Insert an Image or File
@@ -189,47 +189,47 @@
 							if (isset($element_info['read_only']) && $element_info['read_only']) $attributes['readonly'] = 'readonly'; 
 							if ($has_mask) $attributes['data-mask'] = $element_info['mask']; 
 						?>
-						{{ $with_input_wrap ? '<div class="input-group '.$with_append.'">' : '' }}
-						{{ $with_spinner ? '<div class="control-group">' : '' }}
+						{!! $with_input_wrap ? '<div class="input-group '.$with_append.'">' : '' !!}
+						{!! $with_spinner ? '<div class="control-group">' : '' !!}
 
 							@if ($with_prepend)
-								<span class="input-group-addon">{{ $element_info['prepend'] }}</span>
+								<span class="input-group-addon">{!! $element_info['prepend'] !!}</span>
 							@endif
 
 							@if ($with_prepend_icon)
-								<span class="input-group-addon"><span class="{{ $with_prepend_icon }}"></span></span>
+								<span class="input-group-addon"><span class="{!! $with_prepend_icon !!}"></span></span>
 							@endif
 
-							{{ Form::$element_info['type']($element_name, $default_value, $attributes) }}
+							{!! Form::$element_info['type']($element_name, $default_value, $attributes) !!}
 
 							@if ($with_append)
-								<span class="input-group-addon">{{ $element_info['append'] }}</span>
+								<span class="input-group-addon">{!! $element_info['append'] !!}</span>
 							@endif
 
 							@if ($with_append_icon)
-								<span class="input-group-addon"><span class="{{ $with_append_icon }}"></span></span>
+								<span class="input-group-addon"><span class="{!! $with_append_icon !!}"></span></span>
 							@endif
 
-						{{ $with_input_wrap || $with_spinner ? '</div>' : '' }}
+						{!! $with_input_wrap || $with_spinner ? '</div>' : '' !!}
 					@endif
 
 					{{-- boolean / checkbox --}}
 					@if ($element_info['type'] == 'boolean')
 						<?php $default_value = isset($element_info['default']) ? $element_info['default'] : null; ?>
-						{{ Form::checkbox($element_name, '1', $default_value, ['id' => $id, 'data-toggle' => 'switch']) }}
+						{!! Form::checkbox($element_name, '1', $default_value, ['id' => $id, 'data-toggle' => 'switch']) !!}
 					@endif
 
 					{{-- password field --}}
 					@if($element_info['type']=='password')
-						{{ Form::password($element_name,array('id' => $id,'class' => 'form-control')) }}
+						{!! Form::password($element_name,array('id' => $id,'class' => 'form-control')) !!}
 					@endif
 
 					{{-- multiselect using foreign data --}}
 					@if($element_info['type']=='multiselect' && isset($foreign_data[$element_name]))
-						{{ Form::select($element_name.'[]', 
+						{!! Form::select($element_name.'[]', 
 							$foreign_data[$element_name], 
 							(old($element_name) || !isset($passed_model)) ? null : $passed_model->$element_name->lists('id'), 
-							['multiple' => 'multiple','class'=>'chosen-select', 'style' => 'width: 400px', 'id' => $id, 'data-placeholder' => 'Please choose...']) }}
+							['multiple' => 'multiple','class'=>'chosen-select', 'style' => 'width: 400px', 'id' => $id, 'data-placeholder' => 'Please choose...']) !!}
 					@endif
 
 					{{-- radio buttons --}}
@@ -237,7 +237,7 @@
 						<?php $options = isset($foreign_data[$element_name]) ? $foreign_data[$element_name] : $element_info['data']['options'] ?>
 						<div class="radio-wrap">
 							@foreach ($options as $item_id => $item_val)
-								<label class="radio">{{ Form::radio($element_name, $item_id, null, ['id' => $id.'_'.$item_id]) }} {{ $item_val }}</label>
+								<label class="radio">{!! Form::radio($element_name, $item_id, null, ['id' => $id.'_'.$item_id]) !!} {!! $item_val !!}</label>
 							@endforeach
 						</div>
 					@endif
@@ -246,7 +246,7 @@
 					@if ($element_info['type'] == 'select' && (isset($foreign_data[$element_name]) || (isset($element_info['data']['options']))))
 						<?php $options = isset($foreign_data[$element_name]) ? $foreign_data[$element_name] : $element_info['data']['options'] ?>
 						<?php $options = array('' => '') + $options ?> {{-- this is needed to display the harvest/chosen placeholder --}}
-						{{ Form::select($element_name, $options, null,['class'=>'chosen-select', 'style' => 'width: 400px', 'id' => $id, 'data-placeholder' => 'Please choose one...']) }}
+						{!! Form::select($element_name, $options, null,['class'=>'chosen-select', 'style' => 'width: 400px', 'id' => $id, 'data-placeholder' => 'Please choose one...']) !!}
 					@endif
 
 					{{-- sub panel list --}}
@@ -272,9 +272,9 @@
 			<div class="pull-left">
 				<button class="btn btn-success btn-hg station-form-submit">
 					@if(isset($button_override))
-					{{ $button_override['save'] }} <i class="fui-arrow-right"></i>
+						{!! $button_override['save'] !!} <i class="fui-arrow-right"></i>
 					@else
-					{{ $submit_value }} <i class="fui-arrow-right"></i>
+						{!! $submit_value !!} <i class="fui-arrow-right"></i>
 					@endif
 				</button>
 
@@ -283,7 +283,7 @@
 						@if(isset($button_override))
 							@if($button_override['save_add']!==0)
 							<button name="after_save" value="create" class="btn btn-success btn-hg station-form-submit">
-								{{ $button_override['save_add'] }}
+								{!! $button_override['save_add'] !!}
 							</button>	
 							@endif							
 						@else
@@ -297,7 +297,7 @@
 					@if(isset($button_override))
 							@if($button_override['save_add']!==0)
 							<button name="after_save" value="stay" class="btn btn-success btn-hg station-form-submit">
-								{{ $button_override['save_add'] }}
+								{!! $button_override['save_add'] !!}
 							</button>	
 							@endif							
 						@else
@@ -314,10 +314,10 @@
 			</div>
 
 			@if($needs_media)
-				{{ Form::hidden('img_sizes_array', json_encode($img_size_data)) }}
+				{!! Form::hidden('img_sizes_array', json_encode($img_size_data)) !!}
 			@endif
 
-		{{ Form::close() }}
+		{!! Form::close() !!}
 
 		@if($needs_media)
 			@include('station::layouts.media')

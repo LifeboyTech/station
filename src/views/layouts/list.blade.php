@@ -14,8 +14,8 @@
 							{{ count($data['data']) > 1 ? count($data['data']) : '' }}
 							{{ $raw_count > count($data['data']) ? ' of '.$raw_count : '' }}
 							
-							{{ ($is_reorderable || $is_nestable) && count($data['data']) > 1 ? 
-								'&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-xs btn-default drag-drop-notice">Drag and Drop to Reorder</a>' : '' }}
+							{!! ($is_reorderable || $is_nestable) && count($data['data']) > 1 ? 
+								'&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-xs btn-default drag-drop-notice">Drag and Drop to Reorder</a>' : '' !!}
 							
 							@if ($is_nestable && count($data['data']) > 1)
 								<a class="btn btn-xs btn-info nestables-collapse-all"><span class="fui-list"></span>&nbsp;Collapse All</a>
@@ -49,7 +49,7 @@
 			</div>
 
 			{{-- First we build the list header--}}
-			{{ $list_outer_wrap[0] }}
+			{!! $list_outer_wrap[0] !!}
 
 				@if (!$is_reorderable && !$is_nestable)
 					<thead>
@@ -81,7 +81,7 @@
 									@if ($filter_data)
 										<?php $initial_filter_val = isset($user_filters[$elem_name]) ? $user_filters[$elem_name] : null ?>
 										<?php $options = array('' => '') + $filter_data ?> {{-- this is needed to display the harvest/chosen placeholder --}}
-										{{ Form::select('filter-'.$elem_name, $options, $initial_filter_val, ['class'=>'table-filter chosen-select', 'style' => 'width: 150px', 'data-placeholder' => $elem_data['label']]) }}
+										{!! Form::select('filter-'.$elem_name, $options, $initial_filter_val, ['class'=>'table-filter chosen-select', 'style' => 'width: 150px', 'data-placeholder' => $elem_data['label']]) !!}
 									@else 
 										{{ $elem_data['label'] }}
 									@endif
@@ -95,7 +95,7 @@
 					</thead>
 				@endif
 				
-				{{ $list_inner_wrap[0] }}
+				{!! $list_inner_wrap[0] !!}
 
 					<?php 
 						$list_data 		= compact('data', 'panel_data', 'row_opener', 'row_closer', 'user_can_update', 
@@ -105,9 +105,9 @@
 
 					@include('station::partials.'.$partial, $list_data)
 
-				{{ $list_inner_wrap[1] }}
+				{!! $list_inner_wrap[1] !!}
 				
-			{{ $list_outer_wrap[1] }}
+			{!! $list_outer_wrap[1] !!}
 
 
 			{{-- we have more data in this list that we are not showing --}}

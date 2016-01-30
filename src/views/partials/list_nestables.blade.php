@@ -16,7 +16,7 @@
 
 	  	{{-- level up? --}}
 	  	@if ($row['depth'] < $curr_depth)
-	  		<?= str_repeat('</ol></li>', $curr_depth - $row['depth']) ?>
+	  		<?php echo str_repeat('</ol></li>', $curr_depth - $row['depth']) ?>
 	  	@endif
 
 	  	{{-- always open a node --}}

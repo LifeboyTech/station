@@ -10,7 +10,7 @@
 				data-single-item-name="{{ $config['panel_options']['single_item_name'] }}"
 				data-initial-label="Add a New {{{ $config['panel_options']['single_item_name'] }}}">
 			<span class="fui-plus"></span>&nbsp;
-			<span>Add a New {{ $config['panel_options']['single_item_name'] }}</span>
+			<span>Add a New {!! $config['panel_options']['single_item_name'] !!}</span>
 		</button>
 	@endif
 
@@ -22,7 +22,7 @@
 				data-single-item-name="{{ $config['panel_options']['single_item_name'] }}"
 				data-initial-label="Add a New {{{ $config['panel_options']['single_item_name'] }}}">
 			<span class="fui-plus"></span>&nbsp;
-			<span>Add a New {{ $config['panel_options']['single_item_name'] }}</span>
+			<span>Add a New {!! $config['panel_options']['single_item_name'] !!}</span>
 		</button>
 	@endif
 

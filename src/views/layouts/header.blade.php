@@ -1,6 +1,6 @@
 @if(Session::has('success'))
     <div class="dialog dialog-success flash-response">
-      {{ Session::get('success') }}
+      {!! Session::get('success') !!}
       <button class="btn btn-default btn-xs" data-dismiss="alert">
         <span class="fui-cross"></span>
       </button>
@@ -9,7 +9,7 @@
 
 @if(Session::has('error'))
     <div class="dialog dialog-danger flash-response">
-      {{ Session::get('error') }}
+      {!! Session::get('error') !!}
       <button class="btn btn-default btn-xs" data-dismiss="alert">
         <span class="fui-cross"></span>
       </button>
@@ -20,7 +20,7 @@
     <div class="dialog dialog-danger flash-response">
       <p><b>There were some problems:</b></p>
       @foreach (Session::get('errors')->all() as $error)
-        <li>{{ $error }}</li>
+        <li>{!! $error !!}</li>
       @endforeach
       <button class="btn btn-danger btn-xs" data-dismiss="alert">
         <span class="fui-cross"></span>
@@ -33,7 +33,7 @@
     <div class="dialog dialog-danger flash-response">
       <p><b>There were some problems:</b></p>
       @foreach ($ajax_errors as $error)
-        <li>{{ $error[0] }}</li>
+        <li>{!! $error[0] !!}</li>
       @endforeach
       <button class="btn btn-danger btn-xs" data-dismiss="alert">
         <span class="fui-cross"></span>

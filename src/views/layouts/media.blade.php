@@ -18,18 +18,18 @@
       	<div class="col-sm-8"> <!--  main window, normally the grid -->
       		<div class="tab-content" style="padding-bottom:18px;">
 	            <div class="tab-pane active" id="upload-tab">
-                  {{ Form::open(array('target'=>'postiframe','files'=>true,'class' => 'image-form', 'role'=>'form', 'url' => $base_uri.'file/upload', 'method' => 'POST', 'autocomplete' => 'off', 'id'=>'station-fileupload-form')) }}
-                  {{ Form::file('uploaded_file',['style'=>'display:none;']) }}
+                  {!! Form::open(array('target'=>'postiframe','files'=>true,'class' => 'image-form', 'role'=>'form', 'url' => $base_uri.'file/upload', 'method' => 'POST', 'autocomplete' => 'off', 'id'=>'station-fileupload-form')) !!}
+                  {!! Form::file('uploaded_file',['style'=>'display:none;']) !!}
                   
                   <div id="station-fileupload-hud" style="margin:auto;text-align:center;"></div>
                   <button type="button" class="btn btn-primary btn-block trigger_img_upload">Upload File</button>
 
-                  {{ Form::hidden('panel_name', $panel_name) }}
-                  {{ Form::hidden('parent_panel_name', $parent_panel_name) }}
-                  {{ Form::hidden('upload_element_name', null) }}
-                  {{ Form::hidden('img_sizes', null) }}
-                  {{ Form::hidden('method', $method) }}
-                  {{ Form::close() }}
+                  {!! Form::hidden('panel_name', $panel_name) !!}
+                  {!! Form::hidden('parent_panel_name', $parent_panel_name) !!}
+                  {!! Form::hidden('upload_element_name', null) !!}
+                  {!! Form::hidden('img_sizes', null) !!}
+                  {!! Form::hidden('method', $method) !!}
+                  {!! Form::close() !!}
 	            </div>
 	            <div class="tab-pane" id="gallery-tab">
 	              	<p>Nothing here yet.</p>

@@ -2,7 +2,7 @@
 
 	<?php $row = (array) $row; ?>
 
-	{{ $row_opener }} id="{{ $curr_panel }}-record-{{  $row['id'] }}" data-id="{{  $row['id'] }}">
+	{!! $row_opener !!} id="{{ $curr_panel }}-record-{{  $row['id'] }}" data-id="{{  $row['id'] }}">
 
 		@if ($user_can_bulk_delete)
 			{{-- We need our bulk-delete checkbox --}}
@@ -33,5 +33,5 @@
 				</a>
 			</{{ $item_element }}>
 		@endif
-	{{ $row_closer }}
+	{!! $row_closer !!}
 @endforeach

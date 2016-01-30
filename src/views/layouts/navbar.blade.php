@@ -8,7 +8,7 @@
          <span class="icon-bar"></span>
          <span class="icon-bar"></span>
       </button>
-       <a class="navbar-brand" href="/{{ $app_data['root_uri_segment'] }}">{{ $app_data['name'] }}</a>
+       <a class="navbar-brand" href="/{{ $app_data['root_uri_segment'] }}">{!! $app_data['name'] !!}</a>
     </div>
   
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -31,7 +31,7 @@
           <li class="dropdown">
               <a href="/{{ $app_data['root_uri_segment'] }}/panel/my_account/update/{{ $user_data['id'] }}">
                 <img class="gravatar" src="http://www.gravatar.com/avatar/{{ $user_data['gravatar_hash'] }}?s=30&d=identicon">&nbsp; 
-                {{ $user_data['name'] }}
+                {!! $user_data['name'] !!}
               </a>
               <a href="/{{ $app_data['root_uri_segment'] }}/logout/">Log-out Of Account</a>
           </li>
