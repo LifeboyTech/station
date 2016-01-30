@@ -1,3 +1,8 @@
+## TODO 
+
+* Replace `Input::*`
+* Replace `Session::*`
+
 ## Laravel 5: Backend UI for Content & User Management
 
 **Note: This is still unstable as we continue to make the upgrade from L4: https://github.com/thecanarycollective/station**

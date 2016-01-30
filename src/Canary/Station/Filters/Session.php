@@ -1,9 +1,11 @@
 <?php namespace Canary\Station\Filters;
 
-use Auth, Redirect, Config, Request, Session as Laravel_Session;
+use Redirect, Config, Request, Session as Laravel_Session;
+use Illuminate\Support\Facades\Auth as Auth;
 use Canary\Station\Models\User as User;
 use Canary\Station\Models\Panel as Panel;
 use Canary\Station\Config\StationConfig as StationConfig;
+use Closure;
 
 class Session {
 
@@ -12,17 +14,19 @@ class Session {
      * 
      * @return mixed
      */
-    public function handle()
+    public function handle($request, Closure $next, $guard = null)
     {
     	$this->base_uri = StationConfig::app('root_uri_segment').'/';
 
-        if (Auth::guest()) {
+        if (!Auth::check()) {
 
             Laravel_Session::put('desired_uri', '/'.Request::path());
             return Redirect::to($this->base_uri.'login');
         }
 
 		if (!Laravel_Session::has('user_data')) $this->hydrate();
+
+        return $next($request);
     }
 
     /**

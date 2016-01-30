@@ -1,6 +1,7 @@
 <?php namespace Canary\Station\Controllers;
 
-use View, Input, Auth, Redirect, Config, Session;
+use View, Input, Redirect, Config, Session;
+use Illuminate\Support\Facades\Auth as Auth;
 use Canary\Station\Filters\Session as Session_Filter;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,7 @@ class StationSessionController extends ObjectBaseController {
 	 */
 	public function create()
 	{
+		//print_r(session()->all()); exit;
 		if (Auth::check()) return $this->bootstrap();
 		
 		return View::make('station::sessions.create');
@@ -30,6 +32,7 @@ class StationSessionController extends ObjectBaseController {
 	 */
 	public function bootstrap()
 	{
+
 		if (Auth::guest()) return Redirect::to($this->base_uri.'login');
 
 		Session_Filter::hydrate();
@@ -59,7 +62,7 @@ class StationSessionController extends ObjectBaseController {
 		$remember_me		= (boolean) $this->request->input('remember_me');
 		$username_col 		= strpos($username, '@') !== FALSE ? 'email' : 'username';
 		$login_succeeded	= Auth::attempt(array($username_col => $username, 'password' => $password), $remember_me);
-
+        
 		if ($login_succeeded) {
 
 			return $this->bootstrap();

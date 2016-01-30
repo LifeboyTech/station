@@ -16,7 +16,7 @@ $path = 'Canary\Station\Controllers\\';
 Route::get('/password/reset/{token}', $path.'StationUserController@password_reset');
 
 // unprotected routes. user does not have to be logged in to access
-Route::group(array('prefix' => $root_uri_segment), function() use ($path)
+Route::group(array('middleware' => ['web'], 'prefix' => $root_uri_segment), function() use ($path)
 {
 	$panel_for_user_create = Canary\Station\Config\StationConfig::app('panel_for_user_create');
 	Route::get('/login', $path.'StationSessionController@create');
@@ -31,7 +31,7 @@ Route::group(array('prefix' => $root_uri_segment), function() use ($path)
 });
 
 // protected routes. user must be logged in.
-Route::group(array('middleware' => 'station.session', 'prefix' => $root_uri_segment), function() use ($path)
+Route::group(array('middleware' => ['web', 'station.session'], 'prefix' => $root_uri_segment), function() use ($path)
 {
 	Route::get('/', $path.'StationSessionController@bootstrap');
 	Route::get('/home', $path.'StationSessionController@bootstrap');
