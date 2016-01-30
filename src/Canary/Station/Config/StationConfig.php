@@ -25,7 +25,8 @@ class StationConfig {
 
 		$is_vendor = self::is_vendor();
 		$namespace = $is_vendor ? 'station_vendor_config' : 'station';
+		$prefix = 'packages.canary.station.';
 		
-		return Config::get($is_vendor && !$for_build ? $panel_name : $namespace.'::'.$panel_name);
+		return Config::get($is_vendor && !$for_build ? $prefix.$panel_name : $namespace.'::'.$prefix.$panel_name);
 	}
 }

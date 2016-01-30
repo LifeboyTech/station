@@ -278,7 +278,7 @@ class Panel {
 
         if (!$panel) return FALSE;
 
-        $model_name                = '\App\Models\\'.$this->model_name_for($panel_name);
+        $model_name                = $this->model_name_for($panel_name);
         $table_name                = $panel['config']['panel_options']['table'];
         $model                     = new $model_name;
         $is_filtered               = (!$count_only && !$keyword) || ($count_only && $filter_on_count);
@@ -385,7 +385,7 @@ class Panel {
                 break;
             
             default:
-                return ucwords(str_singular($panel_name));
+                return '\App\Models\\'.ucwords(str_singular($panel_name));
                 break;
         }
     }
