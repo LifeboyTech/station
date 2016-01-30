@@ -2,13 +2,14 @@
 
 use View, Input, Auth, Redirect, Config, Session;
 use Canary\Station\Filters\Session as Session_Filter;
+use Illuminate\Http\Request;
 
 class StationSessionController extends ObjectBaseController {
 
-	public function __construct()
+	public function __construct(Request $request)
     {
         parent::__construct();
-        
+        $this->request = $request;
     }
 
 	/**
@@ -53,9 +54,9 @@ class StationSessionController extends ObjectBaseController {
 	{
 		if (Auth::check()) return $this->bootstrap();
 
-		$username			= Input::get('username');
-		$password			= Input::get('password');
-		$remember_me		= (boolean) Input::get('remember_me');
+		$username			= $this->request->input('username');
+		$password			= $this->request->input('password');
+		$remember_me		= (boolean) $this->request->input('remember_me');
 		$username_col 		= strpos($username, '@') !== FALSE ? 'email' : 'username';
 		$login_succeeded	= Auth::attempt(array($username_col => $username, 'password' => $password), $remember_me);
 

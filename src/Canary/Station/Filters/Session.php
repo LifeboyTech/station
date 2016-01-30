@@ -35,8 +35,8 @@ class Session {
 
 		$user_id			= Auth::user()->id;
 		$user				= User::find($user_id);
-		$group_names		= $user->groups->lists('name'); 
-		$primary_group		= current($group_names);
+		$group_names		= $user->groups->lists('name');
+		$primary_group		= $group_names->first();
 		$app_groups			= StationConfig::app('user_groups');
 		$starting_panel		= $app_groups[$primary_group]['starting_panel'];
 		$starting_panel_uri	= Panel::config_to_uri($starting_panel);
