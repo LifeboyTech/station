@@ -12,7 +12,7 @@ class Session {
      * 
      * @return mixed
      */
-    public function filter()
+    public function handle()
     {
     	$this->base_uri = StationConfig::app('root_uri_segment').'/';
 

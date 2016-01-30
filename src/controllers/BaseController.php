@@ -14,14 +14,6 @@ abstract class BaseController extends \Illuminate\Routing\Controller {
      */
     public function __construct(){
 
-        $this->beforeFilter(function() {
-            
-            $strict_domains = StationConfig::app('strict_domains');
-
-            if ($strict_domains && count($strict_domains) > 0 && !in_array(Request::server('SERVER_NAME'), $strict_domains)){
-
-                return Redirect::to('http://'.current($strict_domains).'/'.StationConfig::app('root_uri_segment'));
-            }
-        });
+        
     }
 }

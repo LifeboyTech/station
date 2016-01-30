@@ -9,7 +9,8 @@ class StationConfig {
 		$key = $key != '' ? '.'.$key : '';
 		$is_vendor = self::is_vendor();
 		$namespace = $is_vendor ? 'station_vendor_config' : 'station';
-		return Config::get($is_vendor && !$for_build ? '_app'.$key : $namespace.'::_app'.$key);
+		$prefix = 'packages.canary.station._app';
+		return config($is_vendor && !$for_build ? $prefix.$key : $namespace.'::'.$prefix.$key);
 	}
 
 	/**

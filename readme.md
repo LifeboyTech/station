@@ -33,7 +33,7 @@ composer update
 
 ## Configuration & Setup
 
-This assumes you have a working dev or production environment with Laravel 5 and a database already installed.
+This assumes you have a working dev or production environment with Laravel 5 and a database already installed and configured.
 
 ### 1. Register Station in app/config/app.php
 
@@ -43,12 +43,8 @@ Find the `providers` key in your `app/config/app.php` and register the Station S
 
 ```php
     'providers' => array(
-        // ...
-        'Illuminate\Html\HtmlServiceProvider',
-	'Canary\Station\StationServiceProvider',
-        //'Way\Generators\GeneratorsServiceProvider', // add back when we can remove bridge
-        'Morrislaptop\LaravelFivePackageBridges\ConfigServiceProvider',
-        'Morrislaptop\LaravelFivePackageBridges\Bridges\GeneratorsServiceProvider',
+        // ... add below ...
+        Canary\Station\StationServiceProvider::class,
     ),
 ```
 
@@ -62,23 +58,14 @@ Also update the `aliases` array
 	],
 ```
 
-Then `bootstrap/app.php` replace
+In `app/Http/Kernel.php`, add:
 
-```php
-$app = new Illuminate\Foundation\Application(
-    realpath(__DIR__.'/../')
-);
+```php 
+protected $routeMiddleware = [
+    // ...
+    'station.session' => \Canary\Station\Filters\Session::class
+];
 ```
-
-with
-
-```php
-$app = new Morrislaptop\LaravelFivePackageBridges\Application(
-    realpath(__DIR__.'/../')
-);
-```
-
-(this is a temporary hack until the Way/Generators package is updated for Laravel 5. We will switch it back afterwards)
 
 ### 2. Publish Station's assets over to your app.
 

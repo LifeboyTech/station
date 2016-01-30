@@ -21,7 +21,7 @@ abstract class ObjectBaseController extends BaseController{
     {
         parent::__construct();
         $this->base_uri = StationConfig::app('root_uri_segment').'/';
-        $this->beforeFilter( 'sessionFilter' , array('except' => array('create')));
+        //$this->beforeFilter( 'sessionFilter' , array('except' => array('create')));
         View::share('app_data', StationConfig::app());
     }
 

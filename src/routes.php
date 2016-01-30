@@ -30,12 +30,8 @@ Route::group(array('prefix' => $root_uri_segment), function() use ($path)
 	Route::post('/password/reset/{token}', $path.'StationUserController@do_reset_password');
 });
 
-// Filter for all requests to the private areas of station 
-// This is where we populate session data that needs to persist across all requests
-Route::filter('station.session', 'Canary\Station\Filters\Session');
-
 // protected routes. user must be logged in.
-Route::group(array('before' => 'station.session', 'prefix' => $root_uri_segment), function() use ($path)
+Route::group(array('middleware' => 'station.session', 'prefix' => $root_uri_segment), function() use ($path)
 {
 	Route::get('/', $path.'StationSessionController@bootstrap');
 	Route::get('/home', $path.'StationSessionController@bootstrap');
@@ -62,4 +58,5 @@ Route::group(array('before' => 'station.session', 'prefix' => $root_uri_segment)
     Route::put('/panel/{panel_name}/{parent_panel}/{parent_id}/reorder/', $path.'StationPanelController@do_reorder_in_subpanel');
     Route::delete('/panel/{panel_name}/delete/{id}', $path.'StationPanelController@do_delete');
     Route::delete('/panel/{panel_name}/{parent_panel}/{parent_id}/delete/{id}', $path.'StationPanelController@do_delete_in_subpanel');
+
 });
