@@ -45,6 +45,7 @@ Find the `providers` key in your `app/config/app.php` and register the Station S
     'providers' => array(
         // ... add below ...
         Canary\Station\StationServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
     ),
 ```
 
@@ -53,8 +54,8 @@ Also update the `aliases` array
 ```php 
 	'aliases' => [
 		// ...
-		'Form' 		=> 'Illuminate\Html\FormFacade', 
-		'HTML'		=> 'Illuminate\Html\HtmlFacade',
+		'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 	],
 ```
 
