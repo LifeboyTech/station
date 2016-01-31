@@ -127,6 +127,11 @@ class Build extends Command {
 				break;
 		}
 
+		if (isset($element['rules']) && strpos($element['rules'], 'unique') !== FALSE) {
+
+			$ret .= ':unique';
+		}
+
 		// then set a default value for the field if we have one 
 		// AND if the default does not use a variable (%)
 		if (isset($element['default']) && strpos($element['default'], '%') === FALSE){
@@ -168,14 +173,8 @@ class Build extends Command {
 	 * @return void
 	 */
 	private function generate_migration($options){
-
-		if (isset($options['name'])){ // support the legacy usage of this call
-
-			$options['migrationName'] = $options['name'];
-			unset($options['name']);
-		}
-
-		$this->call('generate:migration', $options);
+print_r($options); exit;
+		$this->call('make:migration:schema', $options);
 		$this->call('migrate'); // see comments
 	}
 
@@ -201,7 +200,7 @@ class Build extends Command {
 
         				// ... add migration for it.
         				$migration_name = 'add_'.$att_name.'_column_to_'.$table_name.'_table'; // must keep 'column_to'!
-        				$migration_options = array('name' => $migration_name,'--fields' => $att_name.$this->column_type_suffix($att_data));
+        				$migration_options = array('name' => $migration_name, '--schema' => $att_name.$this->column_type_suffix($att_data));
         				$this->generate_migration($migration_options);
         			}
 
@@ -215,7 +214,7 @@ class Build extends Command {
         				$subpanel_fields_string	= $this->fields_string_for_elements($att_data['data']['table'], $subpanel_data);
         				if (!Schema::hasTable($att_data['data']['table'])) $this->table_migrate($att_data['data']['table'], $subpanel_fields_string);
         				$migration_name = 'add_'.$att_data['data']['key'].'_column_to_'.$att_data['data']['table'].'_table'; // must keep 'column_to'!
-        				$migration_options = array('name' => $migration_name,'--fields' => $att_data['data']['key'].':integer');
+        				$migration_options = array('name' => $migration_name, '--schema' => $att_data['data']['key'].':integer');
         				$this->generate_migration($migration_options);
         			}
         		}
@@ -331,7 +330,7 @@ class Build extends Command {
 	        	if ($is_nestable_panel && !Schema::hasColumn($table_name, $column)){
 
 		        	$migration_name = 'add_'.$column.'_column_to_'.$table_name.'_table'; // must keep 'column_to'!
-		        	$migration_options = array('name' => $migration_name,'--fields' => $column.':integer:default("0")');
+		        	$migration_options = array('name' => $migration_name,'--schema' => $column.':integer:default("0")');
 		        	$this->generate_migration($migration_options);
 		        }
 
@@ -356,7 +355,7 @@ class Build extends Command {
         if ($is_reorderable_panel && !Schema::hasColumn($table_name, $reorderable_column)){
 
         	$migration_name = 'add_'.$reorderable_column.'_column_to_'.$table_name.'_table'; // must keep 'column_to'!
-        	$migration_options = array('name' => $migration_name,'--fields' => $reorderable_column.':integer:default("0")');
+        	$migration_options = array('name' => $migration_name,'--schema' => $reorderable_column.':integer:default("0")');
         	$this->generate_migration($migration_options);
         }
 	}
@@ -469,7 +468,7 @@ class Build extends Command {
 	}
 
 	/**
-	 * converts panel element to a string which can be passed to way's generate:migration
+	 * converts panel element to a string which can be passed to the migration generator
 	 *
 	 * @param  string  $table_name  // table name
 	 * @param  string  $name // element name
@@ -493,8 +492,6 @@ class Build extends Command {
 		
 		$ret .= $this->column_type_suffix($data);
 
-		if(isset($data['length'])) $ret .= '('.$data['length'].')';
-
 		if(isset($data['attributes']) && $data['attributes'] != '')
 		{
 			$attribs = explode('|', $data['attributes']);
@@ -510,7 +507,7 @@ class Build extends Command {
 
 	private function table_migrate($table_name, $fields_string){
 
-		$migration_options = array('migrationName' => 'create_'.$table_name.'_table','--fields' => $fields_string);
+		$migration_options = array('name' => 'create_'.$table_name.'_table','--schema' => $fields_string);
         $this->generate_migration($migration_options);
 	}
 }
