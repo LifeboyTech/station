@@ -4,13 +4,13 @@ use Config;
 
 class StationConfig {
 
-	static function app($key = '', $for_build = FALSE){
+	static function app($key = ''){
 
 		$key = $key != '' ? '.'.$key : '';
 		$is_vendor = self::is_vendor();
 		$namespace = $is_vendor ? 'station_vendor_config' : 'station';
 		$prefix = 'packages.canary.station._app';
-		return config($is_vendor && !$for_build ? $prefix.$key : $namespace.'::'.$prefix.$key);
+		return config($is_vendor ? $prefix.$key : $namespace.'::'.$prefix.$key);
 	}
 
 	/**
@@ -21,12 +21,12 @@ class StationConfig {
 		return strpos(realpath(__FILE__), '/vendor/') !== FALSE;
 	}
 
-	static function panel($panel_name, $for_build = FALSE){
+	static function panel($panel_name){
 
 		$is_vendor = self::is_vendor();
 		$namespace = $is_vendor ? 'station_vendor_config' : 'station';
 		$prefix = 'packages.canary.station.';
 		
-		return Config::get($is_vendor && !$for_build ? $prefix.$panel_name : $namespace.'::'.$prefix.$panel_name);
+		return Config::get($is_vendor ? $prefix.$panel_name : $namespace.'::'.$prefix.$panel_name);
 	}
 }
