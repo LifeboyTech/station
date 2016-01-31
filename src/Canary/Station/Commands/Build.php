@@ -261,7 +261,7 @@ class Build extends Command {
 			$station_config	= new StationConfig;
 			$panel_data		= $station_config::panel($panel_name, TRUE);
 			$className		= $panel_data['panel_options']['single_item_name'];
-			$modelName		= $this->panel_model->model_name_for($panel_name);
+			$modelName		= $this->panel_model->model_name_for($panel_name, TRUE);
 			$tableName		= $panel_data['panel_options']['table'];
 			$filePath		= $base_path.'/'.$modelName.'.php';
 

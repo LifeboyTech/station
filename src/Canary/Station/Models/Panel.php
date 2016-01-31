@@ -373,20 +373,21 @@ class Panel {
      * @param  array  $panel // full configuration from StationConfig::panel({panel-name}) config file  
      * @return string // the model name
      */
-    public function model_name_for($panel_name){
+    public function model_name_for($panel_name, $no_path = FALSE){
 
         switch ($panel_name) {
 
             case 'users':
-                return 'Canary\Station\Models\User';
+                return $no_path ? 'User' : 'Canary\Station\Models\User';
                 break;
 
             case 'groups':
-                return 'Canary\Station\Models\Group';
+                return $no_path ? 'Group' : 'Canary\Station\Models\Group';
                 break;
             
             default:
-                return '\App\Models\\'.ucwords(str_singular($panel_name));
+                $name = ucwords(str_singular($panel_name));
+                return $no_path ? $name : '\App\Models\\'.$name;
                 break;
         }
     }
