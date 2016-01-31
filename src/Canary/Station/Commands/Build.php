@@ -173,7 +173,8 @@ class Build extends Command {
 	 * @return void
 	 */
 	private function generate_migration($options){
-print_r($options); exit;
+
+		$options['--model'] = FALSE;
 		$this->call('make:migration:schema', $options);
 		$this->call('migrate'); // see comments
 	}
@@ -298,8 +299,9 @@ print_r($options); exit;
 
         		if (!Schema::hasTable($pivot_table_name)) {
 
-        			$this->call('generate:pivot',$pivot);
+        			$this->call('make:migration:pivot', $pivot);
         		}
+
         		$this->call('migrate');
         	}
         }
