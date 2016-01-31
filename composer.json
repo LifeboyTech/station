@@ -20,7 +20,7 @@
             "src/controllers",
             "src/seeds"
         ],
-        "psr-0": {
+        "psr-4": {
             "Canary\\Station": "src/"
         }
     },

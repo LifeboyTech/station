@@ -1,6 +1,6 @@
 <?php namespace Canary\Station\Models;
 /*
- * Image_Moo library
+ * ImageMoo library
  *
  * Written due to image_lib not being so nice when you have to do multiple things to a single image!
  *
@@ -10,7 +10,7 @@
  * @docu		http://todo :)
  * @email		matthew@dps.uk.com
  *
- * @file		image_moo.php
+ * @file		ImageMoo.php
  * @version		1.1.5
  * @date		2012 Oct 13
  *
@@ -19,8 +19,8 @@
  * Requires PHP 5 and GD2!
  *
  * Example usage
- *    $this->image_moo->load("file")->resize(64,40)->save("thumb")->resize(640,480)->save("medium");
- *    if ($this->image_moo->errors) print $this->image_moo->display_errors();
+ *    $this->ImageMoo->load("file")->resize(64,40)->save("thumb")->resize(640,480)->save("medium");
+ *    if ($this->ImageMoo->errors) print $this->ImageMoo->display_errors();
  *
  * COLOURS!
  * Any function that can take a colour as a parameter can take "#RGB", "#RRGGBB" or an array(R,G,B)
@@ -72,7 +72,7 @@
  *
  */
 
-class Image_moo
+class ImageMoo
 {
 	// image vars
 	private $main_image = "";
@@ -100,12 +100,11 @@ class Image_moo
 	public $new_width = 0;
 	public $new_height = 0;
 
-	function Image_moo()
+	public function __construct()
 	//----------------------------------------------------------------------------------------------------------
 	// create stuff here as needed
 	//----------------------------------------------------------------------------------------------------------
 	{
-		log_message('debug', "Image Moo Class Initialized");
 		if ($this->jpeg_ignore_warnings) $this->ignore_jpeg_warnings();
 		if ($this->can_stretch) $this->can_stretch(TRUE);
 	}
@@ -162,7 +161,7 @@ class Image_moo
 
 	public function check_gd()
 	//----------------------------------------------------------------------------------------------------------
-	// verification util to see if you can use image_moo
+	// verification util to see if you can use ImageMoo
 	//----------------------------------------------------------------------------------------------------------
 	{
 		// is gd loaded?
@@ -1380,5 +1379,5 @@ class Image_moo
 	}
 
 }
-/* End of file image_moo.php */
-/* Location: /application/libraries/image_moo.php */
+/* End of file ImageMoo.php */
+/* Location: /application/libraries/ImageMoo.php */

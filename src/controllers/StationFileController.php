@@ -2,11 +2,11 @@
 
 use Input, Response, Config, Session, Medium;
 use Canary\Station\Models\Panel as Panel;
-use Canary\Station\Models\Image_moo as Image_moo;
+use Canary\Station\Models\ImageMoo as ImageMoo;
 use Canary\Station\Models\OpenGraph as OpenGraph;
 use Canary\Station\Models\S3 as S3;
 use Canary\Station\Config\StationConfig as StationConfig;
-//use Canary\Station\Models\Medium as Medium;
+use Illuminate\Http\Request as Request;
 use Illuminate\Filesystem\Filesystem as File;
 
 class StationFileController extends BaseController {
@@ -65,14 +65,14 @@ class StationFileController extends BaseController {
 		$y_val				= $y_val == 0 ? $max_resize : $y_val;
 		$letterbox_color	= isset($size['letterbox']) && $size['letterbox'] ? $size['letterbox'] : FALSE;
 
-		$image = new Image_moo;
+		$image = new ImageMoo;
 		$image->load($this->tmp_dir.'/'.$file); // TODO: need to set the BG color. not urgent.
 		$image->crop($target_orig_x, $target_orig_y, $target_orig_x2, $target_orig_y2);
 		$image->set_jpeg_quality(100);
 		$image->save($this->tmp_dir.'/'.$file, TRUE);
 		$image->clear();
 
-		$image = new Image_moo;
+		$image = new ImageMoo;
 		$image->load($this->tmp_dir.'/'.$file);
 		$image->allow_scale_up(TRUE);
 		$image->set_jpeg_quality(100);
@@ -123,7 +123,7 @@ class StationFileController extends BaseController {
 			
 			if ($x_val == $max_resize && $y_val == $max_resize) continue; // nothing defined. not a well defined spec.
 
-			$image = new Image_moo;
+			$image = new ImageMoo;
 			$image->load($this->tmp_dir.'/'.$file);
 			$image->set_background_colour($letterbox_color ?: '#000000');
 			$image->set_jpeg_quality(100);
@@ -135,7 +135,7 @@ class StationFileController extends BaseController {
 		}
 		
 		// make station large thumb, send to S3
-		$image = new Image_moo;
+		$image = new ImageMoo;
 		$image->load($this->tmp_dir.'/'.$file);
 		$image->resize($this->mock_width, $max_resize); // station large thumb spec
 		$image->set_jpeg_quality(100);
@@ -143,7 +143,7 @@ class StationFileController extends BaseController {
 		$this->send_to_s3('_'.$file, 'station_thumbs_lg',$app_config);
 
 		// make station small thumb, send to S3
-		$image = new Image_moo;
+		$image = new ImageMoo;
 		$image->load($this->tmp_dir.'/'.$file);
 		$image->resize(100, 100, '#FFFFFF'); // station large thumb spec
 		$image->set_jpeg_quality(100);
