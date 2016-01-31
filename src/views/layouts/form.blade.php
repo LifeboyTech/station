@@ -121,6 +121,7 @@
 						$label				.= $is_required ? '<sup>*</sup>' : '';
 						$append_classes		= isset($element_info['format']) ? $element_info['format'] : '';
 						$default_value		= isset($element_info['default']) ? $element_info['default'] : null; // important to keep this as null
+						$default_value 		= isset($passed_model->$element_name) ? $passed_model->$element_name : $default_value;
 						
 						$is_file_uploader 	= in_array($element_info['type'],['image','image_gallery']);
 						$has_file_uploader	= $is_file_uploader	|| (isset($element_info['embeddable']) && $element_info['embeddable']);

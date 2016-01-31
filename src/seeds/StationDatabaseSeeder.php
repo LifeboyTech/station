@@ -1,4 +1,4 @@
-<?php namespace Canary\Station\Seeds;
+<?php 
 
 use \Illuminate\Database\Seeder;
 
