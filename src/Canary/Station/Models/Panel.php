@@ -455,8 +455,9 @@ class Panel {
         $data            = $this->filter_data($data, $user_scope, $writable_fields);
         $model_name      = $this->model_name_for($panel_name);
         $model           = new $model_name;
-        
+
         $old_item = $model::find($id);
+        $old_item::unguard();
         $old_item->fill($data);
         $old_item->save();
 
