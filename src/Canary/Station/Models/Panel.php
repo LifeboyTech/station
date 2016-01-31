@@ -877,7 +877,7 @@ class Panel {
             
             if (strpos($rule, 'unique:') !== FALSE){
 
-                $new_rules[] = $rule.', '.$unique_id;
+                $new_rules[] = $rule.','.$unique_id;
             
             } else {
 
@@ -885,7 +885,9 @@ class Panel {
             }
         }
 
-        return implode('|', $new_rules);
+        $ret = implode('|', $new_rules);
+
+        return $ret;
     }
 
     private function filter_data($data, $user_scope, $writable_fields){

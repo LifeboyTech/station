@@ -3,6 +3,7 @@
 * Replace `Session::*`
 * Replace `Request::*`
 * Replace `->lists()` - convert to array - this now returns an object
+* CSS edits
 
 ## Laravel 5: Backend UI for Content & User Management
 
@@ -58,11 +59,11 @@ Find the `providers` key in your `app/config/app.php` and register the Station S
 Also update the `aliases` array 
 
 ```php 
-	'aliases' => [
-		// ...
-		'Form' => Collective\Html\FormFacade::class,
+    'aliases' => [
+        // ...
+        'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-	],
+    ],
 ```
 
 In `app/Http/Kernel.php`, add:
