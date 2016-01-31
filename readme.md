@@ -2,6 +2,7 @@
 
 * Replace `Session::*`
 * Replace `Request::*`
+* Replace `->lists()` - convert to array - this now returns an object
 
 ## Laravel 5: Backend UI for Content & User Management
 

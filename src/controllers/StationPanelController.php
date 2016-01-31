@@ -86,7 +86,7 @@ class StationPanelController extends BaseController {
 
 		if ($validator->fails()){ // flash error and redirect to form
 
-			if (Request::ajax()){
+			if ($this->request->ajax()){
 
 				$errors = array('ajax_errors' => $validator->getMessageBag()->toArray());
 				$error_flash = View::make('station::layouts.header', $errors)->render();
@@ -125,7 +125,7 @@ class StationPanelController extends BaseController {
 				}
 
 
-				if (Request::ajax()){
+				if ($this->request->ajax()){
 
 					return Response::json(['status' => 1, 'record_id' => $record_id]);
 
@@ -296,7 +296,7 @@ class StationPanelController extends BaseController {
 
 		if ($validator->fails()){ // flash error and redirect to form
 
-			if (Request::ajax()){
+			if ($this->request->ajax()){
 
 				$errors = array('ajax_errors' => $validator->getMessageBag()->toArray());
 				$error_flash = View::make('station::layouts.header', $errors)->render();
@@ -331,7 +331,7 @@ class StationPanelController extends BaseController {
 					App::make($override_controller)->$override_method($id);
 				}
 
-				if (Request::ajax()){
+				if ($this->request->ajax()){
 
 					return Response::json(['status' => 1, 'record_id' => $id]);
 
