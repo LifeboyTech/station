@@ -38,6 +38,10 @@ class StationServiceProvider extends ServiceProvider {
 		$this->registerStationBuild();
 
 		$this->commands('station:build');
+
+		if ($this->app->environment() == 'local') {
+	        $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
+	    }
 	}
 
 	/**
