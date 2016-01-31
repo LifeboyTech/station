@@ -1,6 +1,6 @@
 {
     "name": "canary/laravel-station",
-    "description": "Laravel 5: Backend UI for Content & User Management",
+    "description": "Laravel 5: Backend UI for Content, User and Media Management",
     "version": "0.2.0",
     "license": "MIT",
     "authors": [
@@ -17,8 +17,6 @@
     },
     "autoload": {
         "classmap": [
-            "src/migrations",
-            "src/seeds",
             "src/controllers"
         ],
         "psr-0": {
