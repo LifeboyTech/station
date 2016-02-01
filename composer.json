@@ -1,12 +1,12 @@
 {
-    "name": "canary/laravel-station",
+    "name": "lifeboy/laravel-station",
     "description": "Laravel 5: Backend UI for Content, User and Media Management",
     "version": "0.2.0",
     "license": "MIT",
     "authors": [
         {
-            "name": "Canary Developers",
-            "email": "developers@thecanarycollective.com"
+            "name": "Ben Hirsch",
+            "email": "ben@lifeboytech.com"
         }
     ],
     "require": {
