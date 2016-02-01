@@ -193,7 +193,7 @@
 	background: #EBEBEB !important;
 }
 .nav-list-vivid > li.active > a, .nav-list-vivid > li.active > a:hover, .nav-list-vivid > li.active > a:focus {
-	background: #B3B3B3 !important;
+	background: #1C977C !important;
 	margin-top: 0;
 	margin-bottom: 0;
 	padding-top: 5px;
@@ -668,4 +668,15 @@ textarea.embedder.open {
 	
     margin: -14px 0 0 0;
     color: #AAA;
+}
+
+.log-outter {
+    padding: 3px 17px !important;
+    box-sizing: border-box;
+    margin: 0 !important;
+}
+
+#station-branding a {
+    font-size: 20px !important;
+    line-height: 50px;
 }

@@ -1,10 +1,3 @@
-## TODO 
-
-* Replace `Session::*`
-* Replace `Request::*`
-* Replace `->lists()` - convert to array - this now returns an object
-* CSS edits
-
 ## Laravel 5: Backend UI for Content & User Management
 
 **Note: This is still unstable as we continue to make the upgrade from L4: https://github.com/thecanarycollective/station**
@@ -114,3 +107,10 @@ That's it. You now have a fully functioning back end and user management system 
 ## Notable Limitations
 
 * The validation rule 'unique' MUST accept 2 parameters: table name, and column name. No more and no less. [ex. unique:users,username]
+
+
+## TODO 
+
+* Replace `Session::*`
+* Replace `Request::*`
+* Replace `->lists()` - convert to array - this now returns an object
