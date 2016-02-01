@@ -1,8 +1,8 @@
-<?php namespace Canary\Station\Controllers;
+<?php namespace Lifeboy\Station\Controllers;
 
 use View, Input, Redirect, Config, Session;
 use Illuminate\Support\Facades\Auth as Auth;
-use Canary\Station\Filters\Session as Session_Filter;
+use Lifeboy\Station\Filters\Session as Session_Filter;
 use Illuminate\Http\Request;
 
 class StationSessionController extends ObjectBaseController {

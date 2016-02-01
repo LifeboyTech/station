@@ -1,4 +1,4 @@
-<?php namespace Canary\Station\Models;
+<?php namespace Lifeboy\Station\Models;
 
 class Group extends \Eloquent {
 
@@ -12,6 +12,6 @@ class Group extends \Eloquent {
 
 	public function users()
     {
-        return $this->hasMany('Canary\Station\Models\User', 'id');
+        return $this->hasMany('Lifeboy\Station\Models\User', 'id');
     }
 }

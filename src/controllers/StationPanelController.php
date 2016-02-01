@@ -1,11 +1,11 @@
-<?php namespace Canary\Station\Controllers;
+<?php namespace Lifeboy\Station\Controllers;
 
 use View, App, Config, Session, Auth, Redirect, URL, Input, Response;
 use Illuminate\Http\Request as Request;
-use Canary\Station\Models\Panel as Panel;
-use Canary\Station\Filters\Session as Station_Session;
+use Lifeboy\Station\Models\Panel as Panel;
+use Lifeboy\Station\Filters\Session as Station_Session;
 use Illuminate\Filesystem\Filesystem as File;
-use Canary\Station\Config\StationConfig as StationConfig;
+use Lifeboy\Station\Config\StationConfig as StationConfig;
 
 class StationPanelController extends BaseController {
 

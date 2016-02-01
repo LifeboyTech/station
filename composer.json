@@ -21,7 +21,7 @@
             "src/seeds"
         ],
         "psr-0": {
-            "Canary\\Station": "src/"
+            "Lifeboy\\Station": "src/"
         }
     },
     "minimum-stability": "dev"

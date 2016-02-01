@@ -1,8 +1,8 @@
-<?php namespace Canary\Station\Models;
+<?php namespace Lifeboy\Station\Models;
 
 use Config, Session, URL, DB, Input, Validator, Hash, Request, App;
-use Canary\Station\Models\Group as Group;
-use Canary\Station\Config\StationConfig as StationConfig;
+use Lifeboy\Station\Models\Group as Group;
+use Lifeboy\Station\Config\StationConfig as StationConfig;
 
 class Panel {
 
@@ -378,11 +378,11 @@ class Panel {
         switch ($panel_name) {
 
             case 'users':
-                return $no_path ? 'User' : 'Canary\Station\Models\User';
+                return $no_path ? 'User' : 'Lifeboy\Station\Models\User';
                 break;
 
             case 'groups':
-                return $no_path ? 'Group' : 'Canary\Station\Models\Group';
+                return $no_path ? 'Group' : 'Lifeboy\Station\Models\Group';
                 break;
             
             default:

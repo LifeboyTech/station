@@ -1,10 +1,10 @@
-<?php namespace Canary\Station\Filters;
+<?php namespace Lifeboy\Station\Filters;
 
 use Redirect, Config, Request, Session as Laravel_Session;
 use Illuminate\Support\Facades\Auth as Auth;
-use Canary\Station\Models\User as User;
-use Canary\Station\Models\Panel as Panel;
-use Canary\Station\Config\StationConfig as StationConfig;
+use Lifeboy\Station\Models\User as User;
+use Lifeboy\Station\Models\Panel as Panel;
+use Lifeboy\Station\Config\StationConfig as StationConfig;
 use Closure;
 
 class Session {

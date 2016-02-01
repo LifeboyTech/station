@@ -1,4 +1,4 @@
-<?php namespace Canary\Station\Config;
+<?php namespace Lifeboy\Station\Config;
 
 use Config;
 
@@ -9,7 +9,7 @@ class StationConfig {
 		$key = $key != '' ? '.'.$key : '';
 		$is_vendor = self::is_vendor();
 		$namespace = $is_vendor ? 'station_vendor_config' : 'station';
-		$prefix = 'packages.canary.station._app';
+		$prefix = 'packages.lifeboy.station._app';
 		return config($is_vendor ? $prefix.$key : $namespace.'::'.$prefix.$key);
 	}
 
@@ -25,7 +25,7 @@ class StationConfig {
 
 		$is_vendor = self::is_vendor();
 		$namespace = $is_vendor ? 'station_vendor_config' : 'station';
-		$prefix = 'packages.canary.station.';
+		$prefix = 'packages.lifeboy.station.';
 		
 		return Config::get($is_vendor ? $prefix.$panel_name : $namespace.'::'.$prefix.$panel_name);
 	}

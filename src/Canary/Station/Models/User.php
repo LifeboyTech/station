@@ -1,4 +1,4 @@
-<?php namespace Canary\Station\Models;
+<?php namespace Lifeboy\Station\Models;
 
 use \App\User as App_user;
 
@@ -12,6 +12,6 @@ class User extends App_user {
 	
     public function groups()
     {
-        return $this->belongsToMany('Canary\Station\Models\Group');
+        return $this->belongsToMany('Lifeboy\Station\Models\Group');
     }
 }

@@ -1,4 +1,4 @@
-<?php namespace Canary\Station\Models;
+<?php namespace Lifeboy\Station\Models;
 /*
   Copyright 2010 Scott MacVicar
 

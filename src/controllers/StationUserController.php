@@ -1,7 +1,7 @@
-<?php namespace Canary\Station\Controllers;
+<?php namespace Lifeboy\Station\Controllers;
 
 use Password, Input, Config, Session, Redirect, View, Hash, Auth, Lang;
-use Canary\Station\Config\StationConfig as StationConfig;
+use Lifeboy\Station\Config\StationConfig as StationConfig;
 
 class StationUserController extends ObjectBaseController {
 

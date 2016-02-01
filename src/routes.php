@@ -11,14 +11,14 @@
 |
 */
 
-$root_uri_segment = Canary\Station\Config\StationConfig::app('root_uri_segment');
-$path = 'Canary\Station\Controllers\\';
+$root_uri_segment = Lifeboy\Station\Config\StationConfig::app('root_uri_segment');
+$path = 'Lifeboy\Station\Controllers\\';
 Route::get('/password/reset/{token}', $path.'StationUserController@password_reset');
 
 // unprotected routes. user does not have to be logged in to access
 Route::group(array('middleware' => ['web'], 'prefix' => $root_uri_segment), function() use ($path)
 {
-	$panel_for_user_create = Canary\Station\Config\StationConfig::app('panel_for_user_create');
+	$panel_for_user_create = Lifeboy\Station\Config\StationConfig::app('panel_for_user_create');
 	Route::get('/login', $path.'StationSessionController@create');
 	Route::get('/logout', $path.'StationSessionController@destroy');
 	Route::resource('/sessions', $path.'StationSessionController', ['only' => ['store', 'create', 'destroy']]);

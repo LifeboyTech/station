@@ -12,29 +12,29 @@
 
     @if (isset($assets['css']) and count($assets['css']) > 0)
       @foreach ($assets['css'] as $css_file)
-        <link href="/packages/canary/station/css/{{ $css_file }}" rel="stylesheet">
+        <link href="/packages/lifeboy/station/css/{{ $css_file }}" rel="stylesheet">
       @endforeach
     @endif
 
-    <link href="/packages/canary/station/Flat-UI-Pro-1.2.2/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="/packages/canary/station/Flat-UI-Pro-1.2.2/css/flat-ui.css" rel="stylesheet">
-    <link href="/packages/canary/station/css/base.css?v10" rel="stylesheet">
+    <link href="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/css/flat-ui.css" rel="stylesheet">
+    <link href="/packages/lifeboy/station/css/base.css?v10" rel="stylesheet">
     {!! $app_data['css_override_file'] != '' ? '<link href="'.$app_data['css_override_file'].'" rel="stylesheet">' : '' !!}
 
-    <script src="/packages/canary/station/js/jquery-1.11.2.min.js"></script>
-    <script src="/packages/canary/station/js/radiocheck.js"></script>
-    <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/bootstrap.min.js"></script>
-    <script src="/packages/canary/station/js/jquery-ui-1.10.3.custom.min.js"></script>
-    <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/jquery.ui.touch-punch.min.js"></script>
-    <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/bootstrap.min.js"></script>
-    <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/bootstrap-select.js"></script>
-    <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/bootstrap-switch.js"></script>
-    <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/flatui-checkbox.js"></script>
-    <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/flatui-radio.js"></script>
-    <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/jquery.tagsinput.js"></script>
-    <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/jquery.placeholder.js"></script>
-    <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/application.js"></script>
-    <script src="/packages/canary/station/js/station_application.js?v2"></script>
+    <script src="/packages/lifeboy/station/js/jquery-1.11.2.min.js"></script>
+    <script src="/packages/lifeboy/station/js/radiocheck.js"></script>
+    <script src="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/js/bootstrap.min.js"></script>
+    <script src="/packages/lifeboy/station/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/js/bootstrap.min.js"></script>
+    <script src="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/js/bootstrap-select.js"></script>
+    <script src="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/js/bootstrap-switch.js"></script>
+    <script src="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/js/flatui-checkbox.js"></script>
+    <script src="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/js/flatui-radio.js"></script>
+    <script src="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/js/jquery.tagsinput.js"></script>
+    <script src="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/js/jquery.placeholder.js"></script>
+    <script src="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/js/application.js"></script>
+    <script src="/packages/lifeboy/station/js/station_application.js?v2"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -45,7 +45,7 @@
 
     @if (isset($assets['js']) and count($assets['js']) > 0)
       @foreach ($assets['js'] as $js_file)
-        <script src="{{ substr($js_file, 0, 1) == '/' ? $js_file : '/packages/canary/station/js/'.$js_file }}"></script>
+        <script src="{{ substr($js_file, 0, 1) == '/' ? $js_file : '/packages/lifeboy/station/js/'.$js_file }}"></script>
       @endforeach
     @endif
 

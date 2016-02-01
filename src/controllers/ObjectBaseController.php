@@ -1,7 +1,7 @@
-<?php namespace Canary\Station\Controllers;
+<?php namespace Lifeboy\Station\Controllers;
 
 use Config, View;
-use Canary\Station\Config\StationConfig as StationConfig;
+use Lifeboy\Station\Config\StationConfig as StationConfig;
 
 abstract class ObjectBaseController extends BaseController{
 

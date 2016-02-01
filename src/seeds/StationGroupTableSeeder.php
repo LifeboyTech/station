@@ -1,6 +1,6 @@
 <?php
 
-use Canary\Station\Config\StationConfig as StationConfig;
+use Lifeboy\Station\Config\StationConfig as StationConfig;
 use \Illuminate\Database\Seeder;
 
 class StationGroupTableSeeder extends \Illuminate\Database\Seeder {

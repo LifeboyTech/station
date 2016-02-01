@@ -1,4 +1,4 @@
-<?php namespace Canary\Station\Commands;
+<?php namespace Lifeboy\Station\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem as File;
@@ -8,8 +8,8 @@ use Config;
 use Schema;
 use App;
 use Storage;
-use Canary\Station\Models\Panel as Panel;
-use Canary\Station\Config\StationConfig as StationConfig;
+use Lifeboy\Station\Models\Panel as Panel;
+use Lifeboy\Station\Config\StationConfig as StationConfig;
 
 class Build extends Command {
 

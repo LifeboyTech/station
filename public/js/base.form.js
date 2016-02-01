@@ -251,7 +251,7 @@ $(document).ready(function() {
         var element_name = parent.attr('data-element-name');
         $('input[name="' + element_name + '"]').val('');
         parent.find('#edit_for_' + element_name + ', #remove_for_' + element_name).hide();
-        parent.find('#target-' + element_name).attr('src', '/packages/canary/station/img/missing.gif');
+        parent.find('#target-' + element_name).attr('src', '/packages/lifeboy/station/img/missing.gif');
         return false;
     });
 
@@ -431,7 +431,7 @@ $(document).ready(function() {
                     
                 } else {
 
-                    var src = '/packages/canary/station/img/missing.gif';
+                    var src = '/packages/lifeboy/station/img/missing.gif';
                 }
 
                 thumbnail.attr('src', src);
@@ -629,7 +629,7 @@ $(document).ready(function() {
 
         if ($('.embedder-btn').length){
 
-            var clip = new ZeroClipboard($('.embedder-btn'), { moviePath: "/packages/canary/station/js/zeroclipboard-1.3.5/ZeroClipboard.swf" });
+            var clip = new ZeroClipboard($('.embedder-btn'), { moviePath: "/packages/lifeboy/station/js/zeroclipboard-1.3.5/ZeroClipboard.swf" });
 
             clip.on( 'complete', function(client, args) {
 

@@ -1,6 +1,6 @@
 <div class="station-file-upload-wrap row {{ $is_embedder ? 'snapped-to-textarea' : '' }}">
 	<div class="col-sm-2">
-		<img width="100px" height="100px" src="/packages/canary/station/img/missing.gif" bucket="{{ $bucket_name }}" class="img-thumbnail station-img-thumbnail" id="target-{{ $original_el_name }}" data-target="{{ $original_el_name }}">
+		<img width="100px" height="100px" src="/packages/lifeboy/station/img/missing.gif" bucket="{{ $bucket_name }}" class="img-thumbnail station-img-thumbnail" id="target-{{ $original_el_name }}" data-target="{{ $original_el_name }}">
 	</div>
 	@if (isset($element_info['fetch_url']))
 		{{-- Special element which can fetch URLs --}}

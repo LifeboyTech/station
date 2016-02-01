@@ -2,7 +2,7 @@
 
 **Note: Looking for a Laravel 4 version? Use this: https://github.com/thecanarycollective/station**
 
-**Documentation is coming to the Guthub wiki very soon**
+**Documentation is coming to the Github wiki very soon**
 
 Tired of creating and configuring similar models and controllers which deal with basic CRUD, validation and user role-based capabilities? Station allows developers to setup and configure a backend CMS for a Laravel app/site very quickly. 
 
@@ -18,12 +18,12 @@ Tired of creating and configuring similar models and controllers which deal with
 ## Installation 
 
 The Station Service Provider can be installed via [Composer](http://getcomposer.org) by requiring the
-`canary/laravel-station` package in your project's `composer.json`.
+`lifeboy/station` package in your project's `composer.json`.
 
 ```json
 {
     "require": {
-        "canary/laravel-station": "dev-master"
+        "lifeboy/station": "dev-master"
     }
 }
 ```
@@ -46,7 +46,7 @@ Find the `providers` key in your `app/config/app.php` and register the Station S
 ```php
     'providers' => array(
         // ... add below ...
-        Canary\Station\StationServiceProvider::class,
+        Lifeboy\Station\StationServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
     ),
 ```
@@ -66,7 +66,7 @@ In `app/Http/Kernel.php`, add:
 ```php 
 protected $routeMiddleware = [
     // ...
-    'station.session' => \Canary\Station\Filters\Session::class
+    'station.session' => \Lifeboy\Station\Filters\Session::class
 ];
 ```
 
@@ -76,7 +76,7 @@ protected $routeMiddleware = [
 php artisan vendor:publish
 ```
 
-At this time you can (optionally) edit `/app/config/packages/canary/station/_app.php` and change the `root_admin_email`
+At this time you can (optionally) edit `/app/config/packages/lifeboy/station/_app.php` and change the `root_admin_email`
 
 ### 3. Run default migrations if you haven't already. 
 
@@ -100,9 +100,9 @@ You can log in using user/password: `admin/admin`
 
 ### 6. Configure Station and Your Panels!
 
-Start by editing `/app/config/packages/canary/station/_app.php`
+Start by editing `/app/config/packages/lifeboy/station/_app.php`
 
-Then create files for each panel in /app/config/packages/canary/station/ [we need documentation on this]
+Then create files for each panel in /app/config/packages/lifeboy/station/ [we need documentation on this]
 
 That's it. You now have a fully functioning back end and user management system for your site.
 

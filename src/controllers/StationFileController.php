@@ -1,11 +1,11 @@
-<?php namespace Canary\Station\Controllers;
+<?php namespace Lifeboy\Station\Controllers;
 
 use Input, Response, Config, Session, Medium;
-use Canary\Station\Models\Panel as Panel;
-use Canary\Station\Models\ImageMoo as ImageMoo;
-use Canary\Station\Models\OpenGraph as OpenGraph;
-use Canary\Station\Models\S3 as S3;
-use Canary\Station\Config\StationConfig as StationConfig;
+use Lifeboy\Station\Models\Panel as Panel;
+use Lifeboy\Station\Models\ImageMoo as ImageMoo;
+use Lifeboy\Station\Models\OpenGraph as OpenGraph;
+use Lifeboy\Station\Models\S3 as S3;
+use Lifeboy\Station\Config\StationConfig as StationConfig;
 use Illuminate\Http\Request as Request;
 use Illuminate\Filesystem\Filesystem as File;
 

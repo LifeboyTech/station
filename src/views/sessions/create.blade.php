@@ -8,11 +8,11 @@
     <title>{{ $app_data['name'] }} | Please Login</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/packages/canary/station/Flat-UI-Pro-1.2.2/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="/packages/canary/station/Flat-UI-Pro-1.2.2/css/flat-ui.css" rel="stylesheet">
+    <link href="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/css/flat-ui.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/packages/canary/station/css/login.css" rel="stylesheet">
+    <link href="/packages/lifeboy/station/css/login.css" rel="stylesheet">
     {{ $app_data['css_override_file'] != '' ? '<link href="'.$app_data['css_override_file'].'" rel="stylesheet">' : '' }}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -22,9 +22,9 @@
     <![endif]-->
 
     <!-- script for the login / forgot form -->
-    <script src="/packages/canary/station/js/jquery-1.10.2.min.js"></script>
-    <script src="/packages/canary/station/js/login.js"></script>
-    <script src="/packages/canary/station/Flat-UI-Pro-1.2.2/js/flatui-checkbox.js"></script>
+    <script src="/packages/lifeboy/station/js/jquery-1.10.2.min.js"></script>
+    <script src="/packages/lifeboy/station/js/login.js"></script>
+    <script src="/packages/lifeboy/station/Flat-UI-Pro-1.2.2/js/flatui-checkbox.js"></script>
   </head>
 
   <body>
