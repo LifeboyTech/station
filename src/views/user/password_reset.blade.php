@@ -13,7 +13,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/packages/lifeboy/station/css/login.css" rel="stylesheet">
-    {{ $app_data['css_override_file'] != '' ? '<link href="'.$app_data['css_override_file'].'" rel="stylesheet">' : '' }}
+    {!! $app_data['css_override_file'] != '' ? '<link href="'.$app_data['css_override_file'].'" rel="stylesheet">' : '' !!}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -31,7 +31,7 @@
 
     <div class="container">
 
-      {{ Form::open(array('url' => $app_data['root_uri_segment'].'/password/reset/'.$token, 'class' => 'form-signin reset-password')) }}
+      {!! Form::open(array('url' => $app_data['root_uri_segment'].'/password/reset/'.$token, 'class' => 'form-signin reset-password')) !!}
 
         <h4 class="form-signin-heading">Please reset your password</h4>
 
@@ -54,7 +54,7 @@
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Reset My Password</button>
 
-      {{ Form::close() }}
+      {!! Form::close() !!}
 
     </div> <!-- /container -->
 
