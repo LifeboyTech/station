@@ -75,7 +75,7 @@ class Panel {
      * @param  boolean  $with_subpanels  // much more memory intensive if TRUE
      * @return array
      */
-    public function all($with_subpanels = FALSE){
+    public function all($with_subpanels = FALSE, $skip_build_suppressed = FALSE){
 
         $groups = StationConfig::app('user_groups');
         $ret = [];
@@ -91,6 +91,12 @@ class Panel {
                 if (!$with_subpanels) continue;
 
                 $panel_data = StationConfig::panel($panel_name);
+
+                if ($skip_build_suppressed && isset($panel_data['panel_options']['no_build']) && $panel_data['panel_options']['no_build']) {
+
+                    unset($ret[$panel_name]);
+                    continue;
+                }
 
                 if (isset($panel_data['elements']) && count($panel_data['elements']) > 0){
 

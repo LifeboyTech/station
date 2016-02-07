@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to Station’s documentation! &mdash; Station 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Station 0.2 documentation" href="#" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="#">Station 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-station-s-documentation">
+<h1>Welcome to Station&#8217;s documentation!<a class="headerlink" href="#welcome-to-station-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>## Features</p>
+<ul class="simple">
+<li>UI using a vanilla bootstrap layout which you can style in your own app.</li>
+<li>Allows for easy table association setup through config files.</li>
+</ul>
+<p>## Requirements</p>
+<ul class="simple">
+<li>GD (compiled with PHP, if you want to take advantage of the image resizing features)</li>
+</ul>
+<p>## Installation</p>
+<p>The Station Service Provider can be installed via [Composer](<a class="reference external" href="http://getcomposer.org">http://getcomposer.org</a>) by requiring the
+<cite>lifeboy/station</cite> package in your project&#8217;s <cite>composer.json</cite>.</p>
+<p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>json
+{</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>&#8220;require&#8221;: {</dt>
+<dd>&#8220;lifeboy/station&#8221;: &#8220;dev-master&#8221;</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<div class="section" id="id5">
+<h3>}<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>Then run a composer update
+<code class="docutils literal"><span class="pre">`sh</span>
+<span class="pre">composer</span> <span class="pre">update</span>
+<span class="pre">`</span></code></p>
+<p>## Configuration &amp; Setup</p>
+<p>This assumes you have a working dev or production environment with Laravel 5 and a database already installed and configured.</p>
+<p>### 1. Register Station in app/config/app.php</p>
+<p>To use station, you must register the provider when bootstrapping your Laravel application.</p>
+<p>Find the <cite>providers</cite> key in your <cite>app/config/app.php</cite> and register the Station Service Provider.</p>
+<dl class="docutils">
+<dt><a href="#id6"><span class="problematic" id="id7">``</span></a><a href="#id8"><span class="problematic" id="id9">`</span></a>php</dt>
+<dd><dl class="first docutils">
+<dt>&#8216;providers&#8217; =&gt; array(</dt>
+<dd>// ... add below ...
+LifeboyStationStationServiceProvider::class,
+CollectiveHtmlHtmlServiceProvider::class,</dd>
+</dl>
+<p class="last">),</p>
+</dd>
+</dl>
+<p><a href="#id10"><span class="problematic" id="id11">``</span></a><a href="#id12"><span class="problematic" id="id13">`</span></a></p>
+<p>Also update the <cite>aliases</cite> array</p>
+<dl class="docutils">
+<dt><a href="#id14"><span class="problematic" id="id15">``</span></a><a href="#id16"><span class="problematic" id="id17">`</span></a>php</dt>
+<dd><dl class="first docutils">
+<dt>&#8216;aliases&#8217; =&gt; [</dt>
+<dd>// ...
+&#8216;Form&#8217; =&gt; CollectiveHtmlFormFacade::class,
+&#8216;Html&#8217; =&gt; CollectiveHtmlHtmlFacade::class,</dd>
+</dl>
+<p class="last">],</p>
+</dd>
+</dl>
+<p><a href="#id18"><span class="problematic" id="id19">``</span></a><a href="#id20"><span class="problematic" id="id21">`</span></a></p>
+<p>In <cite>app/Http/Kernel.php</cite>, add:</p>
+<p><a href="#id22"><span class="problematic" id="id23">``</span></a><a href="#id24"><span class="problematic" id="id25">`</span></a>php
+protected $routeMiddleware = [</p>
+<blockquote>
+<div>// ...
+&#8216;station.session&#8217; =&gt; LifeboyStationFiltersSession::class</div></blockquote>
+</div>
+<div class="section" id="id26">
+<h3>];<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<p>### 2. Publish Station&#8217;s assets over to your app.</p>
+<p><code class="docutils literal"><span class="pre">`sh</span>
+<span class="pre">php</span> <span class="pre">artisan</span> <span class="pre">vendor:publish</span>
+<span class="pre">`</span></code></p>
+<p>At this time you can (optionally) edit <cite>/app/config/packages/lifeboy/station/_app.php</cite> and change the <cite>root_admin_email</cite></p>
+<p>### 3. Run default migrations if you haven&#8217;t already.</p>
+<p><cite>php artisan migrate</cite></p>
+<p>### 4. Run Station&#8217;s Build Command.</p>
+<p>This will generate migrations, run migrations, generate models, and seed the database.</p>
+<p><code class="docutils literal"><span class="pre">`sh</span>
+<span class="pre">php</span> <span class="pre">artisan</span> <span class="pre">station:build</span>
+<span class="pre">`</span></code></p>
+<p>### 5. Test Installation</p>
+<p>You should now be able to browse to your app at:</p>
+<p><a class="reference external" href="http:/">http:/</a>/{host}/station/ (ex. <a class="reference external" href="http://app.localhost/station/">http://app.localhost/station/</a>) and see station running without errors.</p>
+<p>You can log in using user/password: <cite>admin/admin</cite></p>
+<p>### 6. Configure Station and Your Panels!</p>
+<p>Start by editing <cite>/app/config/packages/lifeboy/station/_app.php</cite></p>
+<p>Then create files for each panel in /app/config/packages/lifeboy/station/ [we need documentation on this]</p>
+<p>That&#8217;s it. You now have a fully functioning back end and user management system for your site.</p>
+<p>## Notable Limitations</p>
+<ul class="simple">
+<li>The validation rule &#8216;unique&#8217; MUST accept 2 parameters: table name, and column name. No more and no less. [ex. unique:users,username]</li>
+</ul>
+<p>## TODO</p>
+<ul class="simple">
+<li>Replace <cite>Session::*</cite></li>
+<li>Replace <cite>Request::*</cite></li>
+<li>Replace <cite>-&gt;lists()</cite> - convert to array - this now returns an object</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to Station&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#getting-started">Getting Started</a><ul>
+<li><a class="reference internal" href="#id5">}</a></li>
+<li><a class="reference internal" href="#id26">];</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="#">Station 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Lifeboy Tech.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+    </div>
+  </body>
+</html>

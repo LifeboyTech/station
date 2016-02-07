@@ -60,7 +60,7 @@ class Build extends Command {
 	{
 
 		$panel = new Panel;
-        $panels = $panel->all(TRUE); // gets subpanels too.
+        $panels = $panel->all(TRUE, TRUE); // gets subpanels too, avoid the `no_build` specified panels.
         $this->generate_migrations($panels); 
         $this->call('migrate');
         $this->generate_models($panels);
