@@ -283,6 +283,7 @@ class Panel {
 
         $panel = $this->user_scope($panel_name, 'L', $subpanel_parent);
 
+        if (isset($panel['config']['panel_options']['override'])) return $panel;
         if (!$panel) return FALSE;
 
         $model_name                = $this->model_name_for($panel_name);
@@ -510,7 +511,7 @@ class Panel {
             $ret['config']['elements'] = $this->elements_for_letter($ret['config'], $letter); // but filter the elements.
             $ret['config']['elements'] = $this->inject_vars_for_elements($ret['config']['elements']);
 
-            if (count($ret['config']['elements']) == 0) return FALSE; // no elements, no access for you!
+            //if (count($ret['config']['elements']) == 0) return FALSE; // no elements, no access for you!
 
             return $ret;
         }

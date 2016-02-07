@@ -422,11 +422,11 @@ class StationPanelController extends BaseController {
 		$this->init($panel_name, 'L');
 
 		$raw_count 					= $panel->get_data_for($panel_name, TRUE, FALSE, FALSE, FALSE, TRUE);
-		$raw_count 					= $raw_count['data'];
-		$is_trying_to_filter 		= $panel_data['has_user_filters'];
+		$raw_count 					= isset($raw_count['data']) ? $raw_count['data'] : 0;
+		$is_trying_to_filter 		= isset($panel_data['has_user_filters']) ? $panel_data['has_user_filters'] : FALSE;
 		$panel_options				= $this->panel_config['panel_options'];
 		$force_create				= isset($panel_options['no_data_force_create']) && $panel_options['no_data_force_create'];
-		$no_data_and_force_create	= count($panel_data['data']) == 0 && $force_create;
+		$no_data_and_force_create	= isset($panel_data['data']) && count($panel_data['data']) == 0 && $force_create;
 		
 		if ($no_data_and_force_create && !$is_trying_to_filter) return Redirect::to($this->panel_config['relative_uri'].'/create');
 
@@ -440,7 +440,7 @@ class StationPanelController extends BaseController {
 
 		View::share('raw_count', $raw_count);
 		View::share('is_trying_to_filter', $is_trying_to_filter);
-		View::share('user_filters', $panel_data['user_filters']);
+		View::share('user_filters', isset($panel_data['user_filters']) ? $panel_data['user_filters'] : []);
 		View::share('foreign_data', $this->foreign_data);
 		View::share('user_can_create', $user_can_create);
 		View::share('user_can_update', $user_can_update);
@@ -556,7 +556,7 @@ class StationPanelController extends BaseController {
 		if(!$this->user_scope) dd('You do not have access to this'); // TODO: change handling. log it??
 		
 		$this->panel_config 	= $this->user_scope['config'];
-		$this->single_item_name	= $this->panel_config['panel_options']['single_item_name'];
+		$this->single_item_name	= isset($this->panel_config['panel_options']['single_item_name']) ? $this->panel_config['panel_options']['single_item_name'] : '';
 		$this->user_data		= Session::get('user_data');
 		$this->assets			= isset($this->assets) ? $this->assets : [];
 		$this->base_uri			= StationConfig::app('root_uri_segment').'/';
@@ -645,11 +645,11 @@ class StationPanelController extends BaseController {
 
 	private function configure_list_view($panel_data){
 
-		$is_reorderable 		= count($panel_data['data']) > 1 
+		$is_reorderable 		= isset($panel_data['data']) && count($panel_data['data']) > 1 
 								&& isset($this->panel_config['panel_options']['reorderable_by']) 
 								&& $this->panel_config['panel_options']['reorderable_by'];
 
-		$is_nestable 			= count($panel_data['data']) > 1 
+		$is_nestable 			= isset($panel_data['data']) && count($panel_data['data']) > 1 
 								&& isset($this->panel_config['panel_options']['nestable_by']) 
 								&& $this->panel_config['panel_options']['nestable_by'];
 
