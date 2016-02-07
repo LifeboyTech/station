@@ -807,6 +807,8 @@ class Panel {
 
         $ret = [];
 
+        if (!isset($panel_config['elements']) || count($panel_config['elements']) == 0) return $ret;
+
         foreach ($panel_config['elements'] as $element_name => $element) {
             
             $hidden_in_list = $letter == 'L' && $element['type'] == 'hidden';
