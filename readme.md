@@ -6,6 +6,6 @@ If you are tired of creating CRUD-capable interfaces from scratch, then Station 
 
 Station shines when used as a CMS however it is *not* your typical template-based CMS system. It does not include front-end templates or layouts. Instead it is intended to be used as a database, content, and user management system. It takes away the heavy-lifting involved in creating a back-end for your web site or application. But, it leaves the front-end a blank canvas for your creativity!
 
-## [Documentation](http://station.readthedocs.org)
+## Read the [Documentation](http://station.readthedocs.org)
 
 **Looking for a Laravel 4 version? Check this out: https://github.com/thecanarycollective/station**
