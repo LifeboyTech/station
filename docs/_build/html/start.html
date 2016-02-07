@@ -1,0 +1,270 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Getting Started &mdash; Station 0.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Station 0.2 documentation" href="index.html"/>
+        <link rel="prev" title="Station for Laravel 5" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Station
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-setup">Configuration &amp; Setup</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Station</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Getting Started</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/start.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Station should be installed via <a class="reference external" href="http://getcomposer.org">Composer</a> by requiring the
+<code class="docutils literal"><span class="pre">lifeboy/station</span></code> package in your project&#8217;s <code class="docutils literal"><span class="pre">composer.json</span></code>.</p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;lifeboy/station&quot;</span><span class="p">:</span> <span class="s2">&quot;dev-master&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Then run a composer update</p>
+<div class="highlight-sh"><div class="highlight"><pre>composer update
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuration-setup">
+<h2>Configuration &amp; Setup<a class="headerlink" href="#configuration-setup" title="Permalink to this headline">¶</a></h2>
+<p>This assumes you have a working dev or production environment with Laravel 5 and a database already installed and configured.</p>
+<p><strong>1. Register Station in app/config/app.php</strong></p>
+<p>To use station, you must register the provider when bootstrapping your Laravel application.</p>
+<p>Find the <code class="docutils literal"><span class="pre">providers</span></code> key in your <code class="docutils literal"><span class="pre">app/config/app.php</span></code> and register the Station Service Provider.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;providers&#39; =&gt; array(</span>
+<span class="x">    // ... add below ...</span>
+<span class="x">    Lifeboy\Station\StationServiceProvider::class,</span>
+<span class="x">    Collective\Html\HtmlServiceProvider::class,</span>
+<span class="x">),</span>
+</pre></div>
+</div>
+<p>Also update the <code class="docutils literal"><span class="pre">aliases</span></code> array</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;aliases&#39; =&gt; [</span>
+<span class="x">    // ...</span>
+<span class="x">    &#39;Form&#39; =&gt; Collective\Html\FormFacade::class,</span>
+<span class="x">    &#39;Html&#39; =&gt; Collective\Html\HtmlFacade::class,</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>In <code class="docutils literal"><span class="pre">app/Http/Kernel.php</span></code>, add:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">protected $routeMiddleware = [</span>
+<span class="x">    // ...</span>
+<span class="x">    &#39;station.session&#39; =&gt; \Lifeboy\Station\Filters\Session::class</span>
+<span class="x">];</span>
+</pre></div>
+</div>
+<p><strong>2. Publish Station&#8217;s assets over to your app.</strong></p>
+<div class="highlight-sh"><div class="highlight"><pre>php artisan vendor:publish
+</pre></div>
+</div>
+<p>At this time you can (optionally) edit <code class="docutils literal"><span class="pre">/app/config/packages/lifeboy/station/_app.php</span></code> and change the <code class="docutils literal"><span class="pre">root_admin_email</span></code></p>
+<p><strong>3. Run default migrations if you haven&#8217;t already.</strong></p>
+<div class="highlight-sh"><div class="highlight"><pre>php artisan migrate
+</pre></div>
+</div>
+<p><strong>4. Run Station&#8217;s Build Command</strong></p>
+<p>This will generate migrations, run migrations, generate models, and seed the database.</p>
+<div class="highlight-sh"><div class="highlight"><pre>php artisan station:build
+</pre></div>
+</div>
+<p><strong>5. Test Installation</strong></p>
+<p>You should now be able to browse to your app at:</p>
+<p><a class="reference external" href="http:/">http:/</a>/{host}/station/ (ex. <a class="reference external" href="http://app.localhost/station/">http://app.localhost/station/</a>) and see station running without errors.</p>
+<p>You can log in using user/password: <code class="docutils literal"><span class="pre">admin/admin</span></code></p>
+<p><strong>6. Configure Station and Your Panels!</strong></p>
+<p>Start by editing <code class="docutils literal"><span class="pre">/app/config/packages/lifeboy/station/_app.php</span></code></p>
+<p>Then create files for each panel in /app/config/packages/lifeboy/station/ [we need documentation on this]</p>
+<p>That&#8217;s it. You now have a fully functioning back end and user management system for your site.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Station for Laravel 5" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Lifeboy Tech.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
