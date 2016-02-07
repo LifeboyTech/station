@@ -137,19 +137,24 @@
 <div class="section" id="about-station">
 <h2>About Station<a class="headerlink" href="#about-station" title="Permalink to this headline">¶</a></h2>
 <p>Station allows developers to auto-generate, configure, and deploy an admin interface with advanced scaffolding, migrations and models for their Laravel software. It includes an artisan build command and a simple but extensible UI.</p>
-<p>If you are tired of creating <a class="reference external" href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a>-capable interfaces, Station may be perfect for you. In a few minutes you can have a back-end admin installed and ready for use by you, your customers, and your customers&#8217; users.</p>
+<p>If you are tired of creating <a class="reference external" href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a>-capable interfaces from scratch, then Station may be perfect for you. In a few minutes you can have a back-end admin installed and ready for use by you, your customers, and your customers&#8217; users.</p>
+<p>Station shines when used as a CMS however it is <em>not</em> your typical template-based CMS system. It does not include front-end templates or layouts. Instead it is intended to be used as a database, content, and user management system. It takes away the heavy-lifting involved in creating a back-end for your web site or application. But, it leaves the front-end a blank canvas for your creativity!</p>
 </div>
 <div class="section" id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>One</li>
-<li>Two</li>
-<li>Three</li>
+<li>A password protected section of your domain under <code class="docutils literal"><span class="pre">/station/...</span></code> or the virtual directory name of your choice</li>
+<li>Authenticated user system utilizes Laravel&#8217;s native user model</li>
+<li>A simple set of configuration text files defines your entire database, permissions and navigation schema</li>
+<li>A build command at <code class="docutils literal"><span class="pre">php</span> <span class="pre">artisan</span> <span class="pre">station:build</span></code> will generate + run migrations and create models</li>
+<li>Define multiple user <code class="docutils literal"><span class="pre">groups</span></code> where users can only access areas for their own group</li>
+<li>A bootstrap-based UI containing necessary behaviors such as drag and drop reorderables, image upload w/ crop tools, nested sortables, and more</li>
 </ul>
 </div>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li>All of the basic requirements of the Laravel library</li>
 <li>GD (compiled with PHP, if you want to take advantage of the image resizing features)</li>
 </ul>
 </div>
