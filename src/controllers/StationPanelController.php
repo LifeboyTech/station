@@ -541,6 +541,11 @@ class StationPanelController extends BaseController {
 		return $this->update($panel_name, $id);
 	}
 
+	public function welcome(){
+
+		return view($this->layout, ['content' => View::make('station::layouts.welcome')]);
+	}
+
 
 
 	protected function init($panel_name, $method = 'L', $id = 0){

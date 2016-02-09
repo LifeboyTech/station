@@ -30,26 +30,16 @@
 
 			'admin' => [
 
-				'starting_panel' 	=> 'documents.L',
+				'starting_panel' 	=> 'welcome.L',
 				'panels' 			=> [
 
-					'content_sections'		=> ['name' => 'Data & Content',		'is_header' => TRUE, 'icon' => 'glyphicon glyphicon-book'],
-					'documents'				=> ['name' => 'Documents', 			'permissions' => 'CRUDL'],
+					'demo_section'			=> ['name' => 'Section Header',		'is_header' => TRUE, 'icon' => 'glyphicon glyphicon-book'],
+					'welcome'				=> ['name' => 'Welcome', 			'permissions' => 'CRUDL'],
 
 					'admin_sections' 		=> ['name' => 'Administrative', 	'is_header' => TRUE, 'icon' => 'glyphicon glyphicon-user'],
 					'users'					=> ['name' => 'Users', 				'permissions' => 'CRUDL'],
 					'user_passwords'		=> ['name' => 'User Passwords', 	'permissions' => 'LU'],
 					'groups'				=> ['name' => 'Groups', 			'permissions' => 'UL'],
-					'my_account'			=> ['name' => 'My Account', 		'permissions' => 'U', 'uri_slug' => 'update/%user_id%'],
-				]
-			],
-
-			'archivist' => [
-
-				'starting_panel' 	=> 'documents.L',
-				'panels' 			=> [
-
-					'documents'				=> ['name' => 'Documents', 			'permissions' => 'CRUDL'],
 					'my_account'			=> ['name' => 'My Account', 		'permissions' => 'U', 'uri_slug' => 'update/%user_id%'],
 				]
 			],
