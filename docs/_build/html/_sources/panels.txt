@@ -4,5 +4,11 @@
 Anatomy of a Panel 
 ==================
 
-Oh haii
+Here is some info...
+
+
+.. _config-images:
+
+images
+------
 

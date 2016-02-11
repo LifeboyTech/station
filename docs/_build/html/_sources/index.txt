@@ -42,4 +42,14 @@ Documentation Contents
    start
    principles
    panels
+   license
    roadmap
+
+
+Contributing to Station Development
+----------------------------------- 
+
+I welcome and encourage contributions. Please submit pull-requests. I will review and consider implementing.
+
+My only guideline is that enhancements to Station should be within the simple and straightforward spirit of the project.
+

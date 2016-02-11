@@ -85,6 +85,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="principles.html">Basic Principles &amp; Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="panels.html">Anatomy of a Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap &amp; Todos</a></li>
 </ul>
 
@@ -185,14 +186,17 @@
 <div class="highlight-sh"><div class="highlight"><pre>php artisan migrate
 </pre></div>
 </div>
-<p><strong>6. Run Station&#8217;s Build Command</strong></p>
+<p><strong>6. Set the Administrator Email</strong></p>
+<p>In <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code> set the <code class="docutils literal"><span class="pre">root_admin_email</span></code> to your email address.</p>
+<p><strong>7. Run Station&#8217;s Build Command</strong></p>
 <p>This will generate new migrations, run the new migrations, generate models, and seed the database.</p>
 <div class="highlight-sh"><div class="highlight"><pre>php artisan station:build
 </pre></div>
 </div>
-<p><strong>7. Test Installation</strong></p>
-<p>You should now be able to browse to your app at: <code class="docutils literal"><span class="pre">http://{host}/station/</span></code>. You can login using user/password: <code class="docutils literal"><span class="pre">admin/admin</span></code>. Upon login, you will see a welcome screen.</p>
-<p><strong>8. Configure Station and Your Panels!</strong></p>
+<p><strong>8. Test Installation</strong></p>
+<p>You should now be able to browse to your app at: <code class="docutils literal"><span class="pre">http://{host}/station/</span></code>. You can login using user/password: <code class="docutils literal"><span class="pre">admin/admin</span></code>. Upon login, you will see a welcome screen:</p>
+<img alt="_images/welcome.png" src="_images/welcome.png" />
+<p><strong>9. Configure Station and Your Panels!</strong></p>
 <p>That&#8217;s it! Next you will configure Station and tailor it to the needs of your users.</p>
 </div>
 

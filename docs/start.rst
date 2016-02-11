@@ -88,7 +88,13 @@ In ``app/Http/Kernel.php``, update the ``$routeMiddleware`` class variable:
 
 
 
-**6. Run Station's Build Command**
+**6. Set the Administrator Email**
+
+In ``config/packages/lifeboy/station/_app.php`` set the ``root_admin_email`` to your email address.
+
+
+
+**7. Run Station's Build Command**
 
 This will generate new migrations, run the new migrations, generate models, and seed the database.
 
@@ -98,13 +104,15 @@ This will generate new migrations, run the new migrations, generate models, and 
 
 
 
-**7. Test Installation**
+**8. Test Installation**
 
-You should now be able to browse to your app at: ``http://{host}/station/``. You can login using user/password: ``admin/admin``. Upon login, you will see a welcome screen.
+You should now be able to browse to your app at: ``http://{host}/station/``. You can login using user/password: ``admin/admin``. Upon login, you will see a welcome screen:
+
+.. image:: images/welcome.png
 
 
 
-**8. Configure Station and Your Panels!**
+**9. Configure Station and Your Panels!**
 
 That's it! Next you will configure Station and tailor it to the needs of your users.
 

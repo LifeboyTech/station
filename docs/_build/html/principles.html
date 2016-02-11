@@ -89,6 +89,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="panels.html">Anatomy of a Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap &amp; Todos</a></li>
 </ul>
 
@@ -145,6 +146,30 @@
 <div class="section" id="application-level-configuration">
 <span id="app-level-configuration"></span><h2>Application Level Configuration<a class="headerlink" href="#application-level-configuration" title="Permalink to this headline">¶</a></h2>
 <p>All of Station&#8217;s top level configuration occurs in the <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code> file. The boilerplate version of this file was copied to your app during the installation process.</p>
+<p>Following is a list of all of the available configuration options:</p>
+<p><strong>name</strong></p>
+<blockquote>
+<div>This is the name of your site or application</div></blockquote>
+<p><strong>root_admin_email</strong></p>
+<blockquote>
+<div>This value will be seeded into the <code class="docutils literal"><span class="pre">users</span></code> table when the admin user is created during the installation process.</div></blockquote>
+<p><strong>root_uri_segment</strong></p>
+<blockquote>
+<div>This value is what Station will use as its pseudo-directory &#8220;slug&#8221;. By default this is set to <code class="docutils literal"><span class="pre">station</span></code> which means that all of the URLs for Station will be found at <code class="docutils literal"><span class="pre">http://my-site.com/station/...</span></code>. You could use <code class="docutils literal"><span class="pre">admin</span></code> which would result in all URLs looking like <code class="docutils literal"><span class="pre">http://my-site.com/admin/...</span></code></div></blockquote>
+<p><strong>panel_for_user_create</strong></p>
+<blockquote>
+<div>This is the name of the panel which is used for creating new users. You may never need to use this as your app will likely have it&#8217;s own onboarding process. However this panel is shipped with Station in case you want a simple way for new users to create an account.</div></blockquote>
+<p><strong>user_group_upon_register</strong></p>
+<blockquote>
+<div>This is the group which a new user will be automatically set to upon creation.</div></blockquote>
+<p><strong>css_override_file</strong></p>
+<blockquote>
+<div>Optionally set this to the URL or path of a .css file which will be loaded on every Station URL. This is excellent for adding branding specifics to your Station installation.</div></blockquote>
+<p><strong>media_options</strong></p>
+<blockquote>
+<div><p><strong>AWS:</strong> Station currently only supports file uploads to AWS/S3. Enter your bucket, key and secret key here to establish connectivity. If your app does not require uploads then you do not need to configure this option.</p>
+<p><strong>Sizes:</strong> This is where you set the default image sizes for all uploaded images. If any of your panel fields utilize image uploads and <em>do not</em> specify a set of image sizes, these sizes will be used. This is a handy way to set standard sizes for all of your images site-wide, if needed. For more information how to configure this option, refer to the <a class="reference internal" href="panels.html#config-images"><span>images</span></a> configuration documentation.</p>
+</div></blockquote>
 </div>
 </div>
 
