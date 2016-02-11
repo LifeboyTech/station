@@ -85,13 +85,15 @@
 <li class="toctree-l1"><a class="reference internal" href="start.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Basic Principles &amp; Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#panel-level-configuration">Panel Level Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#field-level-configuration">Field Level Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#element-level-configuration">Element Level Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#application-level-configuration">Application Level Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#configuration-variables">Configuration Variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#custom-configuration-variables">Custom Configuration Variables</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="panels.html">Anatomy of a Panel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="panels.html#panel-options">Panel Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="panels.html#element-options">Element Options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap &amp; Todos</a></li>
 </ul>
@@ -140,16 +142,16 @@
             
   <div class="section" id="basic-principles-configuration">
 <h1>Basic Principles &amp; Configuration<a class="headerlink" href="#basic-principles-configuration" title="Permalink to this headline">¶</a></h1>
-<p>Station has three levels of configuration: <strong>Panel Level</strong>, <strong>Field Level</strong> and <strong>Application Level</strong>.</p>
+<p>Station has three levels of configuration: <strong>Panel Level</strong>, <strong>Element Level</strong> and <strong>Application Level</strong>.</p>
 <div class="section" id="panel-level-configuration">
 <span id="id1"></span><h2>Panel Level Configuration<a class="headerlink" href="#panel-level-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Each individual section that appears in the navigation bar is referred to as a &#8220;panel&#8221;. By default, a panel contains all of the functionality to create, remove, update and delete records from a database table or foreign table. Panels can be customized in numerous ways. Panels can also be overriden entirely so that you may develop your own functionality and circumvent default panel behaviors.</p>
 <p>To learn all of the specifics of configuring panels, refer to <a class="reference internal" href="panels.html#panel-anatomy"><span>Anatomy of a Panel</span></a>.</p>
 </div>
-<div class="section" id="field-level-configuration">
-<span id="id2"></span><h2>Field Level Configuration<a class="headerlink" href="#field-level-configuration" title="Permalink to this headline">¶</a></h2>
-<p>Each panel can have any number of fields associated with it. Typically each field refers to a specific field in your database but that is not always the case. A panel can have &#8220;virtual&#8221; fields as well as no fields at all.</p>
-<p>To learn all of the specifics of configuring panel fields, refer to <a class="reference internal" href="panels.html#panel-anatomy"><span>Anatomy of a Panel</span></a>.</p>
+<div class="section" id="element-level-configuration">
+<span id="id2"></span><h2>Element Level Configuration<a class="headerlink" href="#element-level-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Each panel can have any number of elements associated with it. Typically each element refers to a specific element in your database but that is not always the case. A panel can have &#8220;virtual&#8221; elements as well as no elements at all.</p>
+<p>To learn all of the specifics of configuring panel elements, refer to <a class="reference internal" href="panels.html#panel-anatomy"><span>Anatomy of a Panel</span></a>.</p>
 </div>
 <div class="section" id="application-level-configuration">
 <span id="app-level-configuration"></span><h2>Application Level Configuration<a class="headerlink" href="#application-level-configuration" title="Permalink to this headline">¶</a></h2>
@@ -176,7 +178,7 @@
 <p><strong>media_options</strong></p>
 <blockquote>
 <div><p><strong>AWS:</strong> Station currently only supports file uploads to AWS/S3. Enter your bucket, key and secret key here to establish connectivity. If your app does not require uploads then you do not need to configure this option.</p>
-<p><strong>Sizes:</strong> This is where you set the default image sizes for all uploaded images. If any of your panel fields utilize image uploads and <em>do not</em> specify a set of image sizes, these sizes will be used. This is a handy way to set standard sizes for all of your images site-wide, if needed. For more information how to configure this option, refer to the <a class="reference internal" href="panels.html#config-images"><span>images</span></a> configuration documentation.</p>
+<p><strong>Sizes:</strong> This is where you set the default image sizes for all uploaded images. If any of your panel elements utilize image uploads and <em>do not</em> specify a set of image sizes, these sizes will be used. This is a handy way to set standard sizes for all of your images site-wide, if needed. For more information how to configure this option, refer to the <a class="reference internal" href="panels.html#config-images"><span>sizes</span></a> configuration documentation.</p>
 </div></blockquote>
 <p><strong>user_groups</strong></p>
 <blockquote>
@@ -207,7 +209,7 @@
 </div></blockquote>
 <p><strong>html_append_file</strong></p>
 <blockquote>
-<div>This optional field allows you to specify an HTML or PHP blade file to append to every Station view. This is ideal for analytics.</div></blockquote>
+<div>This option allows you to specify an HTML or PHP blade file to append to every Station view. This is ideal for analytics.</div></blockquote>
 <p><strong>html_prepend_content_file</strong></p>
 <blockquote>
 <div>Like <code class="docutils literal"><span class="pre">html_append_file</span></code> you can specify an HTML or PHP blade file to prepend to the content area of every panel in Station. This is ideal for onboarding progress timelines or system-wide, universal alerts.</div></blockquote>
@@ -224,13 +226,13 @@
 <p>You can create your own custom configuration variables <code class="docutils literal"><span class="pre">custom_user_vars</span></code> which are accessible in any panel configuration file and the application configuration file. You can also create <code class="docutils literal"><span class="pre">custom_view_vars</span></code> which are available in any Station views. Just add them to the top-level of your <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code> file.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;custom_user_vars&#39; =&gt; [</span>
 
-<span class="x">        &#39;user_company_ids&#39;      =&gt; &#39;\CompanyRepository::id_list_for_user(%user_id%)&#39;,</span>
-<span class="x">        &#39;user_store_ids&#39;        =&gt; &#39;\StoreRepository::id_list_for_user(%user_id%)&#39;,</span>
+<span class="x">        &#39;user_company_ids&#39; =&gt; &#39;\CompanyRepository::id_list_for_user(%user_id%)&#39;,</span>
+<span class="x">        &#39;user_store_ids&#39; =&gt; &#39;\StoreRepository::id_list_for_user(%user_id%)&#39;,</span>
 <span class="x">],</span>
 
 <span class="x">&#39;custom_view_vars&#39; =&gt; [</span>
 
-<span class="x">        &#39;onboarding_progress_html&#39;      =&gt; &#39;\UserRepository::onboarding_progress_html_for(%user_id%)&#39;,</span>
+<span class="x">        &#39;onboarding_progress_html&#39; =&gt; &#39;\UserRepository::onboarding_progress_html_for(%user_id%)&#39;,</span>
 <span class="x">],</span>
 </pre></div>
 </div>

@@ -2,7 +2,7 @@
 Basic Principles & Configuration 
 ================================
 
-Station has three levels of configuration: **Panel Level**, **Field Level** and **Application Level**.
+Station has three levels of configuration: **Panel Level**, **Element Level** and **Application Level**.
 
 
 .. _panel-level-configuration:
@@ -16,14 +16,14 @@ To learn all of the specifics of configuring panels, refer to :ref:`panel-anatom
 
 
 
-.. _field-level-configuration:
+.. _element-level-configuration:
 
-Field Level Configuration 
-------------------------- 
+Element Level Configuration 
+---------------------------
 
-Each panel can have any number of fields associated with it. Typically each field refers to a specific field in your database but that is not always the case. A panel can have "virtual" fields as well as no fields at all.
+Each panel can have any number of elements associated with it. Typically each element refers to a specific element in your database but that is not always the case. A panel can have "virtual" elements as well as no elements at all.
 
-To learn all of the specifics of configuring panel fields, refer to :ref:`panel-anatomy`.
+To learn all of the specifics of configuring panel elements, refer to :ref:`panel-anatomy`.
 
 
 
@@ -65,7 +65,7 @@ Following is a list of all of the available configuration options:
 
 	**AWS:** Station currently only supports file uploads to AWS/S3. Enter your bucket, key and secret key here to establish connectivity. If your app does not require uploads then you do not need to configure this option.
 
-	**Sizes:** This is where you set the default image sizes for all uploaded images. If any of your panel fields utilize image uploads and *do not* specify a set of image sizes, these sizes will be used. This is a handy way to set standard sizes for all of your images site-wide, if needed. For more information how to configure this option, refer to the :ref:`config-images` configuration documentation.
+	**Sizes:** This is where you set the default image sizes for all uploaded images. If any of your panel elements utilize image uploads and *do not* specify a set of image sizes, these sizes will be used. This is a handy way to set standard sizes for all of your images site-wide, if needed. For more information how to configure this option, refer to the :ref:`config-images` configuration documentation.
 
 **user_groups**
 
@@ -105,7 +105,7 @@ Following is a list of all of the available configuration options:
 
 **html_append_file**
 
-	This optional field allows you to specify an HTML or PHP blade file to append to every Station view. This is ideal for analytics.
+	This option allows you to specify an HTML or PHP blade file to append to every Station view. This is ideal for analytics.
 
 **html_prepend_content_file**
 
@@ -133,13 +133,13 @@ You can create your own custom configuration variables ``custom_user_vars`` whic
 
 	'custom_user_vars' => [
 
-		'user_company_ids' 	=> '\CompanyRepository::id_list_for_user(%user_id%)',
-		'user_store_ids' 	=> '\StoreRepository::id_list_for_user(%user_id%)',
+		'user_company_ids' => '\CompanyRepository::id_list_for_user(%user_id%)',
+		'user_store_ids' => '\StoreRepository::id_list_for_user(%user_id%)',
 	],
 
 	'custom_view_vars' => [
 
-		'onboarding_progress_html' 	=> '\UserRepository::onboarding_progress_html_for(%user_id%)',
+		'onboarding_progress_html' => '\UserRepository::onboarding_progress_html_for(%user_id%)',
 	],
 
 In this example we are utilizing a ``CompanyRepository`` class, which is part of our Laravel app. This class is returning a set of IDs based on the current user's ID. Those IDs are now stored in ``%user_company_ids%``, which can be used in any panel configuration file.

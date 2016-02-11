@@ -21,8 +21,9 @@ Features
 * Authenticated user system utilizes Laravel's native `user model`_.
 * A simple set of configuration text files defines your entire database, permissions and navigation schema.
 * A build command at ``php artisan station:build`` will generate + run migrations and create models.
-* Define multiple user ``groups`` where users can only access areas for their own group. 
+* Define multiple user ``groups`` where users can only access areas configured for their own group. 
 * A bootstrap-based UI containing necessary behaviors such as drag and drop reorderables, image upload w/ crop tools, nested sortables, and more.
+* User management functions such as password reminders and password reset.
 
 .. _user model: https://laravel.com/docs/5.2/authentication
 
