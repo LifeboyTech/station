@@ -40,4 +40,6 @@ Documentation Contents
    :maxdepth: 1
 
    start
+   principles
+   panels
    roadmap

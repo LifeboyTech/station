@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; Station 0.2 documentation</title>
+  <title>Basic Principles &amp; Configuration &mdash; Station 0.2 documentation</title>
   
 
   
@@ -30,7 +30,9 @@
   
 
   
-    <link rel="top" title="Station 0.2 documentation" href="index.html"/> 
+    <link rel="top" title="Station 0.2 documentation" href="index.html"/>
+        <link rel="next" title="Anatomy of a Panel" href="panels.html"/>
+        <link rel="prev" title="Installation" href="start.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -65,7 +67,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -79,9 +81,13 @@
           
             
             
-                <ul>
+                <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="start.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="principles.html">Basic Principles &amp; Configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Basic Principles &amp; Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#panel-level-configuration">Panel Level Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#application-level-configuration">Application Level Configuration</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="panels.html">Anatomy of a Panel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap &amp; Todos</a></li>
 </ul>
@@ -114,8 +120,12 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li></li>
+    <li>Basic Principles &amp; Configuration</li>
       <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/principles.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
@@ -124,23 +134,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="basic-principles-configuration">
+<h1>Basic Principles &amp; Configuration<a class="headerlink" href="#basic-principles-configuration" title="Permalink to this headline">¶</a></h1>
+<p>Station has two levels of configuration: <strong>Panel Level</strong> and <strong>Application Level</strong>.</p>
+<div class="section" id="panel-level-configuration">
+<span id="id1"></span><h2>Panel Level Configuration<a class="headerlink" href="#panel-level-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Each individual section that appears in the navigation bar is referred to as a &#8220;panel&#8221;. By default, a panel contains all of the functionality to create, remove, update and delete records from a database table or foreign table. Panels can be customized in numerous ways. Panels can also be overriden entirely so that you may develop your own functionality and circumvent default panel behaviors.</p>
+<p>To learn all of the specifics of configuring panels, refer to <a class="reference internal" href="panels.html#panel-anatomy"><span>Anatomy of a Panel</span></a>.</p>
+</div>
+<div class="section" id="application-level-configuration">
+<span id="app-level-configuration"></span><h2>Application Level Configuration<a class="headerlink" href="#application-level-configuration" title="Permalink to this headline">¶</a></h2>
+<p>All of Station&#8217;s top level configuration occurs in the <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code> file. The boilerplate version of this file was copied to your app during the installation process.</p>
+</div>
+</div>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="panels.html" class="btn btn-neutral float-right" title="Anatomy of a Panel" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="start.html" class="btn btn-neutral" title="Installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -178,7 +198,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/searchtools.js"></script>
 
   
 
@@ -194,14 +213,7 @@
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>
