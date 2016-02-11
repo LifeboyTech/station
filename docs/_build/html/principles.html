@@ -87,6 +87,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#panel-level-configuration">Panel Level Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#field-level-configuration">Field Level Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#application-level-configuration">Application Level Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-variables">Configuration Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-configuration-variables">Custom Configuration Variables</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="panels.html">Anatomy of a Panel</a></li>
@@ -203,6 +205,38 @@
 </div>
 <p>For example, if you only specify the letter <code class="docutils literal"><span class="pre">L</span></code> for permissions then the user will only be able to list the records in this panel. Specifying all of the letters gives the user full permissions on this panel.</p>
 </div></blockquote>
+<p><strong>html_append_file</strong></p>
+<blockquote>
+<div>This optional field allows you to specify an HTML or PHP blade file to append to every Station view. This is ideal for analytics.</div></blockquote>
+<p><strong>html_prepend_content_file</strong></p>
+<blockquote>
+<div>Like <code class="docutils literal"><span class="pre">html_append_file</span></code> you can specify an HTML or PHP blade file to prepend to the content area of every panel in Station. This is ideal for onboarding progress timelines or system-wide, universal alerts.</div></blockquote>
+<p><strong>strict_domains</strong></p>
+<blockquote>
+<div>This forces all requests within Station to return a 404 unless one of the domains specified in this array is the domain indicated in the request.</div></blockquote>
+</div>
+<div class="section" id="configuration-variables">
+<h2>Configuration Variables<a class="headerlink" href="#configuration-variables" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">%user_id%</span></code> variable can be used in any value of the application or panel config files. The user&#8217;s ID will be replaced. This allows you to create panels which display only user-specific data. See <a class="reference internal" href="panels.html#panel-anatomy"><span>Anatomy of a Panel</span></a> for more examples of where and how this can be used. See below on how this configuration variable can be used in the application level configuration:</p>
+</div>
+<div class="section" id="custom-configuration-variables">
+<h2>Custom Configuration Variables<a class="headerlink" href="#custom-configuration-variables" title="Permalink to this headline">¶</a></h2>
+<p>You can create your own custom configuration variables <code class="docutils literal"><span class="pre">custom_user_vars</span></code> which are accessible in any panel configuration file and the application configuration file. You can also create <code class="docutils literal"><span class="pre">custom_view_vars</span></code> which are available in any Station views. Just add them to the top-level of your <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code> file.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;custom_user_vars&#39; =&gt; [</span>
+
+<span class="x">        &#39;user_company_ids&#39;      =&gt; &#39;\CompanyRepository::id_list_for_user(%user_id%)&#39;,</span>
+<span class="x">        &#39;user_store_ids&#39;        =&gt; &#39;\StoreRepository::id_list_for_user(%user_id%)&#39;,</span>
+<span class="x">],</span>
+
+<span class="x">&#39;custom_view_vars&#39; =&gt; [</span>
+
+<span class="x">        &#39;onboarding_progress_html&#39;      =&gt; &#39;\UserRepository::onboarding_progress_html_for(%user_id%)&#39;,</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>In this example we are utilizing a <code class="docutils literal"><span class="pre">CompanyRepository</span></code> class, which is part of our Laravel app. This class is returning a set of IDs based on the current user&#8217;s ID. Those IDs are now stored in <code class="docutils literal"><span class="pre">%user_company_ids%</span></code>, which can be used in any panel configuration file.</p>
+<p>Similarly, with <code class="docutils literal"><span class="pre">custom_view_vars</span></code> we are creating the variable <code class="docutils literal"><span class="pre">$onboarding_progress_html</span></code> which is now accessible in any Station view. In this example we&#8217;re generating a snippet of HTML which is being inserted into the file that we specified as our <code class="docutils literal"><span class="pre">html_prepend_content_file</span></code>. That snippet of HTML contains information about onboarding specific to the user who is logged in.</p>
+<p>You can create as many of these custom variables as you wish.</p>
 </div>
 </div>
 

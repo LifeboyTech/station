@@ -103,6 +103,49 @@ Following is a list of all of the available configuration options:
 
 	For example, if you only specify the letter ``L`` for permissions then the user will only be able to list the records in this panel. Specifying all of the letters gives the user full permissions on this panel. 
 
+**html_append_file**
 
+	This optional field allows you to specify an HTML or PHP blade file to append to every Station view. This is ideal for analytics.
+
+**html_prepend_content_file**
+
+	Like ``html_append_file`` you can specify an HTML or PHP blade file to prepend to the content area of every panel in Station. This is ideal for onboarding progress timelines or system-wide, universal alerts.
+
+**strict_domains**
+
+	This forces all requests within Station to return a 404 unless one of the domains specified in this array is the domain indicated in the request. 
+
+
+
+Configuration Variables
+-----------------------
+
+The ``%user_id%`` variable can be used in any value of the application or panel config files. The user's ID will be replaced. This allows you to create panels which display only user-specific data. See :ref:`panel-anatomy` for more examples of where and how this can be used. See below on how this configuration variable can be used in the application level configuration:
+
+
+
+Custom Configuration Variables
+------------------------------
+
+You can create your own custom configuration variables ``custom_user_vars`` which are accessible in any panel configuration file and the application configuration file. You can also create ``custom_view_vars`` which are available in any Station views. Just add them to the top-level of your ``config/packages/lifeboy/station/_app.php`` file.
+
+.. code-block:: php 
+
+	'custom_user_vars' => [
+
+		'user_company_ids' => '\CompanyRepository::id_list_for_user(%user_id%)',
+		'user_store_ids' => '\StoreRepository::id_list_for_user(%user_id%)',
+	],
+
+	'custom_view_vars' => [
+
+		'onboarding_progress_html' => '\UserRepository::onboarding_progress_html_for(%user_id%)',
+	],
+
+In this example we are utilizing a ``CompanyRepository`` class, which is part of our Laravel app. This class is returning a set of IDs based on the current user's ID. Those IDs are now stored in ``%user_company_ids%``, which can be used in any panel configuration file.
+
+Similarly, with ``custom_view_vars`` we are creating the variable ``$onboarding_progress_html`` which is now accessible in any Station view. In this example we're generating a snippet of HTML which is being inserted into the file that we specified as our ``html_prepend_content_file``. That snippet of HTML contains information about onboarding specific to the user who is logged in.
+
+You can create as many of these custom variables as you wish.
 
 
