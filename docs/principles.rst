@@ -2,7 +2,7 @@
 Basic Principles & Configuration 
 ================================
 
-Station has two levels of configuration: **Panel Level** and **Application Level**.
+Station has three levels of configuration: **Panel Level**, **Field Level** and **Application Level**.
 
 
 .. _panel-level-configuration:
@@ -13,6 +13,17 @@ Panel Level Configuration
 Each individual section that appears in the navigation bar is referred to as a "panel". By default, a panel contains all of the functionality to create, remove, update and delete records from a database table or foreign table. Panels can be customized in numerous ways. Panels can also be overriden entirely so that you may develop your own functionality and circumvent default panel behaviors.
 
 To learn all of the specifics of configuring panels, refer to :ref:`panel-anatomy`.
+
+
+
+.. _field-level-configuration:
+
+Field Level Configuration 
+------------------------- 
+
+Each panel can have any number of fields associated with it. Typically each field refers to a specific field in your database but that is not always the case. A panel can have "virtual" fields as well as no fields at all.
+
+To learn all of the specifics of configuring panel fields, refer to :ref:`panel-anatomy`.
 
 
 
@@ -56,6 +67,41 @@ Following is a list of all of the available configuration options:
 
 	**Sizes:** This is where you set the default image sizes for all uploaded images. If any of your panel fields utilize image uploads and *do not* specify a set of image sizes, these sizes will be used. This is a handy way to set standard sizes for all of your images site-wide, if needed. For more information how to configure this option, refer to the :ref:`config-images` configuration documentation.
 
+**user_groups**
+
+	This associative array defines the user groups for your app but also, just as importantly, defines the **entire navigation structure** of Station. Please refer to the boilerplate sample of ``config/packages/lifeboy/station/_app.php``, included in the installation, to visualize the structure of this document.
+
+	**user_groups.[group name]:** This associative array's key is the group name. This is only for internal use. You can use any name you want. When you run ``php artisan station:build`` your groups will be seeded to the ``groups`` table in your database and presented as options in your ``users`` panel.
+
+	**user_groups.[group name].starting_panel:** This is the panel key that a user belonging to this group will be redirected to upon log in. The syntax for this is ``panel_name.ACTION``, where action is L (list view), C (create view), or U (update view).
+
+	**user_groups.[group name].panels** This nested associative array defines the navigation that a user from this group will see in their navigation bar. It also defines the sections, panel titles, and permissions that a user of this group has regarding these panels. The format is as follows:
+
+	.. code-block:: php 
+
+		'panels' => [
+
+			'demo_section'   => ['name' => 'Section Header',  'is_header' => TRUE, 'icon' => 'glyphicon glyphicon-book'],
+			'posts'          => ['name' => 'Posts',           'permissions' => 'CRUDL'],
+
+			... more sections headers and panels go here ...
+		]
+
+	In the above example, **demo_section** is the key name for a section header. The actual name is irrelevant. Just make sure all of your section header keys have unique names because this is PHP array and you cannot duplicate your key names! **is_header** indicates that this item is only a header title and not an actual panel. The **icon** option allows you to use bootstrap glyphicon names to accompany your section headers.
+
+	The **posts** key references an actual panel, not a section header. This key must match the name of a file in the ``config/packages/lifeboy/station`` directory where the :ref:`panel-anatomy` is defined. The **name** option is the actual title of the panel as it will appear in the naviagtion. 
+
+	The **permissions** option sets the permissions that a user from this group has on this panel. You can enter any combination of the letters C.R.U.D. and L:
+
+	.. code-block:: php 
+
+		C = Create 
+		R = Read 
+		U = Update 
+		D = Delete 
+		L = List 
+
+	For example, if you only specify the letter ``L`` for permissions then the user will only be able to list the records in this panel. Specifying all of the letters gives the user full permissions on this panel. 
 
 
 
