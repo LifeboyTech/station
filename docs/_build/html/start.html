@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting Started &mdash; Station 0.2 documentation</title>
+  <title>Installation &mdash; Station 0.2 documentation</title>
   
 
   
@@ -31,6 +31,7 @@
 
   
     <link rel="top" title="Station 0.2 documentation" href="index.html"/>
+        <link rel="next" title="Roadmap &amp; Todos" href="roadmap.html"/>
         <link rel="prev" title="Station for Laravel 5" href="index.html"/> 
 
   
@@ -81,11 +82,8 @@
             
             
                 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#configuration-setup">Configuration &amp; Setup</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap &amp; Todos</a></li>
 </ul>
 
             
@@ -116,7 +114,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Getting Started</li>
+    <li>Installation</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -130,12 +128,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="getting-started">
-<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>Station should be installed via <a class="reference external" href="http://getcomposer.org">Composer</a> by requiring the
-<code class="docutils literal"><span class="pre">lifeboy/station</span></code> package in your project&#8217;s <code class="docutils literal"><span class="pre">composer.json</span></code>.</p>
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p><strong>1. Environment</strong></p>
+<p>Make sure Laravel is already installed and running. You should already have a valid database connection. This install process works best on a fresh Laravel installation.</p>
+<p><strong>2. Install Using Composer</strong></p>
+<p>Station should be installed via <a class="reference external" href="http://getcomposer.org">Composer</a> by requiring the <code class="docutils literal"><span class="pre">lifeboy/station</span></code> package in your project&#8217;s <code class="docutils literal"><span class="pre">composer.json</span></code>.</p>
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;lifeboy/station&quot;</span><span class="p">:</span> <span class="s2">&quot;dev-master&quot;</span>
@@ -147,13 +145,10 @@
 <div class="highlight-sh"><div class="highlight"><pre>composer update
 </pre></div>
 </div>
-</div>
-<div class="section" id="configuration-setup">
-<h2>Configuration &amp; Setup<a class="headerlink" href="#configuration-setup" title="Permalink to this headline">¶</a></h2>
 <p>This assumes you have a working dev or production environment with Laravel 5 and a database already installed and configured.</p>
-<p><strong>1. Register Station in app/config/app.php</strong></p>
-<p>To use station, you must register the provider when bootstrapping your Laravel application.</p>
-<p>Find the <code class="docutils literal"><span class="pre">providers</span></code> key in your <code class="docutils literal"><span class="pre">app/config/app.php</span></code> and register the Station Service Provider.</p>
+<p><strong>3. Register Station Within Laravel</strong></p>
+<p>To use Station, you must register the provider when bootstrapping your Laravel application.</p>
+<p>Find the <code class="docutils literal"><span class="pre">providers</span></code> key in <code class="docutils literal"><span class="pre">app/config/app.php</span></code> and register the Station Service Provider.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;providers&#39; =&gt; array(</span>
 <span class="x">    // ... add below ...</span>
 <span class="x">    Lifeboy\Station\StationServiceProvider::class,</span>
@@ -161,7 +156,7 @@
 <span class="x">),</span>
 </pre></div>
 </div>
-<p>Also update the <code class="docutils literal"><span class="pre">aliases</span></code> array</p>
+<p>Also update the <code class="docutils literal"><span class="pre">aliases</span></code> key in <code class="docutils literal"><span class="pre">app/config/app.php</span></code></p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;aliases&#39; =&gt; [</span>
 <span class="x">    // ...</span>
 <span class="x">    &#39;Form&#39; =&gt; Collective\Html\FormFacade::class,</span>
@@ -169,36 +164,34 @@
 <span class="x">],</span>
 </pre></div>
 </div>
-<p>In <code class="docutils literal"><span class="pre">app/Http/Kernel.php</span></code>, add:</p>
+<p>In <code class="docutils literal"><span class="pre">app/Http/Kernel.php</span></code>, update the <code class="docutils literal"><span class="pre">$routeMiddleware</span></code> class variable:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">protected $routeMiddleware = [</span>
 <span class="x">    // ...</span>
 <span class="x">    &#39;station.session&#39; =&gt; \Lifeboy\Station\Filters\Session::class</span>
 <span class="x">];</span>
 </pre></div>
 </div>
-<p><strong>2. Publish Station&#8217;s assets over to your app.</strong></p>
+<p><strong>4. Publish Station&#8217;s Assets to Laravel</strong></p>
 <div class="highlight-sh"><div class="highlight"><pre>php artisan vendor:publish
 </pre></div>
 </div>
-<p>At this time you can (optionally) edit <code class="docutils literal"><span class="pre">/app/config/packages/lifeboy/station/_app.php</span></code> and change the <code class="docutils literal"><span class="pre">root_admin_email</span></code></p>
-<p><strong>3. Run default migrations if you haven&#8217;t already.</strong></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We sometimes see a &#8220;path not found&#8221; warning on this step. You can safely ignore this.</p>
+</div>
+<p><strong>5. Run Default Migrations</strong></p>
 <div class="highlight-sh"><div class="highlight"><pre>php artisan migrate
 </pre></div>
 </div>
-<p><strong>4. Run Station&#8217;s Build Command</strong></p>
-<p>This will generate migrations, run migrations, generate models, and seed the database.</p>
+<p><strong>6. Run Station&#8217;s Build Command</strong></p>
+<p>This will generate new migrations, run the new migrations, generate models, and seed the database.</p>
 <div class="highlight-sh"><div class="highlight"><pre>php artisan station:build
 </pre></div>
 </div>
-<p><strong>5. Test Installation</strong></p>
-<p>You should now be able to browse to your app at:</p>
-<p><a class="reference external" href="http:/">http:/</a>/{host}/station/ (ex. <a class="reference external" href="http://app.localhost/station/">http://app.localhost/station/</a>) and see station running without errors.</p>
-<p>You can log in using user/password: <code class="docutils literal"><span class="pre">admin/admin</span></code></p>
-<p><strong>6. Configure Station and Your Panels!</strong></p>
-<p>Start by editing <code class="docutils literal"><span class="pre">/app/config/packages/lifeboy/station/_app.php</span></code></p>
-<p>Then create files for each panel in /app/config/packages/lifeboy/station/ [we need documentation on this]</p>
-<p>That&#8217;s it. You now have a fully functioning back end and user management system for your site.</p>
-</div>
+<p><strong>7. Test Installation</strong></p>
+<p>You should now be able to browse to your app at: <code class="docutils literal"><span class="pre">http://{host}/station/</span></code>. You can login using user/password: <code class="docutils literal"><span class="pre">admin/admin</span></code>. Upon login, you will see a welcome screen.</p>
+<p><strong>8. Configure Station and Your Panels!</strong></p>
+<p>That&#8217;s it! Next you will configure Station and tailor it to the needs of your users.</p>
 </div>
 
 
@@ -207,6 +200,8 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="roadmap.html" class="btn btn-neutral float-right" title="Roadmap &amp; Todos" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="Station for Laravel 5" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
