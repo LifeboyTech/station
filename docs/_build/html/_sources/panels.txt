@@ -55,8 +55,10 @@ Without further ado, what follows is an exhaustive list of each and every panel 
 Panel Options
 =============
 
-table 
------ 
+*Note: all options marked with an * are required*
+
+table * 
+-------
 
 Quite simply, this is the name of the database table to which this panel corresponds. Note that you can have many panels which use the same table. 
 
@@ -67,6 +69,26 @@ Quite simply, this is the name of the database table to which this panel corresp
 		'table' => 'posts',	
 		...
 	],
+
+
+single_item_name *
+------------------
+
+This is the singular version of the type of data which is being dealt with in this panel.
+
+.. code-block:: php 
+
+	'panel_options'	=> [
+
+		'table'              => 'posts',	
+		'single_item_name'   => 'Post', 
+		...
+	],
+
+
+where
+-----
+
 
 
 

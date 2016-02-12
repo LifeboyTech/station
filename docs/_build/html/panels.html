@@ -90,7 +90,9 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#panel-options">Panel Options</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#table">table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#table">table *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#single-item-name">single_item_name *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#where">where</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#element-options">Element Options</a><ul>
@@ -185,8 +187,9 @@
 </div>
 <div class="section" id="panel-options">
 <h1>Panel Options<a class="headerlink" href="#panel-options" title="Permalink to this headline">¶</a></h1>
+<p><em>Note: all options marked with an * are required</em></p>
 <div class="section" id="table">
-<h2>table<a class="headerlink" href="#table" title="Permalink to this headline">¶</a></h2>
+<h2>table *<a class="headerlink" href="#table" title="Permalink to this headline">¶</a></h2>
 <p>Quite simply, this is the name of the database table to which this panel corresponds. Note that you can have many panels which use the same table.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39; =&gt; [</span>
 
@@ -195,6 +198,21 @@
 <span class="x">],</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="single-item-name">
+<h2>single_item_name *<a class="headerlink" href="#single-item-name" title="Permalink to this headline">¶</a></h2>
+<p>This is the singular version of the type of data which is being dealt with in this panel.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39; =&gt; [</span>
+
+<span class="x">        &#39;table&#39;              =&gt; &#39;posts&#39;,</span>
+<span class="x">        &#39;single_item_name&#39;   =&gt; &#39;Post&#39;,</span>
+<span class="x">        ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="where">
+<h2>where<a class="headerlink" href="#where" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 <div class="section" id="element-options">
