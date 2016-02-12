@@ -43,6 +43,7 @@ Documentation Contents
    start
    principles
    panels
+   models
    license
    roadmap
 
@@ -53,4 +54,10 @@ Contributing to Station Development
 I welcome and encourage contributions. Please submit pull-requests. I will review and consider implementing.
 
 My only guideline is that enhancements to Station should be within the simple and straightforward spirit of the project.
+
+
+Credits
+------- 
+
+Station was conceived and built primarily by `Ben Hirsch <https://github.com/phirschybar>`_. The project was named by `Tim Habersack <https://github.com/timbotron>`_ who also contributed to the the development and strategy in its early phases.
 

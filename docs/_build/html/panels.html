@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="Station 0.2 documentation" href="index.html"/>
-        <link rel="next" title="License" href="license.html"/>
+        <link rel="next" title="Working with Station Models" href="models.html"/>
         <link rel="prev" title="Basic Principles &amp; Configuration" href="principles.html"/> 
 
   
@@ -86,18 +86,20 @@
 <li class="toctree-l1"><a class="reference internal" href="principles.html">Basic Principles &amp; Configuration</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Anatomy of a Panel</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-build-command">The Build Command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#panel-creation-workflow">Panel Creation Workflow</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#panel-options">Panel Options</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#name">name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#table">table</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#element-options">Element Options</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#name">name</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#type">type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sizes">sizes</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Working with Station Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap &amp; Todos</a></li>
 </ul>
@@ -146,25 +148,59 @@
             
   <div class="section" id="anatomy-of-a-panel">
 <span id="panel-anatomy"></span><h1>Anatomy of a Panel<a class="headerlink" href="#anatomy-of-a-panel" title="Permalink to this headline">¶</a></h1>
-<p>Panels are the heart and soul of Station. Each panel contains all of the functionality necessary for a user to manipulate a specific type of data in your database. There are numerous options for panels and elements giving you the flexibility to craft the back-end tools to fit virtually any scenario or database structure.</p>
+<p>Panels are the heart and soul of Station. Out of the box, panels contains all of the functionality necessary for a user to manipulate a specific type of data in your database. There are numerous options for panels and elements giving you the flexibility to craft back-end tools to fit virtually any scenario or database structure.</p>
 <p>Typically each panel maps to a database table one-to-one. However, a panel can also contain one or more <strong>subpanels</strong> as well as references to other tables for lookup capabilities.</p>
 <p>A panel can also be complete overriden so you can build your own functionality from scratch, but within the user-authenticated comfort of Station.</p>
 <div class="section" id="the-build-command">
 <h2>The Build Command<a class="headerlink" href="#the-build-command" title="Permalink to this headline">¶</a></h2>
-<p>Each time</p>
+<p>Each time you add a new panel or change a panel&#8217;s configuration you need to run <code class="docutils literal"><span class="pre">php</span> <span class="pre">artisan</span> <span class="pre">station:build</span></code>.</p>
+<p>This artisan command will analyze your panels and elements and then do the following:</p>
+<ul class="simple">
+<li>generate migrations for any missing database fields, including database pivot tables</li>
+<li>run the new migrations</li>
+<li>generate / refresh models with foreign relationships for each panel (see &#8220;<a class="reference internal" href="models.html#models"><span>Working with Station Models</span></a>&#8221; for more info)</li>
+<li>seed the database (only when new user groups have been added)</li>
+</ul>
+<p>If you attempt to navigate to a newly created panel in the Station navigation, you will likely encounter errors. You must run the build command first.</p>
+</div>
+<div class="section" id="panel-creation-workflow">
+<h2>Panel Creation Workflow<a class="headerlink" href="#panel-creation-workflow" title="Permalink to this headline">¶</a></h2>
+<p>As discussed in &#8220;<a class="reference internal" href="principles.html#app-level-configuration"><span>Application Level Configuration</span></a>&#8221;, when you add new array elements to the <code class="docutils literal"><span class="pre">user_groups</span></code> associative array in your <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code> file, you are in-effect registering new panels with Station.</p>
+<p>Station is able to determine the behaviors of each panel given the values of the configuration parameters found in each panel&#8217;s configuration file. For example, if you have a panel named <code class="docutils literal"><span class="pre">posts</span></code> in your <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code> file, then you need a corresponding <code class="docutils literal"><span class="pre">posts.php</span></code> file in the <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/</span></code> directory to define the parameters of that panel.</p>
+<p>For example, refer to the <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/users.php</span></code> file which was packaged with your installed copy of Station, you will notice that there are two top-level array keys, <code class="docutils literal"><span class="pre">panel_options</span></code> and <code class="docutils literal"><span class="pre">elements</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39; =&gt; [</span>
+
+<span class="x">        // define your panel-level options here...</span>
+<span class="x">],</span>
+
+<span class="x">&#39;elements&#39;      =&gt; [</span>
+
+<span class="x">        // define your element-level options here...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>Panel options control the overall configuration of the panel (think of this as database table-level options). Elements define how your users interact with specific database fields.</p>
+<p>Without further ado, what follows is an exhaustive list of each and every panel and element option possible along with specific examples for each. Dive in!</p>
 </div>
 </div>
 <div class="section" id="panel-options">
 <h1>Panel Options<a class="headerlink" href="#panel-options" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="name">
-<h2>name<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h2>
-<p>xxx</p>
+<div class="section" id="table">
+<h2>table<a class="headerlink" href="#table" title="Permalink to this headline">¶</a></h2>
+<p>Quite simply, this is the name of the database table to which this panel corresponds. Note that you can have many panels which use the same table.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39; =&gt; [</span>
+
+<span class="x">        &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">        ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="element-options">
 <h1>Element Options<a class="headerlink" href="#element-options" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id1">
-<h2>name<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="name">
+<h2>name<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="type">
 <h2>type<a class="headerlink" href="#type" title="Permalink to this headline">¶</a></h2>
@@ -181,7 +217,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="license.html" class="btn btn-neutral float-right" title="License" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="models.html" class="btn btn-neutral float-right" title="Working with Station Models" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="principles.html" class="btn btn-neutral" title="Basic Principles &amp; Configuration" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
