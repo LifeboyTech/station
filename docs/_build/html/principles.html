@@ -219,11 +219,11 @@
 <div>This forces all requests within Station to return a 404 unless one of the domains specified in this array is the domain indicated in the request.</div></blockquote>
 </div>
 <div class="section" id="configuration-variables">
-<h2>Configuration Variables<a class="headerlink" href="#configuration-variables" title="Permalink to this headline">¶</a></h2>
+<span id="config-variables"></span><h2>Configuration Variables<a class="headerlink" href="#configuration-variables" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal"><span class="pre">%user_id%</span></code> variable can be used in any value of the application or panel config files. The user&#8217;s ID will be replaced. This allows you to create panels which display only user-specific data. See <a class="reference internal" href="panels.html#panel-anatomy"><span>Anatomy of a Panel</span></a> for more examples of where and how this can be used. See below on how this configuration variable can be used in the application level configuration:</p>
 </div>
 <div class="section" id="custom-configuration-variables">
-<h2>Custom Configuration Variables<a class="headerlink" href="#custom-configuration-variables" title="Permalink to this headline">¶</a></h2>
+<span id="custom-config-variables"></span><h2>Custom Configuration Variables<a class="headerlink" href="#custom-configuration-variables" title="Permalink to this headline">¶</a></h2>
 <p>You can create your own custom configuration variables <code class="docutils literal"><span class="pre">custom_user_vars</span></code> which are accessible in any panel configuration file and the application configuration file. You can also create <code class="docutils literal"><span class="pre">custom_view_vars</span></code> which are available in any Station views. Just add them to the top-level of your <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code> file.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;custom_user_vars&#39; =&gt; [</span>
 

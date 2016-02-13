@@ -115,7 +115,7 @@ Following is a list of all of the available configuration options:
 
 	This forces all requests within Station to return a 404 unless one of the domains specified in this array is the domain indicated in the request. 
 
-
+.. _config-variables:
 
 Configuration Variables
 -----------------------
@@ -123,6 +123,7 @@ Configuration Variables
 The ``%user_id%`` variable can be used in any value of the application or panel config files. The user's ID will be replaced. This allows you to create panels which display only user-specific data. See :ref:`panel-anatomy` for more examples of where and how this can be used. See below on how this configuration variable can be used in the application level configuration:
 
 
+.. _custom-config-variables:
 
 Custom Configuration Variables
 ------------------------------

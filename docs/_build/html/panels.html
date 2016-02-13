@@ -92,6 +92,13 @@
 <li class="toctree-l1"><a class="reference internal" href="#panel-options">Panel Options</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#table">table *</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#single-item-name">single_item_name *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#allow-bulk-delete">allow_bulk_delete</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#default-order-by-default-id">default_order_by [default = id]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#has-timestamps">has_timestamps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#js-include">js_include</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#no-data-force-create">no_data_force_create</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#override">override</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preview-url">preview_url</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#where">where</a></li>
 </ul>
 </li>
@@ -211,8 +218,104 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="allow-bulk-delete">
+<h2>allow_bulk_delete<a class="headerlink" href="#allow-bulk-delete" title="Permalink to this headline">¶</a></h2>
+<p>Setting this option to true will allow users to select and delete multiple items in list views (including filtered list views)</p>
+</div>
+<div class="section" id="default-order-by-default-id">
+<h2>default_order_by [default = id]<a class="headerlink" href="#default-order-by-default-id" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to set the order in which records for this panel will be displayed. You can choose one or more database fields. You will use traditional SQL syntax.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39; =&gt; [</span>
+
+<span class="x">        &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">        &#39;default_order_by&#39; =&gt; &#39;title ASC, date DESC&#39;,</span>
+<span class="x">        ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="has-timestamps">
+<h2>has_timestamps<a class="headerlink" href="#has-timestamps" title="Permalink to this headline">¶</a></h2>
+<p>If this option is set to true then the migrations and models generated for this panel/table will create and utilize Laravel Eloquent&#8217;s <code class="docutils literal"><span class="pre">created_at</span></code> and <code class="docutils literal"><span class="pre">updated_at</span></code> timestamp fields.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39; =&gt; [</span>
+
+<span class="x">        &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">        &#39;has_timestamps&#39; =&gt; TRUE,</span>
+<span class="x">        ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="js-include">
+<h2>js_include<a class="headerlink" href="#js-include" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to specify a javascript file to include on all pages of this panel. It is great for sewing in your own functionality. jQuery is available on all pages as well.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39; =&gt; [</span>
+
+<span class="x">        &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">        &#39;js_include&#39; =&gt; &#39;/js/my-own.js&#39;,</span>
+<span class="x">        ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="no-data-force-create">
+<h2>no_data_force_create<a class="headerlink" href="#no-data-force-create" title="Permalink to this headline">¶</a></h2>
+<p>When this option is set to true it will redirect a user who is trying to access a panel&#8217;s (initial) list view to the panel&#8217;s create view instead.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39; =&gt; [</span>
+
+<span class="x">        &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">        &#39;no_data_force_create&#39; =&gt; TRUE,</span>
+<span class="x">        ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="override">
+<h2>override<a class="headerlink" href="#override" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to completely override the functionality of a specific panel using a controller and method from your Laravel app. For an example of this, look at the <code class="docutils literal"><span class="pre">welcome</span></code> panel which shipped with Station.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39; =&gt; [</span>
+
+<span class="x">        &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">        &#39;override&#39; =&gt; [&#39;L&#39; =&gt; &#39;MyControllerName@method_name&#39;],</span>
+<span class="x">        ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">L</span></code> above means that this will override the (initial) list view of your panel. However you can override the <code class="docutils literal"><span class="pre">U</span></code> (update) function instead and just leave the list view as-is using <code class="docutils literal"><span class="pre">'override'</span> <span class="pre">=&gt;</span> <span class="pre">['U'</span> <span class="pre">=&gt;</span> <span class="pre">'MyControllerName&#64;method_name'],</span></code>. When using the update override, the record your user is attempting to modify will be passed as data to your controller method automatically.</p>
+</div>
+<div class="section" id="preview-url">
+<h2>preview_url<a class="headerlink" href="#preview-url" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to specify a array template for generating the url for a button which will become visible in the update view of every record in this panel.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39; =&gt; [</span>
+
+<span class="x">        &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">        &#39;preview_url&#39; =&gt; [&#39;http://www.domain.com/post/&#39;, &#39;posts.id&#39;, &#39;/preview&#39;],</span>
+<span class="x">        ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>The elements of this array will concatenate to form the preview URL. When one of the array&#8217;s elements is in the format <code class="docutils literal"><span class="pre">table_name.field_name</span></code> it will be replaced by the actual record&#8217;s value. So the example above might produce <code class="docutils literal"><span class="pre">http://www.domain.com/post/9999/preview</span></code> and a button which looks like the one below will appear on your panel&#8217;s update pages:</p>
+<img alt="_images/preview-url.png" src="_images/preview-url.png" />
+</div>
 <div class="section" id="where">
 <h2>where<a class="headerlink" href="#where" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to append a SQL <code class="docutils literal"><span class="pre">where</span></code> clause onto the standard query which retrieves the data for this panel.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39; =&gt; [</span>
+
+<span class="x">        &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">        &#39;where&#39; =&gt; &#39;title LIKE &quot;%robot%&quot;&#39;,</span>
+<span class="x">        ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>This is also a good opportunity to pass in <a class="reference internal" href="principles.html#config-variables"><span>Configuration Variables</span></a> or <a class="reference internal" href="principles.html#custom-config-variables"><span>Custom Configuration Variables</span></a> if those are relevant to your app.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39; =&gt; [</span>
+
+<span class="x">        &#39;table&#39; =&gt; &#39;employees&#39;,</span>
+<span class="x">        &#39;where&#39; =&gt; &#39;company_id IN (%user_company_ids%)&#39;,</span>
+<span class="x">],</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="element-options">
