@@ -89,12 +89,14 @@
 <li class="toctree-l2"><a class="reference internal" href="#table">table *</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#single-item-name">single_item_name *</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#allow-bulk-delete">allow_bulk_delete</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#default-order-by-default-id">default_order_by [default = id]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#default-order-by">default_order_by</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#has-timestamps">has_timestamps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#js-include">js_include</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nestable-by">nestable_by</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#no-data-force-create">no_data_force_create</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#override">override</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#preview-url">preview_url</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reorderable-by">reorderable_by</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#where">where</a></li>
 </ul>
 </li>
@@ -176,8 +178,8 @@
 <h2>allow_bulk_delete<a class="headerlink" href="#allow-bulk-delete" title="Permalink to this headline">¶</a></h2>
 <p>Setting this option to true will allow users to select and delete multiple items in list views (including filtered list views)</p>
 </div>
-<div class="section" id="default-order-by-default-id">
-<h2>default_order_by [default = id]<a class="headerlink" href="#default-order-by-default-id" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="default-order-by">
+<h2>default_order_by<a class="headerlink" href="#default-order-by" title="Permalink to this headline">¶</a></h2>
 <p>This option allows you to set the order in which records for this panel will be displayed. You can choose one or more database fields. You will use traditional SQL syntax.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
 
@@ -211,6 +213,20 @@
 <span class="x">],</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="nestable-by">
+<h2>nestable_by<a class="headerlink" href="#nestable-by" title="Permalink to this headline">¶</a></h2>
+<p>This is a very powerful feature which will allow your users to reorder and hierarchically &#8220;nest&#8221; the records of this table. When enabled your users can drag and drop records to reorder them arbitrarily as well as &#8220;nest&#8221; them into a tree-like model.</p>
+<img alt="_images/nested.png" src="_images/nested.png" />
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+
+<span class="x">   &#39;table&#39; =&gt; &#39;pages&#39;,</span>
+<span class="x">   &#39;nestable_by&#39; =&gt; [&#39;position&#39;, &#39;parent_id&#39;, &#39;depth&#39;],</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>The three array elements are (1) the field name which contains the overall sort-order (2) the field name which contains the ID of the parent of the record. Records on the top-level have a <code class="docutils literal"><span class="pre">parent_id</span></code> of <code class="docutils literal"><span class="pre">0</span></code> and (3) the depth level of the record.</p>
 </div>
 <div class="section" id="no-data-force-create">
 <h2>no_data_force_create<a class="headerlink" href="#no-data-force-create" title="Permalink to this headline">¶</a></h2>
@@ -250,6 +266,19 @@
 </div>
 <p>The elements of this array will concatenate to form the preview URL. When one of the array&#8217;s elements is in the format <code class="docutils literal"><span class="pre">table_name.field_name</span></code> it will be replaced by the actual record&#8217;s value. So the example above might produce <code class="docutils literal"><span class="pre">http://www.domain.com/post/9999/preview</span></code> and a button which looks like the one below will appear on your panel&#8217;s update pages:</p>
 <img alt="_images/preview-url.png" src="_images/preview-url.png" />
+</div>
+<div class="section" id="reorderable-by">
+<h2>reorderable_by<a class="headerlink" href="#reorderable-by" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to specify a field name to use as your table&#8217;s &#8220;position&#8221; field. This is a field which is used to store an arbitrary, user-defined sorting-order for the records in the table. When enabled, your users will be able to drag and drop records to reorder them within the list view of this panel. Each time a user reorders the records, all of the values for the field you specify will be re-written from 0 through X.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+
+<span class="x">   &#39;table&#39; =&gt; &#39;categories&#39;,</span>
+<span class="x">   &#39;reorderable_by&#39; =&gt; &#39;position&#39;,</span>
+<span class="x">   &#39;default_order_by&#39; =&gt; &#39;position&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="where">
 <h2>where<a class="headerlink" href="#where" title="Permalink to this headline">¶</a></h2>

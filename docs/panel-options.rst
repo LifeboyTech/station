@@ -40,8 +40,8 @@ Setting this option to true will allow users to select and delete multiple items
 
 
 
-default_order_by [default = id]
-------------------------------- 
+default_order_by
+---------------- 
 
 This option allows you to set the order in which records for this panel will be displayed. You can choose one or more database fields. You will use traditional SQL syntax.
 
@@ -85,6 +85,26 @@ This option allows you to specify a javascript file to include on all pages of t
       'js_include' => '/js/my-own.js',
       ...
    ],
+
+
+
+nestable_by
+----------- 
+
+This is a very powerful feature which will allow your users to reorder and hierarchically "nest" the records of this table. When enabled your users can drag and drop records to reorder them arbitrarily as well as "nest" them into a tree-like model.
+
+.. image:: images/nested.png
+
+.. code-block:: php 
+
+   'panel_options'   => [
+
+      'table' => 'pages',  
+      'nestable_by' => ['position', 'parent_id', 'depth'],
+      ...
+   ],
+
+The three array elements are (1) the field name which contains the overall sort-order (2) the field name which contains the ID of the parent of the record. Records on the top-level have a ``parent_id`` of ``0`` and (3) the depth level of the record. 
 
 
 
@@ -139,6 +159,23 @@ This option allows you to specify a array template for generating the url for a 
 The elements of this array will concatenate to form the preview URL. When one of the array's elements is in the format ``table_name.field_name`` it will be replaced by the actual record's value. So the example above might produce ``http://www.domain.com/post/9999/preview`` and a button which looks like the one below will appear on your panel's update pages:
 
 .. image:: images/preview-url.png
+
+
+
+reorderable_by
+--------------
+
+This option allows you to specify a field name to use as your table's "position" field. This is a field which is used to store an arbitrary, user-defined sorting-order for the records in the table. When enabled, your users will be able to drag and drop records to reorder them within the list view of this panel. Each time a user reorders the records, all of the values for the field you specify will be re-written from 0 through X. 
+
+.. code-block:: php 
+
+   'panel_options'   => [
+
+      'table' => 'categories',  
+      'reorderable_by' => 'position',
+      'default_order_by' => 'position',
+      ...
+   ],
 
 
 
