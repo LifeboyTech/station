@@ -43,6 +43,8 @@ Documentation Contents
    start
    principles
    panels
+   panel-options
+   element-options
    models
    license
    roadmap

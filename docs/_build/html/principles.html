@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="Station 0.2 documentation" href="index.html"/>
-        <link rel="next" title="Anatomy of a Panel" href="panels.html"/>
+        <link rel="next" title="Working With Panels" href="panels.html"/>
         <link rel="prev" title="Installation" href="start.html"/> 
 
   
@@ -91,9 +91,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#custom-configuration-variables">Custom Configuration Variables</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="panels.html">Anatomy of a Panel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="panels.html#panel-options">Panel Options</a></li>
-<li class="toctree-l1"><a class="reference internal" href="panels.html#element-options">Element Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="panels.html">Working With Panels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="panel-options.html">Panel Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="element-options.html">Element Options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Working with Station Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap &amp; Todos</a></li>
@@ -147,12 +147,12 @@
 <div class="section" id="panel-level-configuration">
 <span id="id1"></span><h2>Panel Level Configuration<a class="headerlink" href="#panel-level-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Each individual section that appears in the navigation bar is referred to as a &#8220;panel&#8221;. By default, a panel contains all of the functionality to create, remove, update and delete records from a database table or foreign table. Panels can be customized in numerous ways. Panels can also be overriden entirely so that you may develop your own functionality and circumvent default panel behaviors.</p>
-<p>To learn all of the specifics of configuring panels, refer to <a class="reference internal" href="panels.html#panel-anatomy"><span>Anatomy of a Panel</span></a>.</p>
+<p>To learn all of the specifics of configuring panels, refer to <a class="reference internal" href="panels.html#panel-anatomy"><span>Working With Panels</span></a>.</p>
 </div>
 <div class="section" id="element-level-configuration">
 <span id="id2"></span><h2>Element Level Configuration<a class="headerlink" href="#element-level-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Each panel can have any number of elements associated with it. Typically each element refers to a specific element in your database but that is not always the case. A panel can have &#8220;virtual&#8221; elements as well as no elements at all.</p>
-<p>To learn all of the specifics of configuring panel elements, refer to <a class="reference internal" href="panels.html#panel-anatomy"><span>Anatomy of a Panel</span></a>.</p>
+<p>To learn all of the specifics of configuring panel elements, refer to <a class="reference internal" href="panels.html#panel-anatomy"><span>Working With Panels</span></a>.</p>
 </div>
 <div class="section" id="application-level-configuration">
 <span id="app-level-configuration"></span><h2>Application Level Configuration<a class="headerlink" href="#application-level-configuration" title="Permalink to this headline">¶</a></h2>
@@ -179,7 +179,7 @@
 <p><strong>media_options</strong></p>
 <blockquote>
 <div><p><strong>AWS:</strong> Station currently only supports file uploads to AWS/S3. Enter your bucket, key and secret key here to establish connectivity. If your app does not require uploads then you do not need to configure this option.</p>
-<p><strong>Sizes:</strong> This is where you set the default image sizes for all uploaded images. If any of your panel elements utilize image uploads and <em>do not</em> specify a set of image sizes, these sizes will be used. This is a handy way to set standard sizes for all of your images site-wide, if needed. For more information how to configure this option, refer to the <a class="reference internal" href="panels.html#config-images"><span>sizes</span></a> configuration documentation.</p>
+<p><strong>Sizes:</strong> This is where you set the default image sizes for all uploaded images. If any of your panel elements utilize image uploads and <em>do not</em> specify a set of image sizes, these sizes will be used. This is a handy way to set standard sizes for all of your images site-wide, if needed. For more information how to configure this option, refer to the <a class="reference internal" href="element-options.html#config-images"><span>sizes</span></a> configuration documentation.</p>
 </div></blockquote>
 <p><strong>user_groups</strong></p>
 <blockquote>
@@ -197,7 +197,7 @@
 </pre></div>
 </div>
 <p>In the above example, <strong>demo_section</strong> is the key name for a section header. The actual name is irrelevant. Just make sure all of your section header keys have unique names because this is PHP array and you cannot duplicate your key names! <strong>is_header</strong> indicates that this item is only a header title and not an actual panel. The <strong>icon</strong> option allows you to use bootstrap glyphicon names to accompany your section headers.</p>
-<p>The <strong>posts</strong> key references an actual panel, not a section header. This key must match the name of a file in the <code class="docutils literal"><span class="pre">config/packages/lifeboy/station</span></code> directory where the <a class="reference internal" href="panels.html#panel-anatomy"><span>Anatomy of a Panel</span></a> is defined. The <strong>name</strong> option is the actual title of the panel as it will appear in the naviagtion.</p>
+<p>The <strong>posts</strong> key references an actual panel, not a section header. This key must match the name of a file in the <code class="docutils literal"><span class="pre">config/packages/lifeboy/station</span></code> directory where the <a class="reference internal" href="panels.html#panel-anatomy"><span>Working With Panels</span></a> is defined. The <strong>name</strong> option is the actual title of the panel as it will appear in the naviagtion.</p>
 <p>The <strong>permissions</strong> option sets the permissions that a user from this group has on this panel. You can enter any combination of the letters C.R.U.D. and L:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">C = Create</span>
 <span class="x">R = Read</span>
@@ -220,7 +220,7 @@
 </div>
 <div class="section" id="configuration-variables">
 <span id="config-variables"></span><h2>Configuration Variables<a class="headerlink" href="#configuration-variables" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal"><span class="pre">%user_id%</span></code> variable can be used in any value of the application or panel config files. The user&#8217;s ID will be replaced. This allows you to create panels which display only user-specific data. See <a class="reference internal" href="panels.html#panel-anatomy"><span>Anatomy of a Panel</span></a> for more examples of where and how this can be used. See below on how this configuration variable can be used in the application level configuration:</p>
+<p>The <code class="docutils literal"><span class="pre">%user_id%</span></code> variable can be used in any value of the application or panel config files. The user&#8217;s ID will be replaced. This allows you to create panels which display only user-specific data. See <a class="reference internal" href="panels.html#panel-anatomy"><span>Working With Panels</span></a> for more examples of where and how this can be used. See below on how this configuration variable can be used in the application level configuration:</p>
 </div>
 <div class="section" id="custom-configuration-variables">
 <span id="custom-config-variables"></span><h2>Custom Configuration Variables<a class="headerlink" href="#custom-configuration-variables" title="Permalink to this headline">¶</a></h2>
@@ -250,7 +250,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="panels.html" class="btn btn-neutral float-right" title="Anatomy of a Panel" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="panels.html" class="btn btn-neutral float-right" title="Working With Panels" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="start.html" class="btn btn-neutral" title="Installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
