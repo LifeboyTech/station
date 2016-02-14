@@ -119,6 +119,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#display">display</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#help">help</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#is-filterable">is_filterable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prepend-icon">prepend_icon</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#rules">rules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sizes">sizes</a></li>
 </ul>
@@ -477,6 +478,7 @@
 <span class="x">      &#39;join&#39;      =&gt; TRUE,</span>
 <span class="x">      &#39;relation&#39;  =&gt; &#39;belongsToMany&#39;, // &lt;== This relationship is written to the auto-generated model</span>
 <span class="x">      &#39;table&#39;     =&gt; &#39;animals&#39;,</span>
+<span class="x">      &#39;pivot&#39;     =&gt; &#39;animals&#39;,</span>
 <span class="x">      &#39;display&#39;   =&gt; &#39;animals.name&#39;,</span>
 <span class="x">      &#39;order&#39;     =&gt; &#39;animals.name&#39;</span>
 <span class="x">   ]</span>
@@ -569,6 +571,20 @@
 <h2>is_filterable<a class="headerlink" href="#is-filterable" title="Permalink to this headline">¶</a></h2>
 <p>When this option is set to true and the element has type <code class="docutils literal"><span class="pre">select</span></code> and it has a <a class="reference internal" href="#display"><span>display</span></a> value allowing it to be shown in the list view (L), then a filter dropdown will appear allowing users to filter the list view by a value present in the table. The dropdown even contains a search tool, compliments of the <a class="reference external" href="https://harvesthq.github.io/chosen/">Chosen</a> library.</p>
 <img alt="_images/filter.png" src="_images/filter.png" />
+</div>
+<div class="section" id="prepend-icon">
+<h2>prepend_icon<a class="headerlink" href="#prepend-icon" title="Permalink to this headline">¶</a></h2>
+<p>This allows you to set a bootstrap glyphicon class name in order to prepend an icon to your elements input field. This only works with <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'text'</span></code>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;url&#39;   =&gt; [</span>
+
+<span class="x">   &#39;label&#39; =&gt; &#39;Web Address&#39;,</span>
+<span class="x">   &#39;type&#39; =&gt; &#39;text&#39;,</span>
+<span class="x">   &#39;prepend_icon&#39; =&gt; &#39;glyphicon glyphicon-globe&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<img alt="_images/prepend.png" src="_images/prepend.png" />
 </div>
 <div class="section" id="rules">
 <span id="id4"></span><h2>rules<a class="headerlink" href="#rules" title="Permalink to this headline">¶</a></h2>

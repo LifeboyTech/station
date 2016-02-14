@@ -312,6 +312,7 @@ This option defines how the data for this element is populated. It is required w
             'join'      => TRUE,
             'relation'  => 'belongsToMany', // <== This relationship is written to the auto-generated model
             'table'     => 'animals',
+            'pivot'     => 'animals',
             'display'   => 'animals.name',
             'order'     => 'animals.name'
          ]
@@ -418,6 +419,24 @@ is_filterable
 When this option is set to true and the element has type ``select`` and it has a :ref:`display` value allowing it to be shown in the list view (L), then a filter dropdown will appear allowing users to filter the list view by a value present in the table. The dropdown even contains a search tool, compliments of the `Chosen <https://harvesthq.github.io/chosen/>`_ library.
 
 .. image:: /images/filter.png
+
+
+prepend_icon
+------------ 
+
+This allows you to set a bootstrap glyphicon class name in order to prepend an icon to your elements input field. This only works with ``'type' => 'text'``.
+
+.. code-block:: php 
+
+   'url'   => [
+
+      'label' => 'Web Address',
+      'type' => 'text',
+      'prepend_icon' => 'glyphicon glyphicon-globe',
+      ...
+   ],
+
+.. image:: images/prepend.png
 
 
 .. _rules:
