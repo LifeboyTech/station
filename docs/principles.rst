@@ -67,6 +67,8 @@ css_override_file
 
 	Optionally set this to the URL or path of a .css file which will be loaded on every Station URL. This is excellent for adding branding specifics to your Station installation.
 
+.. _media-options:
+
 media_options
 ^^^^^^^^^^^^^
 

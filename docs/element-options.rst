@@ -84,6 +84,9 @@ boolean
 
    .. image:: images/boolean.png
 
+
+.. _type-image:
+
 image
 ^^^^^
    
@@ -215,6 +218,12 @@ subpanel
 
 
 
+allow_upsize
+------------ 
+
+This option is only available to elements using the type ":ref:`type-image`". When set to true, a user uploading an image is allowed to use a smaller image size than the largest dimension expected. The image will be magnified to fit the largest dimension. See more on sizing using the :ref:`config-images` option.
+
+
 attributes 
 ---------- 
 
@@ -272,6 +281,24 @@ This option informs Station when to display this element. You may indicate one o
    ],
 
 
+
+help 
+---- 
+
+This options allows you to set some "helper" text which will display next to the element input in the create and update views. 
+
+.. code-block:: php 
+
+   'bio'   => [
+
+      'label' => 'Company Bio',
+      'type' => 'textarea',
+      'help' => 'Optional. Just some brief, fun facts about your company',
+      ...
+   ],
+
+
+
 .. _rules:
 
 rules 
@@ -292,7 +319,63 @@ This option configures the validation of an element. You must set the value to a
 **Note:** When using the ``unique`` rule, Station uses a ``,`` while Laravel requires a ``:``
 
 
+
 .. _config-images:
 
 sizes
 -----
+
+This option allows you to specify one or more image sizes and locations for uploaded images. Upon upload, only the name of the uploaded file will be saved to your database. The image itself will be resized, cropped, and saved to the locations you specify. If you wish, you can specify global application defaults in ":ref:`media-options`" so that you do not need to repeat the same sizes and locations in every panel.
+
+.. code-block:: php 
+
+   'logo' => [
+
+      'label'        => 'Logo Image',
+      'help'         => '(270 x 270 min)',
+      'type'         => 'image',
+      'display'      => 'CRUD',
+      'allow_upsize' => TRUE,
+      'sizes'     => [
+         'original'  => ['label'=>'Original'],  
+         'logo-300x150' => ['label'=>'300 x 150','size'=>'300x150', 'letterbox' => '#FFFFFF'],
+         'logo-270x270' => ['label'=>'Fixed Width (270px)','size'=>'270x0'],
+         'logo-180x180' => ['label'=>'Square Thumbnail','size'=>'180x180'],
+      ]
+   ],
+
+In the example above, there are 4 different sizes (including an untouched, original version) which will be created upon upload. An associative array defines how the original, uploaded image will be manipulated and transmitted to your CDN server. *Note: currently only Amazon S3 is supported*. Here is the breakdown on how to configure the ``sizes`` option:
+
+**(key)**
+
+   * The key name, ex. ``logo-300x150`` is the name of the directory on the CDN server where the image will be saved.
+   * If the directory does not exist it will be created automatically.
+
+**label**
+   
+   * This is the title of the image version which will display in the crop and preview tool (see screenshot below). 
+   * This can be any descriptive value you wish.
+
+**size**
+
+   * This defines the dimensions of the manipulation. Leaving this blank or undefined will save an unmodified version of the uploaded image. 
+   * Setting a width only (``500x0``) or height only (``0x500``) will preserve the image's aspect ratio but will force the image to resize to the defined dimension.
+   * Setting both a width and a height (``500x500``) will center-crop the image and allow your users to further crop it via Station's crop tool.
+
+**letterbox**
+
+   * When this is defined with a **size** of fixed width and height, the resulting crop will be an outer-crop instead of a center-crop.
+   * Use this option to define the hex color value that will be used to fill any remaining space surrounding the cropped image.
+
+Station's preview and crop tool:
+
+.. image:: images/crop.png
+
+
+
+
+
+
+
+
+

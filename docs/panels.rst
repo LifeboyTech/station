@@ -27,6 +27,16 @@ This artisan command will analyze your panels and elements and then do the follo
 If you attempt to navigate to a newly created panel in the Station navigation, you will likely encounter errors. You must run the build command first.
 
 
+Accessing Panel Configuration
+----------------------------- 
+
+In your Laravel app you may wish to access a panel's configuration array. To accomplish this, just add ``use Lifeboy\Station\Config\StationConfig as StationConfig`` to the top of any class. Then,
+
+.. code-block:: php 
+
+   $my_panel_config = StationConfig::panel('my_panel_name');
+
+
 Panel Creation Workflow
 ----------------------- 
 

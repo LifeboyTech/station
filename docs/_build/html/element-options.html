@@ -107,9 +107,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#subpanel">subpanel</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#allow-upsize">allow_upsize</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#attributes">attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data">data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#display">display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#help">help</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#rules">rules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sizes">sizes</a></li>
 </ul>
@@ -238,7 +240,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="image">
-<h3>image<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h3>
+<span id="type-image"></span><h3>image<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>This will generate a VARCHAR(255) database field.</li>
@@ -389,6 +391,10 @@
 </div></blockquote>
 </div>
 </div>
+<div class="section" id="allow-upsize">
+<h2>allow_upsize<a class="headerlink" href="#allow-upsize" title="Permalink to this headline">¶</a></h2>
+<p>This option is only available to elements using the type &#8220;<a class="reference internal" href="#type-image"><span>image</span></a>&#8221;. When set to true, a user uploading an image is allowed to use a smaller image size than the largest dimension expected. The image will be magnified to fit the largest dimension. See more on sizing using the <a class="reference internal" href="#config-images"><span>sizes</span></a> option.</p>
+</div>
 <div class="section" id="attributes">
 <h2>attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="panels.html#build-command"><span>The Build Command</span></a> utilizes the wonderful <a class="reference external" href="https://github.com/laracasts/Laravel-5-Generators-Extended">Laracast Generators</a> package to generate migrations for your panels. If you add pipe-delimited arguments to the <code class="docutils literal"><span class="pre">attributes</span></code> option, those arguments will be passed to the generator as <a class="reference external" href="https://github.com/laracasts/Laravel-5-Generators-Extended#migrations-with-schema">specific schema</a>.</p>
@@ -434,6 +440,19 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="help">
+<h2>help<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h2>
+<p>This options allows you to set some &#8220;helper&#8221; text which will display next to the element input in the create and update views.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;bio&#39;   =&gt; [</span>
+
+<span class="x">   &#39;label&#39; =&gt; &#39;Company Bio&#39;,</span>
+<span class="x">   &#39;type&#39; =&gt; &#39;textarea&#39;,</span>
+<span class="x">   &#39;help&#39; =&gt; &#39;Optional. Just some brief, fun facts about your company&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="rules">
 <span id="id2"></span><h2>rules<a class="headerlink" href="#rules" title="Permalink to this headline">¶</a></h2>
 <p>This option configures the validation of an element. You must set the value to a pipe-delimited set of rules. The validation options include and are limited to the <a class="reference external" href="https://laravel.com/docs/5.2/validation#available-validation-rules">Laravel Validation Rules</a>. You set the rules in exactly the same way that you would define them natively in Laravel.</p>
@@ -450,6 +469,55 @@
 </div>
 <div class="section" id="sizes">
 <span id="config-images"></span><h2>sizes<a class="headerlink" href="#sizes" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to specify one or more image sizes and locations for uploaded images. Upon upload, only the name of the uploaded file will be saved to your database. The image itself will be resized, cropped, and saved to the locations you specify. If you wish, you can specify global application defaults in &#8220;<a class="reference internal" href="principles.html#media-options"><span>media_options</span></a>&#8221; so that you do not need to repeat the same sizes and locations in every panel.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;logo&#39; =&gt; [</span>
+
+<span class="x">   &#39;label&#39;        =&gt; &#39;Logo Image&#39;,</span>
+<span class="x">   &#39;help&#39;         =&gt; &#39;(270 x 270 min)&#39;,</span>
+<span class="x">   &#39;type&#39;         =&gt; &#39;image&#39;,</span>
+<span class="x">   &#39;display&#39;      =&gt; &#39;CRUD&#39;,</span>
+<span class="x">   &#39;allow_upsize&#39; =&gt; TRUE,</span>
+<span class="x">   &#39;sizes&#39;     =&gt; [</span>
+<span class="x">      &#39;original&#39;  =&gt; [&#39;label&#39;=&gt;&#39;Original&#39;],</span>
+<span class="x">      &#39;logo-300x150&#39; =&gt; [&#39;label&#39;=&gt;&#39;300 x 150&#39;,&#39;size&#39;=&gt;&#39;300x150&#39;, &#39;letterbox&#39; =&gt; &#39;#FFFFFF&#39;],</span>
+<span class="x">      &#39;logo-270x270&#39; =&gt; [&#39;label&#39;=&gt;&#39;Fixed Width (270px)&#39;,&#39;size&#39;=&gt;&#39;270x0&#39;],</span>
+<span class="x">      &#39;logo-180x180&#39; =&gt; [&#39;label&#39;=&gt;&#39;Square Thumbnail&#39;,&#39;size&#39;=&gt;&#39;180x180&#39;],</span>
+<span class="x">   ]</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>In the example above, there are 4 different sizes (including an untouched, original version) which will be created upon upload. An associative array defines how the original, uploaded image will be manipulated and transmitted to your CDN server. <em>Note: currently only Amazon S3 is supported</em>. Here is the breakdown on how to configure the <code class="docutils literal"><span class="pre">sizes</span></code> option:</p>
+<p><strong>(key)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>The key name, ex. <code class="docutils literal"><span class="pre">logo-300x150</span></code> is the name of the directory on the CDN server where the image will be saved.</li>
+<li>If the directory does not exist it will be created automatically.</li>
+</ul>
+</div></blockquote>
+<p><strong>label</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>This is the title of the image version which will display in the crop and preview tool (see screenshot below).</li>
+<li>This can be any descriptive value you wish.</li>
+</ul>
+</div></blockquote>
+<p><strong>size</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>This defines the dimensions of the manipulation. Leaving this blank or undefined will save an unmodified version of the uploaded image.</li>
+<li>Setting a width only (<code class="docutils literal"><span class="pre">500x0</span></code>) or height only (<code class="docutils literal"><span class="pre">0x500</span></code>) will preserve the image&#8217;s aspect ratio but will force the image to resize to the defined dimension.</li>
+<li>Setting both a width and a height (<code class="docutils literal"><span class="pre">500x500</span></code>) will center-crop the image and allow your users to further crop it via Station&#8217;s crop tool.</li>
+</ul>
+</div></blockquote>
+<p><strong>letterbox</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>When this is defined with a <strong>size</strong> of fixed width and height, the resulting crop will be an outer-crop instead of a center-crop.</li>
+<li>Use this option to define the hex color value that will be used to fill any remaining space surrounding the cropped image.</li>
+</ul>
+</div></blockquote>
+<p>Station&#8217;s preview and crop tool:</p>
+<img alt="_images/crop.png" src="_images/crop.png" />
 </div>
 </div>
 
