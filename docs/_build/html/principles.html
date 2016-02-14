@@ -86,7 +86,20 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="">Basic Principles &amp; Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#panel-level-configuration">Panel Level Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#element-level-configuration">Element Level Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#application-level-configuration">Application Level Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#application-level-configuration">Application Level Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#name">name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#root-admin-email">root_admin_email</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#root-uri-segment">root_uri_segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#panel-for-user-create">panel_for_user_create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-group-upon-register">user_group_upon_register</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#css-override-file">css_override_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#media-options">media_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-groups">user_groups</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#html-append-file">html_append_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#html-prepend-content-file">html_prepend_content_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#strict-domains">strict_domains</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#configuration-variables">Configuration Variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#custom-configuration-variables">Custom Configuration Variables</a></li>
 </ul>
@@ -158,30 +171,45 @@
 <span id="app-level-configuration"></span><h2>Application Level Configuration<a class="headerlink" href="#application-level-configuration" title="Permalink to this headline">¶</a></h2>
 <p>All of Station&#8217;s top level configuration occurs in the <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code> file. The boilerplate version of this file was copied to your app during the installation process.</p>
 <p>Following is a list of all of the available configuration options:</p>
-<p><strong>name</strong></p>
+<div class="section" id="name">
+<h3>name<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div>This is the name of your site or application</div></blockquote>
-<p><strong>root_admin_email</strong></p>
+</div>
+<div class="section" id="root-admin-email">
+<h3>root_admin_email<a class="headerlink" href="#root-admin-email" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div>This value will be seeded into the <code class="docutils literal"><span class="pre">users</span></code> table when the admin user is created during the installation process.</div></blockquote>
-<p><strong>root_uri_segment</strong></p>
+</div>
+<div class="section" id="root-uri-segment">
+<h3>root_uri_segment<a class="headerlink" href="#root-uri-segment" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div>This value is what Station will use as its pseudo-directory &#8220;slug&#8221;. By default this is set to <code class="docutils literal"><span class="pre">station</span></code> which means that all of the URLs for Station will be found at <code class="docutils literal"><span class="pre">http://my-site.com/station/...</span></code>. You could use <code class="docutils literal"><span class="pre">admin</span></code> which would result in all URLs looking like <code class="docutils literal"><span class="pre">http://my-site.com/admin/...</span></code></div></blockquote>
-<p><strong>panel_for_user_create</strong></p>
+</div>
+<div class="section" id="panel-for-user-create">
+<h3>panel_for_user_create<a class="headerlink" href="#panel-for-user-create" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div>This is the name of the panel which is used for creating new users. You may never need to use this as your app will likely have it&#8217;s own onboarding process. However this panel is shipped with Station in case you want a simple way for new users to create an account.</div></blockquote>
-<p><strong>user_group_upon_register</strong></p>
+</div>
+<div class="section" id="user-group-upon-register">
+<h3>user_group_upon_register<a class="headerlink" href="#user-group-upon-register" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div>This is the group which a new user will be automatically set to upon creation.</div></blockquote>
-<p><strong>css_override_file</strong></p>
+</div>
+<div class="section" id="css-override-file">
+<h3>css_override_file<a class="headerlink" href="#css-override-file" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div>Optionally set this to the URL or path of a .css file which will be loaded on every Station URL. This is excellent for adding branding specifics to your Station installation.</div></blockquote>
-<p><strong>media_options</strong></p>
+</div>
+<div class="section" id="media-options">
+<h3>media_options<a class="headerlink" href="#media-options" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p><strong>AWS:</strong> Station currently only supports file uploads to AWS/S3. Enter your bucket, key and secret key here to establish connectivity. If your app does not require uploads then you do not need to configure this option.</p>
 <p><strong>Sizes:</strong> This is where you set the default image sizes for all uploaded images. If any of your panel elements utilize image uploads and <em>do not</em> specify a set of image sizes, these sizes will be used. This is a handy way to set standard sizes for all of your images site-wide, if needed. For more information how to configure this option, refer to the <a class="reference internal" href="element-options.html#config-images"><span>sizes</span></a> configuration documentation.</p>
 </div></blockquote>
-<p><strong>user_groups</strong></p>
+</div>
+<div class="section" id="user-groups">
+<h3>user_groups<a class="headerlink" href="#user-groups" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>This associative array defines the user groups for your app but also, just as importantly, defines the <strong>entire navigation structure</strong> of Station. Please refer to the boilerplate sample of <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code>, included in the installation, to visualize the structure of this document.</p>
 <p><strong>user_groups.[group name]:</strong> This associative array&#8217;s key is the group name. This is only for internal use. You can use any name you want. When you run <code class="docutils literal"><span class="pre">php</span> <span class="pre">artisan</span> <span class="pre">station:build</span></code> your groups will be seeded to the <code class="docutils literal"><span class="pre">groups</span></code> table in your database and presented as options in your <code class="docutils literal"><span class="pre">users</span></code> panel.</p>
@@ -208,15 +236,22 @@
 </div>
 <p>For example, if you only specify the letter <code class="docutils literal"><span class="pre">L</span></code> for permissions then the user will only be able to list the records in this panel. Specifying all of the letters gives the user full permissions on this panel.</p>
 </div></blockquote>
-<p><strong>html_append_file</strong></p>
+</div>
+<div class="section" id="html-append-file">
+<h3>html_append_file<a class="headerlink" href="#html-append-file" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div>This option allows you to specify an HTML or PHP blade file to append to every Station view. This is ideal for analytics.</div></blockquote>
-<p><strong>html_prepend_content_file</strong></p>
+</div>
+<div class="section" id="html-prepend-content-file">
+<h3>html_prepend_content_file<a class="headerlink" href="#html-prepend-content-file" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div>Like <code class="docutils literal"><span class="pre">html_append_file</span></code> you can specify an HTML or PHP blade file to prepend to the content area of every panel in Station. This is ideal for onboarding progress timelines or system-wide, universal alerts.</div></blockquote>
-<p><strong>strict_domains</strong></p>
+</div>
+<div class="section" id="strict-domains">
+<h3>strict_domains<a class="headerlink" href="#strict-domains" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div>This forces all requests within Station to return a 404 unless one of the domains specified in this array is the domain indicated in the request.</div></blockquote>
+</div>
 </div>
 <div class="section" id="configuration-variables">
 <span id="config-variables"></span><h2>Configuration Variables<a class="headerlink" href="#configuration-variables" title="Permalink to this headline">¶</a></h2>
