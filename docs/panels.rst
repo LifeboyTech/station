@@ -27,6 +27,8 @@ This artisan command will analyze your panels and elements and then do the follo
 If you attempt to navigate to a newly created panel in the Station navigation, you will likely encounter errors. You must run the build command first.
 
 
+.. _accessing-panel-configuration:
+
 Accessing Panel Configuration
 ----------------------------- 
 

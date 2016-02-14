@@ -108,7 +108,9 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#allow-upsize">allow_upsize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#append">append</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#attributes">attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#concat">concat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data">data</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#static-data-options">1. Static Data Options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#foreign-table-data-lookup">2. Foreign Table Data Lookup</a></li>
@@ -116,14 +118,21 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#default">default</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#disabled">disabled</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#display">display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#format">format</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#help">help</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#is-filterable">is_filterable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#permissions">permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prepend">prepend</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#prepend-icon">prepend_icon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rows">rows</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#rules">rules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sizes">sizes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#thumb-size">thumb_size</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#custom-element-options">Custom Element Options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Working with Station Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="emailers.html">Configuring Emailers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
@@ -302,7 +311,7 @@
 </div></blockquote>
 </div>
 <div class="section" id="virtual">
-<h3>virtual<a class="headerlink" href="#virtual" title="Permalink to this headline">¶</a></h3>
+<span id="virtual-type"></span><h3>virtual<a class="headerlink" href="#virtual" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>Virtual type fields do not actually map to real database fields.</li>
@@ -403,6 +412,20 @@
 <h2>allow_upsize<a class="headerlink" href="#allow-upsize" title="Permalink to this headline">¶</a></h2>
 <p>This option is only available to elements using the type &#8220;<a class="reference internal" href="#type-image"><span>image</span></a>&#8221;. When set to true, a user uploading an image is allowed to use a smaller image size than the largest dimension expected. The image will be magnified to fit the largest dimension. See more on sizing using the <a class="reference internal" href="#config-images"><span>sizes</span></a> option.</p>
 </div>
+<div class="section" id="append">
+<h2>append<a class="headerlink" href="#append" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to append text to an element input field. The element must have <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'text'</span></code>. This text will not be written to the database.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;subdomain&#39;   =&gt; [</span>
+
+<span class="x">   &#39;label&#39; =&gt; &#39;Subdomain&#39;,</span>
+<span class="x">   &#39;type&#39; =&gt; &#39;text&#39;,</span>
+<span class="x">   &#39;append&#39; =&gt; &#39;.domain.com&#39;</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<img alt="_images/append.png" src="_images/append.png" />
+</div>
 <div class="section" id="attributes">
 <h2>attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="panels.html#build-command"><span>The Build Command</span></a> utilizes the wonderful <a class="reference external" href="https://github.com/laracasts/Laravel-5-Generators-Extended">Laracast Generators</a> package to generate migrations for your panels. If you add pipe-delimited arguments to the <code class="docutils literal"><span class="pre">attributes</span></code> option, those arguments will be passed to the generator as <a class="reference external" href="https://github.com/laracasts/Laravel-5-Generators-Extended#migrations-with-schema">specific schema</a>.</p>
@@ -416,6 +439,19 @@
 </pre></div>
 </div>
 <p>Note that <code class="docutils literal"><span class="pre">attributes</span></code> only affect the database schema and have no other affect on panel validation behaviors. To control panel validation behaviors use the <a class="reference internal" href="#rules"><span>rules</span></a> option.</p>
+</div>
+<div class="section" id="concat">
+<h2>concat<a class="headerlink" href="#concat" title="Permalink to this headline">¶</a></h2>
+<p>This option is often used in conjunction with elements of <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'virtual'</span></code> (read more about <a class="reference internal" href="#virtual-type"><span>virtual</span></a>). This option can be set to an array containing a mixture of strings and field names to create a new field, ideal for using in a panel&#8217;s list view.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;preview&#39;   =&gt; [</span>
+<span class="x">   &#39;label&#39;        =&gt; &#39;Preview&#39;,</span>
+<span class="x">   &#39;type&#39;         =&gt; &#39;virtual&#39;,</span>
+<span class="x">   &#39;concat&#39;       =&gt; &#39;&quot;&lt;a href=\&#39;http://&quot;, subdomain, &quot;.domain.com\&#39; target=\&#39;_blank\&#39;&gt;Preview&lt;/a&gt;&quot;&#39;,</span>
+<span class="x">   &#39;display&#39;      =&gt; &#39;L&#39;</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>This would render a link on every row of the panel&#8217;s list view. The link would be of the format: <code class="docutils literal"><span class="pre">&lt;a</span> <span class="pre">href=&quot;http://{subdomain}.domain.com&quot;&gt;Preview&lt;/a&gt;</span></code>.</p>
 </div>
 <div class="section" id="data">
 <span id="data-type"></span><h2>data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
@@ -526,6 +562,10 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="disabled">
+<h2>disabled<a class="headerlink" href="#disabled" title="Permalink to this headline">¶</a></h2>
+<p>When this option is set to true this element&#8217;s input will be rendered with a <code class="docutils literal"><span class="pre">disabled</span></code> attribute in the create and update view.</p>
+</div>
 <div class="section" id="display">
 <span id="id2"></span><h2>display<a class="headerlink" href="#display" title="Permalink to this headline">¶</a></h2>
 <p>This option informs Station when to display this element. You may indicate one or more of the following letters: <strong>C.R.U.D.L</strong>.</p>
@@ -554,6 +594,40 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="format">
+<h2>format<a class="headerlink" href="#format" title="Permalink to this headline">¶</a></h2>
+<p>This is a helper option which will provide &#8220;masking&#8221; to your input field to help guide a user&#8217;s entry. There are currently two formats available:</p>
+<p><strong>phone</strong></p>
+<blockquote>
+<div><div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;mobile_phone&#39;   =&gt; [</span>
+
+<span class="x">   &#39;label&#39; =&gt; &#39;Mobile Phone #&#39;,</span>
+<span class="x">   &#39;type&#39; =&gt; &#39;text&#39;,</span>
+<span class="x">   &#39;format&#39; =&gt; &#39;phone&#39;,</span>
+<span class="x">   &#39;prepend_icon&#39; =&gt; &#39;glyphicon glyphicon-earphone&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>This will provide special guidance for the user to enter properly formatted phone numbers.</p>
+<img alt="_images/phone.png" src="_images/phone.png" />
+</div></blockquote>
+<p><strong>money</strong></p>
+<blockquote>
+<div><div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;unit_msrp&#39;   =&gt; [</span>
+
+<span class="x">   &#39;label&#39; =&gt; &#39;Unit MSRP&#39;,</span>
+<span class="x">   &#39;type&#39; =&gt; &#39;float&#39;,</span>
+<span class="x">   &#39;format&#39; =&gt; &#39;money&#39;,</span>
+<span class="x">   &#39;prepend&#39; =&gt; &#39;$&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>This will provide special guidance for the user to enter properly formatted prices.</p>
+<img alt="_images/money.png" src="_images/money.png" />
+</div></blockquote>
+</div>
 <div class="section" id="help">
 <h2>help<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h2>
 <p>This options allows you to set some &#8220;helper&#8221; text which will display next to the element input in the create and update views.</p>
@@ -572,6 +646,45 @@
 <p>When this option is set to true and the element has type <code class="docutils literal"><span class="pre">select</span></code> and it has a <a class="reference internal" href="#display"><span>display</span></a> value allowing it to be shown in the list view (L), then a filter dropdown will appear allowing users to filter the list view by a value present in the table. The dropdown even contains a search tool, compliments of the <a class="reference external" href="https://harvesthq.github.io/chosen/">Chosen</a> library.</p>
 <img alt="_images/filter.png" src="_images/filter.png" />
 </div>
+<div class="section" id="permissions">
+<h2>permissions<a class="headerlink" href="#permissions" title="Permalink to this headline">¶</a></h2>
+<p>This is only used with the elements of <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'subpanel'</span></code>. This defines which permissions a user has on the subpanel items according to the following list of actions:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">C = Create</span>
+<span class="x">R = Read</span>
+<span class="x">U = Update</span>
+<span class="x">D = Delete</span>
+</pre></div>
+</div>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;colors&#39; =&gt; [</span>
+<span class="x">   &#39;label&#39;        =&gt; &#39;Product Colors&#39;,</span>
+<span class="x">   &#39;type&#39;         =&gt; &#39;subpanel&#39;,</span>
+<span class="x">   &#39;display&#39;      =&gt; &#39;CU&#39;,</span>
+<span class="x">   &#39;permissions&#39;  =&gt; &#39;C&#39;,</span>
+<span class="x">   &#39;data&#39;         =&gt; [</span>
+<span class="x">      &#39;join&#39;      =&gt; TRUE,</span>
+<span class="x">      &#39;relation&#39;  =&gt; &#39;hasMany&#39;,</span>
+<span class="x">      &#39;table&#39;     =&gt; &#39;colors&#39;,</span>
+<span class="x">      &#39;key&#39;       =&gt; &#39;product_id&#39;</span>
+<span class="x">   ]</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>In the above example a user will be able to view the colors in the subpanel (according to the <code class="docutils literal"><span class="pre">display</span></code> option) however they have not been given <code class="docutils literal"><span class="pre">permissions</span></code> to do anything other than create new ones. They cannot delete or update because the letters <code class="docutils literal"><span class="pre">D</span></code> and <code class="docutils literal"><span class="pre">U</span></code> are not present.</p>
+</div>
+<div class="section" id="prepend">
+<h2>prepend<a class="headerlink" href="#prepend" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to prepend text to an element input field. The element must have <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'text'</span></code>. This text will not be written to the database.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;subtotal&#39;  =&gt; [</span>
+<span class="x">   &#39;label&#39;        =&gt; &#39;Subtotal&#39;,</span>
+<span class="x">   &#39;type&#39;         =&gt; &#39;float&#39;,</span>
+<span class="x">   &#39;format&#39;       =&gt; &#39;money&#39;,</span>
+<span class="x">   &#39;prepend&#39;      =&gt; &#39;$&#39;,</span>
+<span class="x">   &#39;display&#39;      =&gt; &#39;CRUD&#39;</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<img alt="_images/money.png" src="_images/money.png" />
+</div>
 <div class="section" id="prepend-icon">
 <h2>prepend_icon<a class="headerlink" href="#prepend-icon" title="Permalink to this headline">¶</a></h2>
 <p>This allows you to set a bootstrap glyphicon class name in order to prepend an icon to your elements input field. This only works with <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'text'</span></code>.</p>
@@ -585,6 +698,10 @@
 </pre></div>
 </div>
 <img alt="_images/prepend.png" src="_images/prepend.png" />
+</div>
+<div class="section" id="rows">
+<h2>rows<a class="headerlink" href="#rows" title="Permalink to this headline">¶</a></h2>
+<p>This is only relevant for elements of <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'textarea'</span></code>. This is a simple integer which defines how many rows of visible space will be applied to the <code class="docutils literal"><span class="pre">&lt;textarea&gt;</span></code> input. This is handy for when you want to encourage, or discourage long-form typing.</p>
 </div>
 <div class="section" id="rules">
 <span id="id4"></span><h2>rules<a class="headerlink" href="#rules" title="Permalink to this headline">¶</a></h2>
@@ -652,6 +769,15 @@
 <p>Station&#8217;s preview and crop tool:</p>
 <img alt="_images/crop.png" src="_images/crop.png" />
 </div>
+<div class="section" id="thumb-size">
+<h2>thumb_size<a class="headerlink" href="#thumb-size" title="Permalink to this headline">¶</a></h2>
+<p>This option defines the dimensions of the square thumbnail in the panel&#8217;s list view for elements which have <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'image'</span></code>. By default the value is <code class="docutils literal"><span class="pre">100</span></code>. However, it is possible to set this to a smaller integer.</p>
+</div>
+</div>
+<div class="section" id="custom-element-options">
+<h1>Custom Element Options<a class="headerlink" href="#custom-element-options" title="Permalink to this headline">¶</a></h1>
+<p>You are always free to use your own custom element options.</p>
+<p>Station will not return any errors if it finds extra, unreserved options in your elements. In fact setting custom options can be very useful if you are trying to create systems which need to map against your underlying data schema. Read more about this in &#8220;<a class="reference internal" href="panels.html#accessing-panel-configuration"><span>Accessing Panel Configuration</span></a>&#8221;.</p>
 </div>
 
 

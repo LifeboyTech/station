@@ -92,6 +92,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="panel-options.html">Panel Options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="element-options.html">Element Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="element-options.html#custom-element-options">Custom Element Options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Working with Station Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="emailers.html">Configuring Emailers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
@@ -158,7 +159,7 @@
 <p>If you attempt to navigate to a newly created panel in the Station navigation, you will likely encounter errors. You must run the build command first.</p>
 </div>
 <div class="section" id="accessing-panel-configuration">
-<h2>Accessing Panel Configuration<a class="headerlink" href="#accessing-panel-configuration" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>Accessing Panel Configuration<a class="headerlink" href="#accessing-panel-configuration" title="Permalink to this headline">¶</a></h2>
 <p>In your Laravel app you may wish to access a panel&#8217;s configuration array. To accomplish this, just add <code class="docutils literal"><span class="pre">use</span> <span class="pre">Lifeboy\Station\Config\StationConfig</span> <span class="pre">as</span> <span class="pre">StationConfig</span></code> to the top of any class. Then,</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">$my_panel_config = StationConfig::panel(&#39;my_panel_name&#39;);</span>
 </pre></div>

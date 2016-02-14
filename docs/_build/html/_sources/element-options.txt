@@ -133,6 +133,9 @@ radio
 
    .. image:: images/radio.png
 
+
+.. _virtual-type:
+
 virtual
 ^^^^^^^
    
@@ -226,6 +229,24 @@ allow_upsize
 This option is only available to elements using the type ":ref:`type-image`". When set to true, a user uploading an image is allowed to use a smaller image size than the largest dimension expected. The image will be magnified to fit the largest dimension. See more on sizing using the :ref:`config-images` option.
 
 
+append
+------ 
+
+This option allows you to append text to an element input field. The element must have ``'type' => 'text'``. This text will not be written to the database.
+
+.. code-block:: php 
+
+   'subdomain'   => [
+
+      'label' => 'Subdomain',
+      'type' => 'text',
+      'append' => '.domain.com'
+      ...
+   ],
+
+.. image:: images/append.png
+
+
 attributes 
 ---------- 
 
@@ -243,6 +264,22 @@ attributes
 
 Note that ``attributes`` only affect the database schema and have no other affect on panel validation behaviors. To control panel validation behaviors use the :ref:`rules` option.
 
+
+concat
+------ 
+
+This option is often used in conjunction with elements of ``'type' => 'virtual'`` (read more about :ref:`virtual-type`). This option can be set to an array containing a mixture of strings and field names to create a new field, ideal for using in a panel's list view.
+
+.. code-block:: php 
+
+   'preview'   => [
+      'label'        => 'Preview',
+      'type'         => 'virtual',
+      'concat'       => '"<a href=\'http://", subdomain, ".domain.com\' target=\'_blank\'>Preview</a>"',
+      'display'      => 'L'
+   ],
+
+This would render a link on every row of the panel's list view. The link would be of the format: ``<a href="http://{subdomain}.domain.com">Preview</a>``.
 
 
 .. _data-type:
@@ -361,6 +398,12 @@ Use this to set a default value for an element. This value will be first selecte
    ],
 
 
+disabled
+-------- 
+
+When this option is set to true this element's input will be rendered with a ``disabled`` attribute in the create and update view.
+
+
 .. _display:
 
 display
@@ -396,6 +439,46 @@ This option informs Station when to display this element. You may indicate one o
 
 
 
+format 
+------
+
+This is a helper option which will provide "masking" to your input field to help guide a user's entry. There are currently two formats available:
+
+**phone**
+
+   .. code-block:: php 
+
+      'mobile_phone'   => [
+
+         'label' => 'Mobile Phone #',
+         'type' => 'text',
+         'format' => 'phone',
+         'prepend_icon' => 'glyphicon glyphicon-earphone',
+         ...
+      ],
+
+   This will provide special guidance for the user to enter properly formatted phone numbers.
+
+   .. image:: /images/phone.png
+
+**money**
+
+   .. code-block:: php 
+
+      'unit_msrp'   => [
+
+         'label' => 'Unit MSRP',
+         'type' => 'float',
+         'format' => 'money',
+         'prepend' => '$',
+         ...
+      ],
+
+   This will provide special guidance for the user to enter properly formatted prices.
+
+   .. image:: /images/money.png
+
+
 help 
 ---- 
 
@@ -421,6 +504,55 @@ When this option is set to true and the element has type ``select`` and it has a
 .. image:: /images/filter.png
 
 
+
+permissions
+----------- 
+
+This is only used with the elements of ``'type' => 'subpanel'``. This defines which permissions a user has on the subpanel items according to the following list of actions:
+
+.. code-block:: php 
+
+   C = Create 
+   R = Read 
+   U = Update 
+   D = Delete 
+
+.. code-block:: php 
+
+   'colors' => [
+      'label'        => 'Product Colors',
+      'type'         => 'subpanel',
+      'display'      => 'CU',
+      'permissions'  => 'C',
+      'data'         => [
+         'join'      => TRUE,
+         'relation'  => 'hasMany',
+         'table'     => 'colors',
+         'key'       => 'product_id'
+      ]
+   ], 
+
+In the above example a user will be able to view the colors in the subpanel (according to the ``display`` option) however they have not been given ``permissions`` to do anything other than create new ones. They cannot delete or update because the letters ``D`` and ``U`` are not present.
+
+
+prepend
+-------
+
+This option allows you to prepend text to an element input field. The element must have ``'type' => 'text'``. This text will not be written to the database.
+
+.. code-block:: php 
+
+   'subtotal'  => [
+      'label'        => 'Subtotal',
+      'type'         => 'float',
+      'format'       => 'money',
+      'prepend'      => '$',
+      'display'      => 'CRUD'
+   ],
+
+.. image:: images/money.png
+
+
 prepend_icon
 ------------ 
 
@@ -437,6 +569,14 @@ This allows you to set a bootstrap glyphicon class name in order to prepend an i
    ],
 
 .. image:: images/prepend.png
+
+
+
+rows 
+---- 
+
+This is only relevant for elements of ``'type' => 'textarea'``. This is a simple integer which defines how many rows of visible space will be applied to the ``<textarea>`` input. This is handy for when you want to encourage, or discourage long-form typing.
+
 
 
 .. _rules:
@@ -513,6 +653,19 @@ Station's preview and crop tool:
 
 
 
+thumb_size
+---------- 
+
+This option defines the dimensions of the square thumbnail in the panel's list view for elements which have ``'type' => 'image'``. By default the value is ``100``. However, it is possible to set this to a smaller integer.
+
+
+
+Custom Element Options 
+======================
+
+You are always free to use your own custom element options. 
+
+Station will not return any errors if it finds extra, unreserved options in your elements. In fact setting custom options can be very useful if you are trying to create systems which need to map against your underlying data schema. Read more about this in ":ref:`accessing-panel-configuration`". 
 
 
 
