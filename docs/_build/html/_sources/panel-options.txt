@@ -115,6 +115,8 @@ This is a very powerful feature which will allow your users to reorder and hiera
 
 The three array elements are (1) the field name which contains the overall sort-order (2) the field name which contains the ID of the parent of the record. Records on the top-level have a ``parent_id`` of ``0`` and (3) the depth level of the record. 
 
+*Note: You do not need to also create ``position``, ``parent_id``, and ``depth`` elements in your panel's :ref:`element-options` configuration. Station will manage these for you.*
+
 
 
 no_build
@@ -213,6 +215,7 @@ This option allows you to specify a field name to use as your table's "position"
       ...
    ],
 
+*Note: You do not need to also create a ``position`` element in your panel's :ref:`element-options` configuration. Station will manage this for you.*
 
 
 where

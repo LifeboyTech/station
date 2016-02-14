@@ -109,9 +109,16 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#allow-upsize">allow_upsize</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#attributes">attributes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#data">data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data">data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#static-data-options">1. Static Data Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#foreign-table-data-lookup">2. Foreign Table Data Lookup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subpanel-data">3. Subpanel Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#default">default</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#display">display</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#help">help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#is-filterable">is_filterable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#rules">rules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sizes">sizes</a></li>
 </ul>
@@ -165,7 +172,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="element-options">
-<h1>Element Options<a class="headerlink" href="#element-options" title="Permalink to this headline">¶</a></h1>
+<span id="element-option"></span><h1>Element Options<a class="headerlink" href="#element-options" title="Permalink to this headline">¶</a></h1>
 <p>The <code class="docutils literal"><span class="pre">elements</span></code> key of the array defined in any of the files at <code class="docutils literal"><span class="pre">/config/packages/lifeboy/station</span></code> represents the list of elements which are available to users of Station.</p>
 <p>Generally, each element is mapped to a specific database field. However, this is not always the case. Some elements are &#8220;virtual&#8221;. See below for the full documentation on configuring elements.</p>
 <div class="admonition note">
@@ -411,9 +418,114 @@
 </div>
 <div class="section" id="data">
 <span id="data-type"></span><h2>data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
+<p>This option defines how the data for this element is populated. It is required whenever you use the element type <code class="docutils literal"><span class="pre">select</span></code>, <code class="docutils literal"><span class="pre">multiselect</span></code>, <code class="docutils literal"><span class="pre">radio</span></code> or <code class="docutils literal"><span class="pre">subpanel</span></code>.</p>
+<div class="section" id="static-data-options">
+<h3>1. Static Data Options<a class="headerlink" href="#static-data-options" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>You want to present a list of static options for a user to choose from</li>
+<li>You are using element <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'select'</span></code> or <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'radio'</span></code></li>
+<li>The input options will be pre-populated using the array values you supply</li>
+<li>The <code class="docutils literal"><span class="pre">options</span></code> array <em>values</em> will be seen/chosen by the user, however the <em>keys</em> will be saved to the database.</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;favorite_animal&#39;   =&gt; [</span>
+<span class="x">   &#39;label&#39;          =&gt; &#39;Your Favorite Animal&#39;,</span>
+<span class="x">   &#39;type&#39;           =&gt; &#39;radio&#39;, // &lt;=== this works for `select` as well</span>
+<span class="x">   &#39;default&#39;        =&gt; &#39;0&#39;,</span>
+<span class="x">   &#39;is_filterable&#39;  =&gt; TRUE,</span>
+<span class="x">   &#39;data&#39;           =&gt; [</span>
+<span class="x">      &#39;options&#39; =&gt; [</span>
+<span class="x">         0 =&gt; &#39;None&#39;,</span>
+<span class="x">         1 =&gt; &#39;Pig&#39;,</span>
+<span class="x">         2 =&gt; &#39;Ocelot&#39;,</span>
+<span class="x">         3 =&gt; &#39;Llama&#39;,</span>
+<span class="x">      ]</span>
+<span class="x">   ]</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="foreign-table-data-lookup">
+<h3>2. Foreign Table Data Lookup<a class="headerlink" href="#foreign-table-data-lookup" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>You want to present a list of options for a user to choose from, but is populated using a foreign table&#8217;s data</li>
+<li>You are using element <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'select'</span></code>, <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'radio'</span></code> or <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'multiselect'</span></code></li>
+<li>The input options will be pre-populated using the data from the foreign table</li>
+<li>The foreign table&#8217;s chosen <code class="docutils literal"><span class="pre">id</span></code> value will be saved to this table or a pivot table.</li>
+</ul>
+<p>Example using <code class="docutils literal"><span class="pre">select</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;favorite_animal&#39;   =&gt; [</span>
+<span class="x">   &#39;label&#39;        =&gt; &#39;Favorite Animal&#39;,</span>
+<span class="x">   &#39;type&#39;         =&gt; &#39;select&#39;,</span>
+<span class="x">   &#39;data&#39;         =&gt; [</span>
+<span class="x">      &#39;join&#39;      =&gt; TRUE,</span>
+<span class="x">      &#39;relation&#39;  =&gt; &#39;belongsTo&#39;, // &lt;== This relationship is written to the auto-generated model</span>
+<span class="x">      &#39;table&#39;     =&gt; &#39;animals&#39;,</span>
+<span class="x">      &#39;display&#39;   =&gt; [&#39;animals.name&#39;, &#39; &#39; ,&#39;(&#39;, &#39;animals.genus&#39;, &#39; : &#39;, &#39;animals.species&#39;, &#39;)&#39;],</span>
+<span class="x">      &#39;no_model&#39;  =&gt; TRUE // only use this if you want to avoid writing this relationship to the model</span>
+<span class="x">   ]</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>Example using <code class="docutils literal"><span class="pre">multiselect</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;favorite_animals&#39;   =&gt; [</span>
+<span class="x">   &#39;label&#39;        =&gt; &#39;Favorite Animals&#39;,</span>
+<span class="x">   &#39;type&#39;         =&gt; &#39;multiselect&#39;,</span>
+<span class="x">   &#39;data&#39;         =&gt; [</span>
+<span class="x">      &#39;join&#39;      =&gt; TRUE,</span>
+<span class="x">      &#39;relation&#39;  =&gt; &#39;belongsToMany&#39;, // &lt;== This relationship is written to the auto-generated model</span>
+<span class="x">      &#39;table&#39;     =&gt; &#39;animals&#39;,</span>
+<span class="x">      &#39;display&#39;   =&gt; &#39;animals.name&#39;,</span>
+<span class="x">      &#39;order&#39;     =&gt; &#39;animals.name&#39;</span>
+<span class="x">   ]</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>It is important that you specify a <code class="docutils literal"><span class="pre">display</span></code> value so that Station knows which of the foreign table&#8217;s fields to use to display in the dropdown or on the radio buttons. Notice that you can provide an array for <code class="docutils literal"><span class="pre">display</span></code> which will concatenate field names and your own strings. This allows you to create a display using multiple foreign table fields.</p>
+</div></blockquote>
+</div>
+<div class="section" id="subpanel-data">
+<h3>3. Subpanel Data<a class="headerlink" href="#subpanel-data" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>You want to nest a subpanel within this panel so a user can create, update, delete, and reorder a foreign table&#8217;s data from within this panel!</li>
+<li>This makes foreign table data manipulation possible.</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;comments&#39; =&gt; [</span>
+<span class="x">   &#39;label&#39;        =&gt; &#39;Comments&#39;,</span>
+<span class="x">   &#39;type&#39;         =&gt; &#39;subpanel&#39;,</span>
+<span class="x">   &#39;permissions&#39;  =&gt; &#39;CRUD&#39;, // &lt;== User has all permissions on this subpanel</span>
+<span class="x">   &#39;data&#39;         =&gt; [</span>
+<span class="x">      &#39;join&#39;      =&gt; TRUE,</span>
+<span class="x">      &#39;relation&#39;  =&gt; &#39;hasMany&#39;,</span>
+<span class="x">      &#39;table&#39;     =&gt; &#39;comments&#39;,</span>
+<span class="x">      &#39;key&#39;       =&gt; &#39;post_id&#39; // &lt;== This is the foreign key, which will be auto-generated by Station&#39;s build command</span>
+<span class="x">   ]</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>When a subpanel is defined like this, Station will look for another panel configuration file called <code class="docutils literal"><span class="pre">comments.php</span></code>. That panel is configured just as you would configure a non-nested panel. You can even use the <code class="docutils literal"><span class="pre">reorderable_by</span></code> option in your subpanel so the user can reorder/sort the subpanel&#8217;s data right from the parent panel!</p>
+<p><em>Note: you do not need to create an element for the foreign key when you make your subpanel&#8217;s configuration file. Station will create it for you.</em></p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="default">
+<h2>default<a class="headerlink" href="#default" title="Permalink to this headline">¶</a></h2>
+<p>Use this to set a default value for an element. This value will be first selected in a create or update form.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;favorite_animal&#39;   =&gt; [</span>
+
+<span class="x">   &#39;label&#39; =&gt; &#39;Your Favorite Animal&#39;,</span>
+<span class="x">   &#39;type&#39; =&gt; &#39;text&#39;,</span>
+<span class="x">   &#39;default&#39; =&gt; &#39;Panda&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="display">
-<h2>display<a class="headerlink" href="#display" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>display<a class="headerlink" href="#display" title="Permalink to this headline">¶</a></h2>
 <p>This option informs Station when to display this element. You may indicate one or more of the following letters: <strong>C.R.U.D.L</strong>.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">C = Create</span>
 <span class="x">R = Read</span>
@@ -453,8 +565,13 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="is-filterable">
+<h2>is_filterable<a class="headerlink" href="#is-filterable" title="Permalink to this headline">¶</a></h2>
+<p>When this option is set to true and the element has type <code class="docutils literal"><span class="pre">select</span></code> and it has a <a class="reference internal" href="#display"><span>display</span></a> value allowing it to be shown in the list view (L), then a filter dropdown will appear allowing users to filter the list view by a value present in the table. The dropdown even contains a search tool, compliments of the <a class="reference external" href="https://harvesthq.github.io/chosen/">Chosen</a> library.</p>
+<img alt="_images/filter.png" src="_images/filter.png" />
+</div>
 <div class="section" id="rules">
-<span id="id2"></span><h2>rules<a class="headerlink" href="#rules" title="Permalink to this headline">¶</a></h2>
+<span id="id4"></span><h2>rules<a class="headerlink" href="#rules" title="Permalink to this headline">¶</a></h2>
 <p>This option configures the validation of an element. You must set the value to a pipe-delimited set of rules. The validation options include and are limited to the <a class="reference external" href="https://laravel.com/docs/5.2/validation#available-validation-rules">Laravel Validation Rules</a>. You set the rules in exactly the same way that you would define them natively in Laravel.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;title&#39;   =&gt; [</span>
 
