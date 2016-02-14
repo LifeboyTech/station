@@ -93,6 +93,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#has-timestamps">has_timestamps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#js-include">js_include</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nestable-by">nestable_by</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#no-build">no_build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#no-data-alert">no_data_alert</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#no-data-force-create">no_data_force_create</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#override">override</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#preview-url">preview_url</a></li>
@@ -227,6 +229,25 @@
 </pre></div>
 </div>
 <p>The three array elements are (1) the field name which contains the overall sort-order (2) the field name which contains the ID of the parent of the record. Records on the top-level have a <code class="docutils literal"><span class="pre">parent_id</span></code> of <code class="docutils literal"><span class="pre">0</span></code> and (3) the depth level of the record.</p>
+</div>
+<div class="section" id="no-build">
+<h2>no_build<a class="headerlink" href="#no-build" title="Permalink to this headline">¶</a></h2>
+<p>If this option is set to true then the <code class="docutils literal"><span class="pre">php</span> <span class="pre">artisan</span> <span class="pre">station:build</span></code> command will simply skip this panel entirely when it attempts to create models and migrations. This is useful for panels where you want to use the <code class="docutils literal"><span class="pre">override</span></code> option and you have no need for a data model to be available.</p>
+</div>
+<div class="section" id="no-data-alert">
+<h2>no_data_alert<a class="headerlink" href="#no-data-alert" title="Permalink to this headline">¶</a></h2>
+<p>This option, defined by an array, can be used to configure a special message to users of a panel which has no data. This can be useful for when you want to assist users on creating a type of data for the first time.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+<span class="x">   &#39;table&#39;              =&gt; &#39;posts&#39;,</span>
+<span class="x">   &#39;single_item_name&#39;   =&gt; &#39;Blog Post&#39;,</span>
+<span class="x">   &#39;no_data_alert&#39;      =&gt; [</span>
+
+<span class="x">      &#39;header&#39;    =&gt; &#39;You have no blog posts yet&#39;,</span>
+<span class="x">      &#39;body&#39;      =&gt; &#39;Go ahead and create your first blog post now!&#39;</span>
+<span class="x">   ]</span>
+<span class="x">],</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="no-data-force-create">
 <h2>no_data_force_create<a class="headerlink" href="#no-data-force-create" title="Permalink to this headline">¶</a></h2>

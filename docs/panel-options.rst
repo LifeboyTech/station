@@ -108,6 +108,32 @@ The three array elements are (1) the field name which contains the overall sort-
 
 
 
+no_build
+-------- 
+
+If this option is set to true then the ``php artisan station:build`` command will simply skip this panel entirely when it attempts to create models and migrations. This is useful for panels where you want to use the ``override`` option and you have no need for a data model to be available.
+
+
+
+no_data_alert
+------------- 
+
+This option, defined by an array, can be used to configure a special message to users of a panel which has no data. This can be useful for when you want to assist users on creating a type of data for the first time.
+
+.. code-block:: php 
+
+   'panel_options'   => [
+      'table'              => 'posts',
+      'single_item_name'   => 'Blog Post',
+      'no_data_alert'      => [
+
+         'header'    => 'You have no blog posts yet',
+         'body'      => 'Go ahead and create your first blog post now!'
+      ]
+   ],
+
+
+
 no_data_force_create
 -------------------- 
 
