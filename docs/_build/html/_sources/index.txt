@@ -46,6 +46,7 @@ Documentation Contents
    panel-options
    element-options
    models
+   emailers
    license
    roadmap
 
@@ -56,6 +57,12 @@ Contributing to Station Development
 I welcome and encourage contributions. Please submit pull-requests. I will review and consider implementing.
 
 My only guideline is that enhancements to Station should be within the simple and straightforward spirit of the project.
+
+
+Issues?
+------- 
+
+Please use the `Github issue tracker <https://github.com/LifeboyTech/station/issues>`_ to report problems or to get answers to your questions.
 
 
 Credits

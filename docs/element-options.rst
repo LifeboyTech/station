@@ -5,7 +5,11 @@ The ``elements`` key of the array defined in any of the files at ``/config/packa
 
 Generally, each element is mapped to a specific database field. However, this is not always the case. Some elements are "virtual". See below for the full documentation on configuring elements.
 
-.. note:: all options marked with an * are required
+.. note:: 
+
+   *All options marked with a * are required!*
+
+   **Important:** You do not need to create an ``id`` element in your panels. Station assumes that any panel which is mapped to a :ref:`table` has an ``id`` field and it will auto-generate this field for you as your table's primary key and index.
 
 
 (key name) *
@@ -195,12 +199,17 @@ hidden
    * As the name suggests this will simply render a ``<input type="hidden">`` input in your forms.
    * This can be very useful when used in conjunction with the ``default`` option.
 
+password
+^^^^^^^^
+
+   * This will generate a VARCHAR(255) database field. 
+   * The input for user manipulation is a simple ``<input type="password">``
 
 subpanel
 ^^^^^^^^
 
    * This is a way to "nest" a panel within another panel.
-   * You will need to configure the ``data`` option (see the :ref:`data-type` option for more details)
+   * You will need to configure the ``data`` option (see the :ref:`data-type` option for more details) in order to define which panel becomes nested and how the two panels are linked.
 
    .. image:: images/subpanel.png
 
@@ -209,7 +218,19 @@ subpanel
 attributes 
 ---------- 
 
+:ref:`build-command` utilizes the wonderful `Laracast Generators <https://github.com/laracasts/Laravel-5-Generators-Extended>`_ package to generate migrations for your panels. If you add pipe-delimited arguments to the ``attributes`` option, those arguments will be passed to the generator as `specific schema <https://github.com/laracasts/Laravel-5-Generators-Extended#migrations-with-schema>`_.
 
+.. code-block:: php 
+
+   'email'   => [
+
+      'label' => 'Email',
+      'type' => 'text',
+      'attributes' => 'unique|index|default("foo@example.com")',
+      ...
+   ],
+
+Note that ``attributes`` only affect the database schema and have no other affect on panel validation behaviors. To control panel validation behaviors use the :ref:`rules` option.
 
 
 
@@ -218,6 +239,57 @@ attributes
 data
 ---- 
 
+
+display
+------- 
+
+This option informs Station when to display this element. You may indicate one or more of the following letters: **C.R.U.D.L**.
+
+.. code-block:: php 
+
+   C = Create 
+   R = Read 
+   U = Update 
+   D = Delete 
+   L = List 
+
+.. code-block:: php 
+
+   'favorite_animal'   => [
+
+      'label' => 'Your Favorite Animal',
+      'type' => 'text',
+      'display' => 'CRUDL' // <=== This element will appear in all views & controls
+      ...
+   ],
+
+   'favorite_movie'   => [
+
+      'label' => 'Your Favorite Movie',
+      'type' => 'text',
+      'display' => 'CRUD' // <=== This element will not appear in the list view
+      ...
+   ],
+
+
+.. _rules:
+
+rules 
+----- 
+
+This option configures the validation of an element. You must set the value to a pipe-delimited set of rules. The validation options include and are limited to the `Laravel Validation Rules <https://laravel.com/docs/5.2/validation#available-validation-rules>`_. You set the rules in exactly the same way that you would define them natively in Laravel.
+
+.. code-block:: php 
+
+   'title'   => [
+
+      'label' => 'Post Title',
+      'type' => 'text',
+      'rules' => 'required|unique,posts,title|between:3,125',
+      ...
+   ],
+
+**Note:** When using the ``unique`` rule, Station uses a ``,`` while Laravel requires a ``:``
 
 
 .. _config-images:

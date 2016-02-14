@@ -5,7 +5,10 @@ The ``panel_options`` key of the array defined in any of the files at ``/config/
 
 Generally, each panel is mapped to a specific database table. However, this is not always the case. Some panels have an :ref:`override` defined. See below for the full documentation on configuring panels.
 
-.. note:: all options marked with an * are required
+.. note:: 
+   
+   All options marked with a * are required
+   
 
 .. _table:
 

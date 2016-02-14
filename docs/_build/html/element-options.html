@@ -103,15 +103,19 @@
 <li class="toctree-l3"><a class="reference internal" href="#float">float</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#textarea">textarea</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hidden">hidden</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#password">password</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#subpanel">subpanel</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#attributes">attributes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data">data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#display">display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rules">rules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sizes">sizes</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Working with Station Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="emailers.html">Configuring Emailers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap &amp; Todos</a></li>
 </ul>
@@ -164,7 +168,8 @@
 <p>Generally, each element is mapped to a specific database field. However, this is not always the case. Some elements are &#8220;virtual&#8221;. See below for the full documentation on configuring elements.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">all options marked with an * are required</p>
+<p><em>All options marked with a * are required!</em></p>
+<p class="last"><strong>Important:</strong> You do not need to create an <code class="docutils literal"><span class="pre">id</span></code> element in your panels. Station assumes that any panel which is mapped to a <a class="reference internal" href="panel-options.html#table"><span>table *</span></a> has an <code class="docutils literal"><span class="pre">id</span></code> field and it will auto-generate this field for you as your table&#8217;s primary key and index.</p>
 </div>
 <div class="section" id="key-name">
 <h2>(key name) *<a class="headerlink" href="#key-name" title="Permalink to this headline">¶</a></h2>
@@ -364,12 +369,21 @@
 </ul>
 </div></blockquote>
 </div>
+<div class="section" id="password">
+<h3>password<a class="headerlink" href="#password" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a VARCHAR(255) database field.</li>
+<li>The input for user manipulation is a simple <code class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;password&quot;&gt;</span></code></li>
+</ul>
+</div></blockquote>
+</div>
 <div class="section" id="subpanel">
 <h3>subpanel<a class="headerlink" href="#subpanel" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>This is a way to &#8220;nest&#8221; a panel within another panel.</li>
-<li>You will need to configure the <code class="docutils literal"><span class="pre">data</span></code> option (see the <a class="reference internal" href="#data-type"><span>data</span></a> option for more details)</li>
+<li>You will need to configure the <code class="docutils literal"><span class="pre">data</span></code> option (see the <a class="reference internal" href="#data-type"><span>data</span></a> option for more details) in order to define which panel becomes nested and how the two panels are linked.</li>
 </ul>
 <img alt="_images/subpanel.png" src="_images/subpanel.png" />
 </div></blockquote>
@@ -377,9 +391,62 @@
 </div>
 <div class="section" id="attributes">
 <h2>attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="panels.html#build-command"><span>The Build Command</span></a> utilizes the wonderful <a class="reference external" href="https://github.com/laracasts/Laravel-5-Generators-Extended">Laracast Generators</a> package to generate migrations for your panels. If you add pipe-delimited arguments to the <code class="docutils literal"><span class="pre">attributes</span></code> option, those arguments will be passed to the generator as <a class="reference external" href="https://github.com/laracasts/Laravel-5-Generators-Extended#migrations-with-schema">specific schema</a>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;email&#39;   =&gt; [</span>
+
+<span class="x">   &#39;label&#39; =&gt; &#39;Email&#39;,</span>
+<span class="x">   &#39;type&#39; =&gt; &#39;text&#39;,</span>
+<span class="x">   &#39;attributes&#39; =&gt; &#39;unique|index|default(&quot;foo@example.com&quot;)&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal"><span class="pre">attributes</span></code> only affect the database schema and have no other affect on panel validation behaviors. To control panel validation behaviors use the <a class="reference internal" href="#rules"><span>rules</span></a> option.</p>
 </div>
 <div class="section" id="data">
 <span id="data-type"></span><h2>data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="display">
+<h2>display<a class="headerlink" href="#display" title="Permalink to this headline">¶</a></h2>
+<p>This option informs Station when to display this element. You may indicate one or more of the following letters: <strong>C.R.U.D.L</strong>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">C = Create</span>
+<span class="x">R = Read</span>
+<span class="x">U = Update</span>
+<span class="x">D = Delete</span>
+<span class="x">L = List</span>
+</pre></div>
+</div>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;favorite_animal&#39;   =&gt; [</span>
+
+<span class="x">   &#39;label&#39; =&gt; &#39;Your Favorite Animal&#39;,</span>
+<span class="x">   &#39;type&#39; =&gt; &#39;text&#39;,</span>
+<span class="x">   &#39;display&#39; =&gt; &#39;CRUDL&#39; // &lt;=== This element will appear in all views &amp; controls</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+
+<span class="x">&#39;favorite_movie&#39;   =&gt; [</span>
+
+<span class="x">   &#39;label&#39; =&gt; &#39;Your Favorite Movie&#39;,</span>
+<span class="x">   &#39;type&#39; =&gt; &#39;text&#39;,</span>
+<span class="x">   &#39;display&#39; =&gt; &#39;CRUD&#39; // &lt;=== This element will not appear in the list view</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rules">
+<span id="id2"></span><h2>rules<a class="headerlink" href="#rules" title="Permalink to this headline">¶</a></h2>
+<p>This option configures the validation of an element. You must set the value to a pipe-delimited set of rules. The validation options include and are limited to the <a class="reference external" href="https://laravel.com/docs/5.2/validation#available-validation-rules">Laravel Validation Rules</a>. You set the rules in exactly the same way that you would define them natively in Laravel.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;title&#39;   =&gt; [</span>
+
+<span class="x">   &#39;label&#39; =&gt; &#39;Post Title&#39;,</span>
+<span class="x">   &#39;type&#39; =&gt; &#39;text&#39;,</span>
+<span class="x">   &#39;rules&#39; =&gt; &#39;required|unique,posts,title|between:3,125&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> When using the <code class="docutils literal"><span class="pre">unique</span></code> rule, Station uses a <code class="docutils literal"><span class="pre">,</span></code> while Laravel requires a <code class="docutils literal"><span class="pre">:</span></code></p>
 </div>
 <div class="section" id="sizes">
 <span id="config-images"></span><h2>sizes<a class="headerlink" href="#sizes" title="Permalink to this headline">¶</a></h2>
