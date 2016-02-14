@@ -58,21 +58,30 @@ This is the "type" of element and there are numerous options. Your choice of ele
       ...
    ],
 
-**text**
+text
+^^^^
 
    * This will generate a VARCHAR(255) database field. 
    * The input for user manipulation is a simple ``<input type="text">``
 
    .. image:: images/label.png
 
-**boolean**
+integer
+^^^^^^^
+
+   * This will generate a INT(12) database field. 
+   * The input for user manipulation is a simple ``<input type="text">``
+
+boolean
+^^^^^^^
 
    * This will generate a TINYINT(1) database field. 
    * The input for user manipulation is a toggle "on/off" switch (which masks a ``<input type="checkbox">``).
 
    .. image:: images/boolean.png
 
-**image** 
+image
+^^^^^
    
    * This will generate a VARCHAR(255) database field.
    * The input for user manipulation is a special image uploader w/ crop tool mechanism.
@@ -80,7 +89,8 @@ This is the "type" of element and there are numerous options. Your choice of ele
 
    .. image:: images/image.png
 
-**tags**
+tags
+^^^^
    
    * This will generate a VARCHAR(255) database field.
    * The input for user manipulation is a special tagging interface.
@@ -88,14 +98,16 @@ This is the "type" of element and there are numerous options. Your choice of ele
 
    .. image:: images/tags.png
 
-**select**
+select
+^^^^^^
 
    * This can be used in conjunction with another table or with static data (see the :ref:`data-type` option).
    * The input for user-manipulation uses the wonderful `Chosen <https://harvesthq.github.io/chosen/>`_ library which contains a dropdown with search bar
 
    .. image:: images/select.png
 
-**multiselect**
+multiselect
+^^^^^^^^^^^
 
    * This can only be used when a relationship with another table has been defined (see the :ref:`data-type` option).
    * Data will be written to the database via a pivot table which is auto-generated via :ref:`build-command`.
@@ -103,7 +115,8 @@ This is the "type" of element and there are numerous options. Your choice of ele
 
    .. image:: images/multiselect.png
 
-**radio**
+radio
+^^^^^
    
    * This will generate a VARCHAR(255) database field.
    * This can be used in conjunction with another table or with static data (see the :ref:`data-type` option).
@@ -111,9 +124,11 @@ This is the "type" of element and there are numerous options. Your choice of ele
 
    .. image:: images/radio.png
 
-**virtual**
+virtual
+^^^^^^^
    
    * Virtual type fields do not actually map to real database fields.
+   * No field will be generated from :ref:`build-command`.
    * They are often used in conjunction with the ``concat`` option in order to create links in a list view which require one or more *other* fields from the same record.
 
    .. code-block:: php 
@@ -125,6 +140,68 @@ This is the "type" of element and there are numerous options. Your choice of ele
          'display'      => 'L'
       ],
 
+date / datetime
+^^^^^^^^^^^^^^^
+
+   * These will generate ether a DATE() or DATETIME() database field.
+   * The input for user-manipulation is a calendar day-picker with or without a time-picker.
+   
+   .. image:: images/date.png
+
+float
+^^^^^
+
+   * This will generate a FLOAT(10,2) database field.
+
+   .. code-block:: php 
+
+      'tax'  => [
+         'label'        => 'Tax on Clothing Exemption Cap',
+         'type'         => 'float',
+         'format'       => 'money',
+         'prepend'      => '$',
+         'attributes'   => '',
+         'rules'        => '',
+         'display'      => 'CRUD'
+      ],
+
+   The above example would produce:
+
+   .. image:: images/float.png
+
+textarea
+^^^^^^^^
+
+   * This will generate a TEXT() database field.
+
+   .. code-block:: php 
+
+      'description'  => [
+         'label'        => 'Description',
+         'helper'       => 'markdown',
+         'type'         => 'textarea',
+         'rows'         => 18,
+         'embeddable'   => TRUE,
+         'display'      => 'CRUD'
+      ],
+
+   .. image:: images/description.png
+
+
+hidden
+^^^^^^
+
+   * This will generate a VARCHAR(255) database field.
+   * As the name suggests this will simply render a ``<input type="hidden">`` input in your forms.
+   * This can be very useful when used in conjunction with the ``default`` option.
+
+
+subpanel
+^^^^^^^^
+
+   
+
+   
 
 .. _data-type:
 

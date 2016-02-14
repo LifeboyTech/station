@@ -89,7 +89,23 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="">Element Options</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#key-name">(key name) *</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#label">label *</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#type">type *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#type">type *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#text">text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integer">integer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boolean">boolean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#image">image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tags">tags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select">select</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multiselect">multiselect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#radio">radio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#virtual">virtual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#date-datetime">date / datetime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#float">float</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#textarea">textarea</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hidden">hidden</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subpanel">subpanel</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#data">data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sizes">sizes</a></li>
 </ul>
@@ -186,7 +202,8 @@
 <span class="x">],</span>
 </pre></div>
 </div>
-<p><strong>text</strong></p>
+<div class="section" id="text">
+<h3>text<a class="headerlink" href="#text" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>This will generate a VARCHAR(255) database field.</li>
@@ -194,7 +211,18 @@
 </ul>
 <img alt="_images/label.png" src="_images/label.png" />
 </div></blockquote>
-<p><strong>boolean</strong></p>
+</div>
+<div class="section" id="integer">
+<h3>integer<a class="headerlink" href="#integer" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a INT(12) database field.</li>
+<li>The input for user manipulation is a simple <code class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;text&quot;&gt;</span></code></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="boolean">
+<h3>boolean<a class="headerlink" href="#boolean" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>This will generate a TINYINT(1) database field.</li>
@@ -202,7 +230,9 @@
 </ul>
 <img alt="_images/boolean.png" src="_images/boolean.png" />
 </div></blockquote>
-<p><strong>image</strong></p>
+</div>
+<div class="section" id="image">
+<h3>image<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>This will generate a VARCHAR(255) database field.</li>
@@ -211,7 +241,9 @@
 </ul>
 <img alt="_images/image.png" src="_images/image.png" />
 </div></blockquote>
-<p><strong>tags</strong></p>
+</div>
+<div class="section" id="tags">
+<h3>tags<a class="headerlink" href="#tags" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>This will generate a VARCHAR(255) database field.</li>
@@ -220,7 +252,9 @@
 </ul>
 <img alt="_images/tags.png" src="_images/tags.png" />
 </div></blockquote>
-<p><strong>select</strong></p>
+</div>
+<div class="section" id="select">
+<h3>select<a class="headerlink" href="#select" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>This can be used in conjunction with another table or with static data (see the <a class="reference internal" href="#data-type"><span>data</span></a> option).</li>
@@ -228,7 +262,9 @@
 </ul>
 <img alt="_images/select.png" src="_images/select.png" />
 </div></blockquote>
-<p><strong>multiselect</strong></p>
+</div>
+<div class="section" id="multiselect">
+<h3>multiselect<a class="headerlink" href="#multiselect" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>This can only be used when a relationship with another table has been defined (see the <a class="reference internal" href="#data-type"><span>data</span></a> option).</li>
@@ -237,7 +273,9 @@
 </ul>
 <img alt="_images/multiselect.png" src="_images/multiselect.png" />
 </div></blockquote>
-<p><strong>radio</strong></p>
+</div>
+<div class="section" id="radio">
+<h3>radio<a class="headerlink" href="#radio" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>This will generate a VARCHAR(255) database field.</li>
@@ -246,10 +284,13 @@
 </ul>
 <img alt="_images/radio.png" src="_images/radio.png" />
 </div></blockquote>
-<p><strong>virtual</strong></p>
+</div>
+<div class="section" id="virtual">
+<h3>virtual<a class="headerlink" href="#virtual" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>Virtual type fields do not actually map to real database fields.</li>
+<li>No field will be generated from <a class="reference internal" href="panels.html#build-command"><span>The Build Command</span></a>.</li>
 <li>They are often used in conjunction with the <code class="docutils literal"><span class="pre">concat</span></code> option in order to create links in a list view which require one or more <em>other</em> fields from the same record.</li>
 </ul>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;permalink&#39; =&gt; [</span>
@@ -261,6 +302,70 @@
 </pre></div>
 </div>
 </div></blockquote>
+</div>
+<div class="section" id="date-datetime">
+<h3>date / datetime<a class="headerlink" href="#date-datetime" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>These will generate ether a DATE() or DATETIME() database field.</li>
+<li>The input for user-manipulation is a calendar day-picker with or without a time-picker.</li>
+</ul>
+<img alt="_images/date.png" src="_images/date.png" />
+</div></blockquote>
+</div>
+<div class="section" id="float">
+<h3>float<a class="headerlink" href="#float" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a FLOAT(10,2) database field.</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;tax&#39;  =&gt; [</span>
+<span class="x">   &#39;label&#39;        =&gt; &#39;Tax on Clothing Exemption Cap&#39;,</span>
+<span class="x">   &#39;type&#39;         =&gt; &#39;float&#39;,</span>
+<span class="x">   &#39;format&#39;       =&gt; &#39;money&#39;,</span>
+<span class="x">   &#39;prepend&#39;      =&gt; &#39;$&#39;,</span>
+<span class="x">   &#39;attributes&#39;   =&gt; &#39;&#39;,</span>
+<span class="x">   &#39;rules&#39;        =&gt; &#39;&#39;,</span>
+<span class="x">   &#39;display&#39;      =&gt; &#39;CRUD&#39;</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>The above example would produce:</p>
+<img alt="_images/float.png" src="_images/float.png" />
+</div></blockquote>
+</div>
+<div class="section" id="textarea">
+<h3>textarea<a class="headerlink" href="#textarea" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a TEXT() database field.</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;description&#39;  =&gt; [</span>
+<span class="x">   &#39;label&#39;        =&gt; &#39;Description&#39;,</span>
+<span class="x">   &#39;helper&#39;       =&gt; &#39;markdown&#39;,</span>
+<span class="x">   &#39;type&#39;         =&gt; &#39;textarea&#39;,</span>
+<span class="x">   &#39;rows&#39;         =&gt; 18,</span>
+<span class="x">   &#39;embeddable&#39;   =&gt; TRUE,</span>
+<span class="x">   &#39;display&#39;      =&gt; &#39;CRUD&#39;</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<img alt="_images/description.png" src="_images/description.png" />
+</div></blockquote>
+</div>
+<div class="section" id="hidden">
+<h3>hidden<a class="headerlink" href="#hidden" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a VARCHAR(255) database field.</li>
+<li>As the name suggests this will simply render a <code class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;hidden&quot;&gt;</span></code> input in your forms.</li>
+<li>This can be very useful when used in conjunction with the <code class="docutils literal"><span class="pre">default</span></code> option.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="subpanel">
+<h3>subpanel<a class="headerlink" href="#subpanel" title="Permalink to this headline">¶</a></h3>
+</div>
 </div>
 <div class="section" id="data">
 <span id="data-type"></span><h2>data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
