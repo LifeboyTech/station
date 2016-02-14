@@ -199,9 +199,19 @@ hidden
 subpanel
 ^^^^^^^^
 
-   
+   * This is a way to "nest" a panel within another panel.
+   * You will need to configure the ``data`` option (see the :ref:`data-type` option for more details)
 
-   
+   .. image:: images/subpanel.png
+
+
+
+attributes 
+---------- 
+
+
+
+
 
 .. _data-type:
 
