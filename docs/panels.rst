@@ -10,6 +10,7 @@ Typically each panel maps to a database table one-to-one. However, a panel can a
 
 A panel can also be complete overriden so you can build your own functionality from scratch, but within the user-authenticated comfort of Station.
 
+.. _build-command:
 
 The Build Command
 -----------------

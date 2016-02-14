@@ -87,8 +87,10 @@
 <li class="toctree-l1"><a class="reference internal" href="panels.html">Working With Panels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="panel-options.html">Panel Options</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Element Options</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#name">name</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#type">type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#key-name">(key name) *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#label">label *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#type">type *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data">data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sizes">sizes</a></li>
 </ul>
 </li>
@@ -141,11 +143,127 @@
             
   <div class="section" id="element-options">
 <h1>Element Options<a class="headerlink" href="#element-options" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="name">
-<h2>name<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">elements</span></code> key of the array defined in any of the files at <code class="docutils literal"><span class="pre">/config/packages/lifeboy/station</span></code> represents the list of elements which are available to users of Station.</p>
+<p>Generally, each element is mapped to a specific database field. However, this is not always the case. Some elements are &#8220;virtual&#8221;. See below for the full documentation on configuring elements.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">all options marked with an * are required</p>
+</div>
+<div class="section" id="key-name">
+<h2>(key name) *<a class="headerlink" href="#key-name" title="Permalink to this headline">¶</a></h2>
+<p>The key of each element (unless the element <code class="docutils literal"><span class="pre">type</span></code> is <code class="docutils literal"><span class="pre">virtual</span></code>) is the name of the database field of this panel&#8217;s <a class="reference internal" href="panel-options.html#table"><span>table *</span></a>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;first_name&#39;   =&gt; [</span>
+
+<span class="x">   &#39;label&#39; =&gt; &#39;First Name&#39;,</span>
+<span class="x">   &#39;type&#39; =&gt; &#39;text&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal"><span class="pre">first_name</span></code> is the name of the database field.</p>
+</div>
+<div class="section" id="label">
+<h2>label *<a class="headerlink" href="#label" title="Permalink to this headline">¶</a></h2>
+<p>This is the user-facing &#8220;name&#8221; of the field. This name will appear in a number of places. (1) As the input label in the create and update form. (2) on the top of a list view column (if this element has been given list permissions) and (3) in validation error messages, when a user has not fulfilled validation requirements for this element.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;first_name&#39;   =&gt; [</span>
+
+<span class="x">   &#39;label&#39; =&gt; &#39;First Name&#39;,</span>
+<span class="x">   &#39;type&#39; =&gt; &#39;text&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<img alt="_images/label.png" src="_images/label.png" />
 </div>
 <div class="section" id="type">
-<h2>type<a class="headerlink" href="#type" title="Permalink to this headline">¶</a></h2>
+<h2>type *<a class="headerlink" href="#type" title="Permalink to this headline">¶</a></h2>
+<p>This is the &#8220;type&#8221; of element and there are numerous options. Your choice of element type is based primarily on which kind of browser input you wish to use, however it also influences the field type used in the auto-generated database migrations:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;is_active&#39;   =&gt; [</span>
+
+<span class="x">   &#39;label&#39; =&gt; &#39;Activated?&#39;,</span>
+<span class="x">   &#39;type&#39; =&gt; &#39;boolean&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p><strong>text</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a VARCHAR(255) database field.</li>
+<li>The input for user manipulation is a simple <code class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;text&quot;&gt;</span></code></li>
+</ul>
+<img alt="_images/label.png" src="_images/label.png" />
+</div></blockquote>
+<p><strong>boolean</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a TINYINT(1) database field.</li>
+<li>The input for user manipulation is a toggle &#8220;on/off&#8221; switch (which masks a <code class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;checkbox&quot;&gt;</span></code>).</li>
+</ul>
+<img alt="_images/boolean.png" src="_images/boolean.png" />
+</div></blockquote>
+<p><strong>image</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a VARCHAR(255) database field.</li>
+<li>The input for user manipulation is a special image uploader w/ crop tool mechanism.</li>
+<li>See the <a class="reference internal" href="#config-images"><span>sizes</span></a> option for more details on configuration, sizing and cropping.</li>
+</ul>
+<img alt="_images/image.png" src="_images/image.png" />
+</div></blockquote>
+<p><strong>tags</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a VARCHAR(255) database field.</li>
+<li>The input for user manipulation is a special tagging interface.</li>
+<li>The field data is written to the database as comma delimited values.</li>
+</ul>
+<img alt="_images/tags.png" src="_images/tags.png" />
+</div></blockquote>
+<p><strong>select</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>This can be used in conjunction with another table or with static data (see the <a class="reference internal" href="#data-type"><span>data</span></a> option).</li>
+<li>The input for user-manipulation uses the wonderful <a class="reference external" href="https://harvesthq.github.io/chosen/">Chosen</a> library which contains a dropdown with search bar</li>
+</ul>
+<img alt="_images/select.png" src="_images/select.png" />
+</div></blockquote>
+<p><strong>multiselect</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>This can only be used when a relationship with another table has been defined (see the <a class="reference internal" href="#data-type"><span>data</span></a> option).</li>
+<li>Data will be written to the database via a pivot table which is auto-generated via <a class="reference internal" href="panels.html#build-command"><span>The Build Command</span></a>.</li>
+<li>The input for user-manipulation uses the wonderful <a class="reference external" href="https://harvesthq.github.io/chosen/">Chosen</a> library which contains a taggable dropdown with search bar</li>
+</ul>
+<img alt="_images/multiselect.png" src="_images/multiselect.png" />
+</div></blockquote>
+<p><strong>radio</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a VARCHAR(255) database field.</li>
+<li>This can be used in conjunction with another table or with static data (see the <a class="reference internal" href="#data-type"><span>data</span></a> option).</li>
+<li>The input for user-manipulation uses enhanced radio buttons (masking standard <code class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;radio&quot;&gt;</span></code> inputs).</li>
+</ul>
+<img alt="_images/radio.png" src="_images/radio.png" />
+</div></blockquote>
+<p><strong>virtual</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Virtual type fields do not actually map to real database fields.</li>
+<li>They are often used in conjunction with the <code class="docutils literal"><span class="pre">concat</span></code> option in order to create links in a list view which require one or more <em>other</em> fields from the same record.</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;permalink&#39; =&gt; [</span>
+<span class="x">   &#39;label&#39;        =&gt; &#39;Permalink&#39;,</span>
+<span class="x">   &#39;type&#39;         =&gt; &#39;virtual&#39;,</span>
+<span class="x">   &#39;concat&#39;       =&gt; &#39;&quot;&lt;a href=\&#39;http://www.domain.com/faq#answer-&quot;, id, &quot;\&#39; target=\&#39;_blank\&#39;&gt;Preview&lt;/a&gt;&quot;&#39;,</span>
+<span class="x">   &#39;display&#39;      =&gt; &#39;L&#39;</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="data">
+<span id="data-type"></span><h2>data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="sizes">
 <span id="config-images"></span><h2>sizes<a class="headerlink" href="#sizes" title="Permalink to this headline">¶</a></h2>

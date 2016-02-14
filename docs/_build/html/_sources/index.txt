@@ -61,5 +61,5 @@ My only guideline is that enhancements to Station should be within the simple an
 Credits
 ------- 
 
-Station was conceived and built primarily by `Ben Hirsch <https://github.com/phirschybar>`_. The project was named by `Tim Habersack <https://github.com/timbotron>`_ who also contributed to the the development and strategy in its early phases.
+Station was conceived and built by `Ben Hirsch <https://github.com/phirschybar>`_. The project was named by `Tim Habersack <https://github.com/timbotron>`_ who also contributed to feature development and strategy in its early phases.
 

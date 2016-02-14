@@ -1,7 +1,13 @@
 Panel Options
 =============
 
-*Note: all options marked with an * are required*
+The ``panel_options`` key of the array defined in any of the files at ``/config/packages/lifeboy/station`` represents the panel-level options which are available to users of Station. 
+
+Generally, each panel is mapped to a specific database table. However, this is not always the case. Some panels have an :ref:`override` defined. See below for the full documentation on configuring panels.
+
+.. note:: all options marked with an * are required
+
+.. _table:
 
 table * 
 -------
@@ -149,6 +155,7 @@ When this option is set to true it will redirect a user who is trying to access 
    ],
 
 
+.. _override:
 
 override
 -------- 

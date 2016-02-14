@@ -152,9 +152,14 @@
             
   <div class="section" id="panel-options">
 <h1>Panel Options<a class="headerlink" href="#panel-options" title="Permalink to this headline">¶</a></h1>
-<p><em>Note: all options marked with an * are required</em></p>
+<p>The <code class="docutils literal"><span class="pre">panel_options</span></code> key of the array defined in any of the files at <code class="docutils literal"><span class="pre">/config/packages/lifeboy/station</span></code> represents the panel-level options which are available to users of Station.</p>
+<p>Generally, each panel is mapped to a specific database table. However, this is not always the case. Some panels have an <a class="reference internal" href="#override"><span>override</span></a> defined. See below for the full documentation on configuring panels.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">all options marked with an * are required</p>
+</div>
 <div class="section" id="table">
-<h2>table *<a class="headerlink" href="#table" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>table *<a class="headerlink" href="#table" title="Permalink to this headline">¶</a></h2>
 <p>Quite simply, this is the name of the database table to which this panel corresponds. Note that you can have many panels which use the same table.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
 
@@ -262,7 +267,7 @@
 </div>
 </div>
 <div class="section" id="override">
-<h2>override<a class="headerlink" href="#override" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>override<a class="headerlink" href="#override" title="Permalink to this headline">¶</a></h2>
 <p>This option allows you to completely override the functionality of a specific panel using a controller and method from your Laravel app. For an example of this, look at the <code class="docutils literal"><span class="pre">welcome</span></code> panel which shipped with Station.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
 
