@@ -116,4 +116,8 @@ You should now be able to browse to your app at: ``http://{host}/station/``. You
 
 That's it! Next you will configure Station and tailor it to the needs of your users.
 
+.. note::
+
+	You will be able to configure and test Station now. However, to run Station in production, please make sure that your email system has been configured and enabled. (See :ref:`emailers` for more info).
+
 

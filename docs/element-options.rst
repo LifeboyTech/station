@@ -20,6 +20,8 @@ Generally, each element is mapped to a specific database field. However, this is
 The key of each element (unless the element ``type`` is ``virtual``) is the name of the database field of this panel's :ref:`table`.
 
 .. code-block:: php 
+   
+   <?php 
 
    'first_name'   => [
 
@@ -38,7 +40,9 @@ label *
 This is the user-facing "name" of the field. This name will appear in a number of places. (1) As the input label in the create and update form. (2) on the top of a list view column (if this element has been given list permissions) and (3) in validation error messages, when a user has not fulfilled validation requirements for this element.
 
 .. code-block:: php 
-
+   
+   <?php 
+   
    'first_name'   => [
 
       'label' => 'First Name',
@@ -56,7 +60,9 @@ type *
 This is the "type" of element and there are numerous options. Your choice of element type is based primarily on which kind of browser input you wish to use, however it also influences the field type used in the auto-generated database migrations:
 
 .. code-block:: php 
-
+   
+   <?php 
+   
    'is_active'   => [
 
       'label' => 'Activated?',
@@ -145,6 +151,8 @@ virtual
 
    .. code-block:: php 
 
+      <?php 
+
       'permalink' => [
          'label'        => 'Permalink',
          'type'         => 'virtual',
@@ -167,6 +175,8 @@ float
 
    .. code-block:: php 
 
+      <?php 
+
       'tax'  => [
          'label'        => 'Tax on Clothing Exemption Cap',
          'type'         => 'float',
@@ -187,6 +197,8 @@ textarea
    * This will generate a TEXT() database field.
 
    .. code-block:: php 
+
+      <?php 
 
       'description'  => [
          'label'        => 'Description',
@@ -235,7 +247,9 @@ append
 This option allows you to append text to an element input field. The element must have ``'type' => 'text'``. This text will not be written to the database.
 
 .. code-block:: php 
-
+   
+   <?php 
+   
    'subdomain'   => [
 
       'label' => 'Subdomain',
@@ -253,7 +267,9 @@ attributes
 :ref:`build-command` utilizes the wonderful `Laracast Generators <https://github.com/laracasts/Laravel-5-Generators-Extended>`_ package to generate migrations for your panels. If you add pipe-delimited arguments to the ``attributes`` option, those arguments will be passed to the generator as `specific schema <https://github.com/laracasts/Laravel-5-Generators-Extended#migrations-with-schema>`_.
 
 .. code-block:: php 
-
+   
+   <?php 
+   
    'email'   => [
 
       'label' => 'Email',
@@ -271,7 +287,9 @@ concat
 This option is often used in conjunction with elements of ``'type' => 'virtual'`` (read more about :ref:`virtual-type`). This option can be set to an array containing a mixture of strings and field names to create a new field, ideal for using in a panel's list view.
 
 .. code-block:: php 
-
+   
+   <?php 
+   
    'preview'   => [
       'label'        => 'Preview',
       'type'         => 'virtual',
@@ -299,6 +317,8 @@ This option defines how the data for this element is populated. It is required w
 
    .. code-block:: php 
 
+      <?php 
+   
       'favorite_animal'   => [
          'label'          => 'Your Favorite Animal',
          'type'           => 'radio', // <=== this works for `select` as well
@@ -326,6 +346,8 @@ This option defines how the data for this element is populated. It is required w
 
    .. code-block:: php 
 
+      <?php 
+   
       'favorite_animal'   => [
          'label'        => 'Favorite Animal',
          'type'         => 'select',
@@ -342,6 +364,8 @@ This option defines how the data for this element is populated. It is required w
 
    .. code-block:: php 
 
+      <?php 
+   
       'favorite_animals'   => [
          'label'        => 'Favorite Animals',
          'type'         => 'multiselect',
@@ -365,6 +389,8 @@ This option defines how the data for this element is populated. It is required w
 
    .. code-block:: php 
 
+      <?php 
+   
       'comments' => [
          'label'        => 'Comments',
          'type'         => 'subpanel',
@@ -388,7 +414,9 @@ default
 Use this to set a default value for an element. This value will be first selected in a create or update form.
 
 .. code-block:: php 
-
+   
+   <?php 
+   
    'favorite_animal'   => [
 
       'label' => 'Your Favorite Animal',
@@ -411,7 +439,9 @@ display
 
 This option informs Station when to display this element. You may indicate one or more of the following letters: **C.R.U.D.L**.
 
-.. code-block:: php 
+.. code-block:: php
+
+   <?php 
 
    C = Create 
    R = Read 
@@ -420,7 +450,9 @@ This option informs Station when to display this element. You may indicate one o
    L = List 
 
 .. code-block:: php 
-
+   
+   <?php 
+   
    'favorite_animal'   => [
 
       'label' => 'Your Favorite Animal',
@@ -439,6 +471,33 @@ This option informs Station when to display this element. You may indicate one o
 
 
 
+embeddable
+---------- 
+
+This option, when set to true, enables inline embedding of images and documents within the body of an element of ``'type' => 'textarea'``. 
+
+.. code-block:: php 
+      
+      <?php 
+   
+      'description'   => [
+         'label'        => 'Description',
+         'type'         => 'textarea',
+         'rows'         => 20, 
+         'embeddable'   => TRUE,
+         'sizes'     => [
+            'original'  => ['label'=>'Original'],  
+            'journal-body-620x0' => ['label'=>'Full Column Width', 'size'=>'620x0'],
+            'journal-body-250x0' => ['label'=>'Partial Column Width', 'size'=>'250x0'],
+         ]
+      ],
+
+You can (and should) set the ``sizes`` options to the :ref:`config-images` which you want any uploaded images to be resized to.
+
+.. image:: /images/embeddable.png
+
+
+
 format 
 ------
 
@@ -448,6 +507,8 @@ This is a helper option which will provide "masking" to your input field to help
 
    .. code-block:: php 
 
+      <?php 
+   
       'mobile_phone'   => [
 
          'label' => 'Mobile Phone #',
@@ -465,6 +526,8 @@ This is a helper option which will provide "masking" to your input field to help
 
    .. code-block:: php 
 
+      <?php 
+   
       'unit_msrp'   => [
 
          'label' => 'Unit MSRP',
@@ -479,13 +542,16 @@ This is a helper option which will provide "masking" to your input field to help
    .. image:: /images/money.png
 
 
+
 help 
 ---- 
 
 This options allows you to set some "helper" text which will display next to the element input in the create and update views. 
 
 .. code-block:: php 
-
+   
+   <?php 
+   
    'bio'   => [
 
       'label' => 'Company Bio',
@@ -493,6 +559,28 @@ This options allows you to set some "helper" text which will display next to the
       'help' => 'Optional. Just some brief, fun facts about your company',
       ...
    ],
+
+
+
+helper
+------ 
+
+This option allows you to choose a pre-baked "help" functionality. There is currently only one option, ``markdown`` which is best when used with elements of ``'type' => 'textarea'``. When you choose the ``markdown`` option your users will see a "Help Formatting" link above the textarea. When clicked, a modal overlay will render containing a Markdown syntax cheat sheet.
+
+.. code-block:: php 
+   
+   <?php 
+   
+   'description'  => [
+
+      'label' => 'Description',
+      'helper' => 'markdown',
+      'type' => 'textarea',
+      'rows' => 6,
+      'display' => 'CRUD'
+   ],
+
+.. image:: /images/markdown.png
 
 
 
@@ -511,14 +599,16 @@ permissions
 This is only used with the elements of ``'type' => 'subpanel'``. This defines which permissions a user has on the subpanel items according to the following list of actions:
 
 .. code-block:: php 
-
+   
    C = Create 
    R = Read 
    U = Update 
    D = Delete 
 
 .. code-block:: php 
-
+   
+   <?php 
+   
    'colors' => [
       'label'        => 'Product Colors',
       'type'         => 'subpanel',
@@ -541,7 +631,9 @@ prepend
 This option allows you to prepend text to an element input field. The element must have ``'type' => 'text'``. This text will not be written to the database.
 
 .. code-block:: php 
-
+   
+   <?php 
+   
    'subtotal'  => [
       'label'        => 'Subtotal',
       'type'         => 'float',
@@ -559,7 +651,9 @@ prepend_icon
 This allows you to set a bootstrap glyphicon class name in order to prepend an icon to your elements input field. This only works with ``'type' => 'text'``.
 
 .. code-block:: php 
-
+   
+   <?php 
+   
    'url'   => [
 
       'label' => 'Web Address',
@@ -587,7 +681,9 @@ rules
 This option configures the validation of an element. You must set the value to a pipe-delimited set of rules. The validation options include and are limited to the `Laravel Validation Rules <https://laravel.com/docs/5.2/validation#available-validation-rules>`_. You set the rules in exactly the same way that you would define them natively in Laravel.
 
 .. code-block:: php 
-
+   
+   <?php 
+   
    'title'   => [
 
       'label' => 'Post Title',
@@ -608,7 +704,9 @@ sizes
 This option allows you to specify one or more image sizes and locations for uploaded images. Upon upload, only the name of the uploaded file will be saved to your database. The image itself will be resized, cropped, and saved to the locations you specify. If you wish, you can specify global application defaults in ":ref:`media-options`" so that you do not need to repeat the same sizes and locations in every panel.
 
 .. code-block:: php 
-
+   
+   <?php 
+   
    'logo' => [
 
       'label'        => 'Logo Image',

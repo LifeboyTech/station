@@ -89,12 +89,14 @@ user_groups
 
 	.. code-block:: php 
 
+		<?php 
+   
 		'panels' => [
 
 			'demo_section'   => ['name' => 'Section Header',  'is_header' => TRUE, 'icon' => 'glyphicon glyphicon-book'],
 			'posts'          => ['name' => 'Posts',           'permissions' => 'CRUDL'],
 
-			... more sections headers and panels go here ...
+			// ... more sections headers and panels go here ...
 		]
 
 	In the above example, **demo_section** is the key name for a section header. The actual name is irrelevant. Just make sure all of your section header keys have unique names because this is PHP array and you cannot duplicate your key names! **is_header** indicates that this item is only a header title and not an actual panel. The **icon** option allows you to use bootstrap glyphicon names to accompany your section headers.
@@ -144,7 +146,9 @@ Custom Configuration Variables
 You can create your own custom configuration variables ``custom_user_vars`` which are accessible in any panel configuration file and the application configuration file. You can also create ``custom_view_vars`` which are available in any Station views. Just add them to the top-level of your ``config/packages/lifeboy/station/_app.php`` file.
 
 .. code-block:: php 
-
+	
+	<?php 
+   
 	'custom_user_vars' => [
 
 		'user_company_ids' => '\CompanyRepository::id_list_for_user(%user_id%)',

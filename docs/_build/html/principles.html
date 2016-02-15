@@ -217,13 +217,15 @@
 <p><strong>user_groups.[group name]:</strong> This associative array&#8217;s key is the group name. This is only for internal use. You can use any name you want. When you run <code class="docutils literal"><span class="pre">php</span> <span class="pre">artisan</span> <span class="pre">station:build</span></code> your groups will be seeded to the <code class="docutils literal"><span class="pre">groups</span></code> table in your database and presented as options in your <code class="docutils literal"><span class="pre">users</span></code> panel.</p>
 <p><strong>user_groups.[group name].starting_panel:</strong> This is the panel key that a user belonging to this group will be redirected to upon log in. The syntax for this is <code class="docutils literal"><span class="pre">panel_name.ACTION</span></code>, where action is L (list view), C (create view), or U (update view).</p>
 <p><strong>user_groups.[group name].panels</strong> This nested associative array defines the navigation that a user from this group will see in their navigation bar. It also defines the sections, panel titles, and permissions that a user of this group has regarding these panels. The format is as follows:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panels&#39; =&gt; [</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 
-<span class="x">        &#39;demo_section&#39;   =&gt; [&#39;name&#39; =&gt; &#39;Section Header&#39;,  &#39;is_header&#39; =&gt; TRUE, &#39;icon&#39; =&gt; &#39;glyphicon glyphicon-book&#39;],</span>
-<span class="x">        &#39;posts&#39;          =&gt; [&#39;name&#39; =&gt; &#39;Posts&#39;,           &#39;permissions&#39; =&gt; &#39;CRUDL&#39;],</span>
+<span class="s1">&#39;panels&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
 
-<span class="x">        ... more sections headers and panels go here ...</span>
-<span class="x">]</span>
+        <span class="s1">&#39;demo_section&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Section Header&#39;</span><span class="p">,</span>  <span class="s1">&#39;is_header&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span> <span class="s1">&#39;icon&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;glyphicon glyphicon-book&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;posts&#39;</span>          <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Posts&#39;</span><span class="p">,</span>           <span class="s1">&#39;permissions&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CRUDL&#39;</span><span class="p">],</span>
+
+        <span class="c1">// ... more sections headers and panels go here ...</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 <p>In the above example, <strong>demo_section</strong> is the key name for a section header. The actual name is irrelevant. Just make sure all of your section header keys have unique names because this is PHP array and you cannot duplicate your key names! <strong>is_header</strong> indicates that this item is only a header title and not an actual panel. The <strong>icon</strong> option allows you to use bootstrap glyphicon names to accompany your section headers.</p>
@@ -262,16 +264,18 @@
 <div class="section" id="custom-configuration-variables">
 <span id="custom-config-variables"></span><h2>Custom Configuration Variables<a class="headerlink" href="#custom-configuration-variables" title="Permalink to this headline">¶</a></h2>
 <p>You can create your own custom configuration variables <code class="docutils literal"><span class="pre">custom_user_vars</span></code> which are accessible in any panel configuration file and the application configuration file. You can also create <code class="docutils literal"><span class="pre">custom_view_vars</span></code> which are available in any Station views. Just add them to the top-level of your <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code> file.</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;custom_user_vars&#39; =&gt; [</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 
-<span class="x">        &#39;user_company_ids&#39; =&gt; &#39;\CompanyRepository::id_list_for_user(%user_id%)&#39;,</span>
-<span class="x">        &#39;user_store_ids&#39; =&gt; &#39;\StoreRepository::id_list_for_user(%user_id%)&#39;,</span>
-<span class="x">],</span>
+<span class="s1">&#39;custom_user_vars&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
 
-<span class="x">&#39;custom_view_vars&#39; =&gt; [</span>
+        <span class="s1">&#39;user_company_ids&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;\CompanyRepository::id_list_for_user(%user_id%)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;user_store_ids&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;\StoreRepository::id_list_for_user(%user_id%)&#39;</span><span class="p">,</span>
+<span class="p">],</span>
 
-<span class="x">        &#39;onboarding_progress_html&#39; =&gt; &#39;\UserRepository::onboarding_progress_html_for(%user_id%)&#39;,</span>
-<span class="x">],</span>
+<span class="s1">&#39;custom_view_vars&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+
+        <span class="s1">&#39;onboarding_progress_html&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;\UserRepository::onboarding_progress_html_for(%user_id%)&#39;</span><span class="p">,</span>
+<span class="p">],</span>
 </pre></div>
 </div>
 <p>In this example we are utilizing a <code class="docutils literal"><span class="pre">CompanyRepository</span></code> class, which is part of our Laravel app. This class is returning a set of IDs based on the current user&#8217;s ID. Those IDs are now stored in <code class="docutils literal"><span class="pre">%user_company_ids%</span></code>, which can be used in any panel configuration file.</p>
