@@ -4,7 +4,7 @@
 
 	<div id="list-for-{{ $curr_panel }}" class="station-list-wrap" data-panel-name="{{ $curr_panel }}">
 
-		@if (count($data['data']) > 0 || $is_trying_to_filter)
+		@if ((isset($data['data']) && count($data['data']) > 0) || $is_trying_to_filter)
 
 			<div class="clearfix">
 				<div class="pull-left">
