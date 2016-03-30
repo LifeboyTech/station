@@ -1,6 +1,7 @@
 <?php namespace Lifeboy\Station\Controllers;
 
 use Password, Input, Config, Session, Redirect, View, Hash, Auth, Lang;
+use Illuminate\Http\Request;
 use Lifeboy\Station\Config\StationConfig as StationConfig;
 
 class StationUserController extends ObjectBaseController {
@@ -46,7 +47,7 @@ class StationUserController extends ObjectBaseController {
      */
     public function forgot(){
 
-    	switch ($response = Password::remind($this->request->only('email')))
+    	switch ($response = Password::sendResetLink($this->request->only('email')))
         {
             case Password::INVALID_USER:
                 return Redirect::back()->with('error', Lang::get($response));
@@ -59,7 +60,7 @@ class StationUserController extends ObjectBaseController {
     }
 
     /**
-     * display the form for password reset 
+     * display the form for password reset
      *
      * @param  string  $token
      * @return View
@@ -72,7 +73,7 @@ class StationUserController extends ObjectBaseController {
     }
 
     /**
-     * this is the landing page for the forgotten password / reset password form 
+     * this is the landing page for the forgotten password / reset password form
      * it just redirects to the login form.
      */
     public function reminded(){
