@@ -283,7 +283,7 @@ class Panel {
 
         $panel = $this->user_scope($panel_name, 'L', $subpanel_parent);
 
-        if (isset($panel['config']['panel_options']['override'])) return $panel;
+        if (isset($panel['config']['panel_options']['override']) && $panel['config']['panel_options']['override']) return $panel;
         if (!$panel) return FALSE;
 
         $model_name                = $this->model_name_for($panel_name);

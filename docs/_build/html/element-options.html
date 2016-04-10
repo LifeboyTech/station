@@ -1,0 +1,939 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Element Options &mdash; Station 0.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Station 0.2 documentation" href="index.html"/>
+        <link rel="next" title="Working with Station Models" href="models.html"/>
+        <link rel="prev" title="Panel Options" href="panel-options.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Station
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="start.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="principles.html">Basic Principles &amp; Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="panels.html">Working With Panels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="panel-options.html">Panel Options</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Element Options</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#key-name">(key name) *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#label">label *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#type">type *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#text">text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integer">integer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boolean">boolean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#image">image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tags">tags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select">select</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multiselect">multiselect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#radio">radio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#virtual">virtual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#date-datetime">date / datetime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#float">float</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#textarea">textarea</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hidden">hidden</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#password">password</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subpanel">subpanel</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#allow-upsize">allow_upsize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#append">append</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#attributes">attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#concat">concat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data">data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#static-data-options">1. Static Data Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#foreign-table-data-lookup">2. Foreign Table Data Lookup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subpanel-data">3. Subpanel Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#default">default</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#disabled">disabled</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#display">display</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embeddable">embeddable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#format">format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#help">help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#helper">helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#is-filterable">is_filterable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#permissions">permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prepend">prepend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prepend-icon">prepend_icon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rows">rows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rules">rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sizes">sizes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#thumb-size">thumb_size</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#custom-element-options">Custom Element Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Working with Station Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="emailers.html">Configuring Emailers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap &amp; Todos</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Station</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Element Options</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/element-options.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="element-options">
+<span id="element-option"></span><h1>Element Options<a class="headerlink" href="#element-options" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal"><span class="pre">elements</span></code> key of the array defined in any of the files at <code class="docutils literal"><span class="pre">/config/packages/lifeboy/station</span></code> represents the list of elements which are available to users of Station.</p>
+<p>Generally, each element is mapped to a specific database field. However, this is not always the case. Some elements are &#8220;virtual&#8221;. See below for the full documentation on configuring elements.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><em>All options marked with a * are required!</em></p>
+<p class="last"><strong>Important:</strong> You do not need to create an <code class="docutils literal"><span class="pre">id</span></code> element in your panels. Station assumes that any panel which is mapped to a <a class="reference internal" href="panel-options.html#table"><span>table *</span></a> has an <code class="docutils literal"><span class="pre">id</span></code> field and it will auto-generate this field for you as your table&#8217;s primary key and index.</p>
+</div>
+<div class="section" id="key-name">
+<h2>(key name) *<a class="headerlink" href="#key-name" title="Permalink to this headline">¶</a></h2>
+<p>The key of each element (unless the element <code class="docutils literal"><span class="pre">type</span></code> is <code class="docutils literal"><span class="pre">virtual</span></code>) is the name of the database field of this panel&#8217;s <a class="reference internal" href="panel-options.html#table"><span>table *</span></a>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;first_name&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;First Name&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+   <span class="o">...</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal"><span class="pre">first_name</span></code> is the name of the database field.</p>
+</div>
+<div class="section" id="label">
+<h2>label *<a class="headerlink" href="#label" title="Permalink to this headline">¶</a></h2>
+<p>This is the user-facing &#8220;name&#8221; of the field. This name will appear in a number of places. (1) As the input label in the create and update form. (2) on the top of a list view column (if this element has been given list permissions) and (3) in validation error messages, when a user has not fulfilled validation requirements for this element.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;first_name&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;First Name&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+   <span class="o">...</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<img alt="_images/label.png" src="_images/label.png" />
+</div>
+<div class="section" id="type">
+<h2>type *<a class="headerlink" href="#type" title="Permalink to this headline">¶</a></h2>
+<p>This is the &#8220;type&#8221; of element and there are numerous options. Your choice of element type is based primarily on which kind of browser input you wish to use, however it also influences the field type used in the auto-generated database migrations:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;is_active&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Activated?&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;boolean&#39;</span><span class="p">,</span>
+   <span class="o">...</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<div class="section" id="text">
+<h3>text<a class="headerlink" href="#text" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a VARCHAR(255) database field.</li>
+<li>The input for user manipulation is a simple <code class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;text&quot;&gt;</span></code></li>
+</ul>
+<img alt="_images/label.png" src="_images/label.png" />
+</div></blockquote>
+</div>
+<div class="section" id="integer">
+<h3>integer<a class="headerlink" href="#integer" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a INT(12) database field.</li>
+<li>The input for user manipulation is a simple <code class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;text&quot;&gt;</span></code></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="boolean">
+<h3>boolean<a class="headerlink" href="#boolean" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a TINYINT(1) database field.</li>
+<li>The input for user manipulation is a toggle &#8220;on/off&#8221; switch (which masks a <code class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;checkbox&quot;&gt;</span></code>).</li>
+</ul>
+<img alt="_images/boolean.png" src="_images/boolean.png" />
+</div></blockquote>
+</div>
+<div class="section" id="image">
+<span id="type-image"></span><h3>image<a class="headerlink" href="#image" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a VARCHAR(255) database field.</li>
+<li>The input for user manipulation is a special image uploader w/ crop tool mechanism.</li>
+<li>See the <a class="reference internal" href="#config-images"><span>sizes</span></a> option for more details on configuration, sizing and cropping.</li>
+</ul>
+<img alt="_images/image.png" src="_images/image.png" />
+</div></blockquote>
+</div>
+<div class="section" id="tags">
+<h3>tags<a class="headerlink" href="#tags" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a VARCHAR(255) database field.</li>
+<li>The input for user manipulation is a special tagging interface.</li>
+<li>The field data is written to the database as comma delimited values.</li>
+</ul>
+<img alt="_images/tags.png" src="_images/tags.png" />
+</div></blockquote>
+</div>
+<div class="section" id="select">
+<h3>select<a class="headerlink" href="#select" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This can be used in conjunction with another table or with static data (see the <a class="reference internal" href="#data-type"><span>data</span></a> option).</li>
+<li>The input for user-manipulation uses the wonderful <a class="reference external" href="https://harvesthq.github.io/chosen/">Chosen</a> library which contains a dropdown with search bar</li>
+</ul>
+<img alt="_images/select.png" src="_images/select.png" />
+</div></blockquote>
+</div>
+<div class="section" id="multiselect">
+<h3>multiselect<a class="headerlink" href="#multiselect" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This can only be used when a relationship with another table has been defined (see the <a class="reference internal" href="#data-type"><span>data</span></a> option).</li>
+<li>Data will be written to the database via a pivot table which is auto-generated via <a class="reference internal" href="panels.html#build-command"><span>The Build Command</span></a>.</li>
+<li>The input for user-manipulation uses the wonderful <a class="reference external" href="https://harvesthq.github.io/chosen/">Chosen</a> library which contains a taggable dropdown with search bar</li>
+</ul>
+<img alt="_images/multiselect.png" src="_images/multiselect.png" />
+</div></blockquote>
+</div>
+<div class="section" id="radio">
+<h3>radio<a class="headerlink" href="#radio" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a VARCHAR(255) database field.</li>
+<li>This can be used in conjunction with another table or with static data (see the <a class="reference internal" href="#data-type"><span>data</span></a> option).</li>
+<li>The input for user-manipulation uses enhanced radio buttons (masking standard <code class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;radio&quot;&gt;</span></code> inputs).</li>
+</ul>
+<img alt="_images/radio.png" src="_images/radio.png" />
+</div></blockquote>
+</div>
+<div class="section" id="virtual">
+<span id="virtual-type"></span><h3>virtual<a class="headerlink" href="#virtual" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Virtual type fields do not actually map to real database fields.</li>
+<li>No field will be generated from <a class="reference internal" href="panels.html#build-command"><span>The Build Command</span></a>.</li>
+<li>They are often used in conjunction with the <code class="docutils literal"><span class="pre">concat</span></code> option in order to create links in a list view which require one or more <em>other</em> fields from the same record.</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;permalink&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+   <span class="s1">&#39;label&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;Permalink&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;virtual&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;concat&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;&quot;&lt;a href=\&#39;http://www.domain.com/faq#answer-&quot;, id, &quot;\&#39; target=\&#39;_blank\&#39;&gt;Preview&lt;/a&gt;&quot;&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;display&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;L&#39;</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="date-datetime">
+<h3>date / datetime<a class="headerlink" href="#date-datetime" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>These will generate ether a DATE() or DATETIME() database field.</li>
+<li>The input for user-manipulation is a calendar day-picker with or without a time-picker.</li>
+</ul>
+<img alt="_images/date.png" src="_images/date.png" />
+</div></blockquote>
+</div>
+<div class="section" id="float">
+<h3>float<a class="headerlink" href="#float" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a FLOAT(10,2) database field.</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;tax&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span>
+   <span class="s1">&#39;label&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;Tax on Clothing Exemption Cap&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;format&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;money&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;prepend&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;$&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;attributes&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;rules&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;display&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;CRUD&#39;</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>The above example would produce:</p>
+<img alt="_images/float.png" src="_images/float.png" />
+</div></blockquote>
+</div>
+<div class="section" id="textarea">
+<h3>textarea<a class="headerlink" href="#textarea" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a TEXT() database field.</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;description&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span>
+   <span class="s1">&#39;label&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;Description&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;helper&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;markdown&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;textarea&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;rows&#39;</span>         <span class="o">=&gt;</span> <span class="mi">18</span><span class="p">,</span>
+   <span class="s1">&#39;embeddable&#39;</span>   <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+   <span class="s1">&#39;display&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;CRUD&#39;</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<img alt="_images/description.png" src="_images/description.png" />
+</div></blockquote>
+</div>
+<div class="section" id="hidden">
+<h3>hidden<a class="headerlink" href="#hidden" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a VARCHAR(255) database field.</li>
+<li>As the name suggests this will simply render a <code class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;hidden&quot;&gt;</span></code> input in your forms.</li>
+<li>This can be very useful when used in conjunction with the <code class="docutils literal"><span class="pre">default</span></code> option.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="password">
+<h3>password<a class="headerlink" href="#password" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a VARCHAR(255) database field.</li>
+<li>The input for user manipulation is a simple <code class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;password&quot;&gt;</span></code></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="subpanel">
+<h3>subpanel<a class="headerlink" href="#subpanel" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This is a way to &#8220;nest&#8221; a panel within another panel.</li>
+<li>You will need to configure the <code class="docutils literal"><span class="pre">data</span></code> option (see the <a class="reference internal" href="#data-type"><span>data</span></a> option for more details) in order to define which panel becomes nested and how the two panels are linked.</li>
+</ul>
+<img alt="_images/subpanel.png" src="_images/subpanel.png" />
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="allow-upsize">
+<h2>allow_upsize<a class="headerlink" href="#allow-upsize" title="Permalink to this headline">¶</a></h2>
+<p>This option is only available to elements using the type &#8220;<a class="reference internal" href="#type-image"><span>image</span></a>&#8221;. When set to true, a user uploading an image is allowed to use a smaller image size than the largest dimension expected. The image will be magnified to fit the largest dimension. See more on sizing using the <a class="reference internal" href="#config-images"><span>sizes</span></a> option.</p>
+</div>
+<div class="section" id="append">
+<h2>append<a class="headerlink" href="#append" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to append text to an element input field. The element must have <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'text'</span></code>. This text will not be written to the database.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;subdomain&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Subdomain&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;append&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;.domain.com&#39;</span>
+   <span class="o">...</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<img alt="_images/append.png" src="_images/append.png" />
+</div>
+<div class="section" id="attributes">
+<h2>attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="panels.html#build-command"><span>The Build Command</span></a> utilizes the wonderful <a class="reference external" href="https://github.com/laracasts/Laravel-5-Generators-Extended">Laracast Generators</a> package to generate migrations for your panels. If you add pipe-delimited arguments to the <code class="docutils literal"><span class="pre">attributes</span></code> option, those arguments will be passed to the generator as <a class="reference external" href="https://github.com/laracasts/Laravel-5-Generators-Extended#migrations-with-schema">specific schema</a>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Email&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;attributes&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;unique|index|default(&quot;foo@example.com&quot;)&#39;</span><span class="p">,</span>
+   <span class="o">...</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal"><span class="pre">attributes</span></code> only affect the database schema and have no other affect on panel validation behaviors. To control panel validation behaviors use the <a class="reference internal" href="#rules"><span>rules</span></a> option.</p>
+</div>
+<div class="section" id="concat">
+<h2>concat<a class="headerlink" href="#concat" title="Permalink to this headline">¶</a></h2>
+<p>This option is often used in conjunction with elements of <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'virtual'</span></code> (read more about <a class="reference internal" href="#virtual-type"><span>virtual</span></a>). This option can be set to an array containing a mixture of strings and field names to create a new field, ideal for using in a panel&#8217;s list view.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;preview&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+   <span class="s1">&#39;label&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;Preview&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;virtual&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;concat&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;&quot;&lt;a href=\&#39;http://&quot;, subdomain, &quot;.domain.com\&#39; target=\&#39;_blank\&#39;&gt;Preview&lt;/a&gt;&quot;&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;display&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;L&#39;</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>This would render a link on every row of the panel&#8217;s list view. The link would be of the format: <code class="docutils literal"><span class="pre">&lt;a</span> <span class="pre">href=&quot;http://{subdomain}.domain.com&quot;&gt;Preview&lt;/a&gt;</span></code>.</p>
+</div>
+<div class="section" id="data">
+<span id="data-type"></span><h2>data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
+<p>This option defines how the data for this element is populated. It is required whenever you use the element type <code class="docutils literal"><span class="pre">select</span></code>, <code class="docutils literal"><span class="pre">multiselect</span></code>, <code class="docutils literal"><span class="pre">radio</span></code> or <code class="docutils literal"><span class="pre">subpanel</span></code>.</p>
+<div class="section" id="static-data-options">
+<h3>1. Static Data Options<a class="headerlink" href="#static-data-options" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>You want to present a list of static options for a user to choose from</li>
+<li>You are using element <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'select'</span></code> or <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'radio'</span></code></li>
+<li>The input options will be pre-populated using the array values you supply</li>
+<li>The <code class="docutils literal"><span class="pre">options</span></code> array <em>values</em> will be seen/chosen by the user, however the <em>keys</em> will be saved to the database.</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;favorite_animal&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+   <span class="s1">&#39;label&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;Your Favorite Animal&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;radio&#39;</span><span class="p">,</span> <span class="c1">// &lt;=== this works for `select` as well</span>
+   <span class="s1">&#39;default&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;is_filterable&#39;</span>  <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+   <span class="s1">&#39;data&#39;</span>           <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s1">&#39;options&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+         <span class="mi">0</span> <span class="o">=&gt;</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span>
+         <span class="mi">1</span> <span class="o">=&gt;</span> <span class="s1">&#39;Pig&#39;</span><span class="p">,</span>
+         <span class="mi">2</span> <span class="o">=&gt;</span> <span class="s1">&#39;Ocelot&#39;</span><span class="p">,</span>
+         <span class="mi">3</span> <span class="o">=&gt;</span> <span class="s1">&#39;Llama&#39;</span><span class="p">,</span>
+      <span class="p">]</span>
+   <span class="p">]</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="foreign-table-data-lookup">
+<h3>2. Foreign Table Data Lookup<a class="headerlink" href="#foreign-table-data-lookup" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>You want to present a list of options for a user to choose from, but is populated using a foreign table&#8217;s data</li>
+<li>You are using element <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'select'</span></code>, <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'radio'</span></code> or <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'multiselect'</span></code></li>
+<li>The input options will be pre-populated using the data from the foreign table</li>
+<li>The foreign table&#8217;s chosen <code class="docutils literal"><span class="pre">id</span></code> value will be saved to this table or a pivot table.</li>
+</ul>
+<p>Example using <code class="docutils literal"><span class="pre">select</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;favorite_animal&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+   <span class="s1">&#39;label&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;Favorite Animal&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;select&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;data&#39;</span>         <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s1">&#39;join&#39;</span>      <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+      <span class="s1">&#39;relation&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;belongsTo&#39;</span><span class="p">,</span> <span class="c1">// &lt;== This relationship is written to the auto-generated model</span>
+      <span class="s1">&#39;table&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;animals&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;display&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;animals.name&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span> <span class="p">,</span><span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="s1">&#39;animals.genus&#39;</span><span class="p">,</span> <span class="s1">&#39; : &#39;</span><span class="p">,</span> <span class="s1">&#39;animals.species&#39;</span><span class="p">,</span> <span class="s1">&#39;)&#39;</span><span class="p">],</span>
+      <span class="s1">&#39;no_model&#39;</span>  <span class="o">=&gt;</span> <span class="k">TRUE</span> <span class="c1">// only use this if you want to avoid writing this relationship to the model</span>
+   <span class="p">]</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>Example using <code class="docutils literal"><span class="pre">multiselect</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;favorite_animals&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+   <span class="s1">&#39;label&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;Favorite Animals&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;multiselect&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;data&#39;</span>         <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s1">&#39;join&#39;</span>      <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+      <span class="s1">&#39;relation&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;belongsToMany&#39;</span><span class="p">,</span> <span class="c1">// &lt;== This relationship is written to the auto-generated model</span>
+      <span class="s1">&#39;table&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;animals&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;pivot&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;animals&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;display&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;animals.name&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;order&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;animals.name&#39;</span>
+   <span class="p">]</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>It is important that you specify a <code class="docutils literal"><span class="pre">display</span></code> value so that Station knows which of the foreign table&#8217;s fields to use to display in the dropdown or on the radio buttons. Notice that you can provide an array for <code class="docutils literal"><span class="pre">display</span></code> which will concatenate field names and your own strings. This allows you to create a display using multiple foreign table fields.</p>
+</div></blockquote>
+</div>
+<div class="section" id="subpanel-data">
+<h3>3. Subpanel Data<a class="headerlink" href="#subpanel-data" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>You want to nest a subpanel within this panel so a user can create, update, delete, and reorder a foreign table&#8217;s data from within this panel!</li>
+<li>This makes foreign table data manipulation possible.</li>
+</ul>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;comments&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+   <span class="s1">&#39;label&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;Comments&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;subpanel&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;permissions&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;CRUD&#39;</span><span class="p">,</span> <span class="c1">// &lt;== User has all permissions on this subpanel</span>
+   <span class="s1">&#39;data&#39;</span>         <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s1">&#39;join&#39;</span>      <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+      <span class="s1">&#39;relation&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;hasMany&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;table&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;comments&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;key&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;post_id&#39;</span> <span class="c1">// &lt;== This is the foreign key, which will be auto-generated by Station&#39;s build command</span>
+   <span class="p">]</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>When a subpanel is defined like this, Station will look for another panel configuration file called <code class="docutils literal"><span class="pre">comments.php</span></code>. That panel is configured just as you would configure a non-nested panel. You can even use the <code class="docutils literal"><span class="pre">reorderable_by</span></code> option in your subpanel so the user can reorder/sort the subpanel&#8217;s data right from the parent panel!</p>
+<p><em>Note: you do not need to create an element for the foreign key when you make your subpanel&#8217;s configuration file. Station will create it for you.</em></p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="default">
+<h2>default<a class="headerlink" href="#default" title="Permalink to this headline">¶</a></h2>
+<p>Use this to set a default value for an element. This value will be first selected in a create or update form.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;favorite_animal&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Your Favorite Animal&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;default&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Panda&#39;</span><span class="p">,</span>
+   <span class="o">...</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="disabled">
+<h2>disabled<a class="headerlink" href="#disabled" title="Permalink to this headline">¶</a></h2>
+<p>When this option is set to true this element&#8217;s input will be rendered with a <code class="docutils literal"><span class="pre">disabled</span></code> attribute in the create and update view.</p>
+</div>
+<div class="section" id="display">
+<span id="id2"></span><h2>display<a class="headerlink" href="#display" title="Permalink to this headline">¶</a></h2>
+<p>This option informs Station when to display this element. You may indicate one or more of the following letters: <strong>C.R.U.D.L</strong>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="nx">C</span> <span class="o">=</span> <span class="nx">Create</span>
+<span class="nx">R</span> <span class="o">=</span> <span class="nx">Read</span>
+<span class="nx">U</span> <span class="o">=</span> <span class="nx">Update</span>
+<span class="nx">D</span> <span class="o">=</span> <span class="nx">Delete</span>
+<span class="nx">L</span> <span class="o">=</span> <span class="k">List</span>
+</pre></div>
+</div>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;favorite_animal&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Your Favorite Animal&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;display&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CRUDL&#39;</span> <span class="c1">// &lt;=== This element will appear in all views &amp; controls</span>
+   <span class="o">...</span>
+<span class="p">],</span>
+
+<span class="s1">&#39;favorite_movie&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Your Favorite Movie&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;display&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CRUD&#39;</span> <span class="c1">// &lt;=== This element will not appear in the list view</span>
+   <span class="o">...</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="embeddable">
+<h2>embeddable<a class="headerlink" href="#embeddable" title="Permalink to this headline">¶</a></h2>
+<p>This option, when set to true, enables inline embedding of images and documents within the body of an element of <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'textarea'</span></code>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;description&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+   <span class="s1">&#39;label&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;Description&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;textarea&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;rows&#39;</span>         <span class="o">=&gt;</span> <span class="mi">20</span><span class="p">,</span>
+   <span class="s1">&#39;embeddable&#39;</span>   <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+   <span class="s1">&#39;sizes&#39;</span>     <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s1">&#39;original&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;Original&#39;</span><span class="p">],</span>
+      <span class="s1">&#39;journal-body-620x0&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;Full Column Width&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;620x0&#39;</span><span class="p">],</span>
+      <span class="s1">&#39;journal-body-250x0&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;Partial Column Width&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;250x0&#39;</span><span class="p">],</span>
+   <span class="p">]</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>You can (and should) set the <code class="docutils literal"><span class="pre">sizes</span></code> options to the <a class="reference internal" href="#config-images"><span>sizes</span></a> which you want any uploaded images to be resized to.</p>
+<img alt="_images/embeddable.png" src="_images/embeddable.png" />
+</div>
+<div class="section" id="format">
+<h2>format<a class="headerlink" href="#format" title="Permalink to this headline">¶</a></h2>
+<p>This is a helper option which will provide &#8220;masking&#8221; to your input field to help guide a user&#8217;s entry. There are currently two formats available:</p>
+<p><strong>phone</strong></p>
+<blockquote>
+<div><div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;mobile_phone&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mobile Phone #&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;format&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;phone&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;prepend_icon&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;glyphicon glyphicon-earphone&#39;</span><span class="p">,</span>
+   <span class="o">...</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>This will provide special guidance for the user to enter properly formatted phone numbers.</p>
+<img alt="_images/phone.png" src="_images/phone.png" />
+</div></blockquote>
+<p><strong>money</strong></p>
+<blockquote>
+<div><div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;unit_msrp&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Unit MSRP&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;format&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;money&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;prepend&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;$&#39;</span><span class="p">,</span>
+   <span class="o">...</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>This will provide special guidance for the user to enter properly formatted prices.</p>
+<img alt="_images/money.png" src="_images/money.png" />
+</div></blockquote>
+</div>
+<div class="section" id="help">
+<h2>help<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h2>
+<p>This options allows you to set some &#8220;helper&#8221; text which will display next to the element input in the create and update views.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;bio&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Company Bio&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;textarea&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;help&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Optional. Just some brief, fun facts about your company&#39;</span><span class="p">,</span>
+   <span class="o">...</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="helper">
+<h2>helper<a class="headerlink" href="#helper" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to choose a pre-baked &#8220;help&#8221; functionality. There is currently only one option, <code class="docutils literal"><span class="pre">markdown</span></code> which is best when used with elements of <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'textarea'</span></code>. When you choose the <code class="docutils literal"><span class="pre">markdown</span></code> option your users will see a &#8220;Help Formatting&#8221; link above the textarea. When clicked, a modal overlay will render containing a Markdown syntax cheat sheet.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;description&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Description&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;helper&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;markdown&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;textarea&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;rows&#39;</span> <span class="o">=&gt;</span> <span class="mi">6</span><span class="p">,</span>
+   <span class="s1">&#39;display&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CRUD&#39;</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<img alt="_images/markdown.png" src="_images/markdown.png" />
+</div>
+<div class="section" id="is-filterable">
+<h2>is_filterable<a class="headerlink" href="#is-filterable" title="Permalink to this headline">¶</a></h2>
+<p>When this option is set to true and the element has type <code class="docutils literal"><span class="pre">select</span></code> and it has a <a class="reference internal" href="#display"><span>display</span></a> value allowing it to be shown in the list view (L), then a filter dropdown will appear allowing users to filter the list view by a value present in the table. The dropdown even contains a search tool, compliments of the <a class="reference external" href="https://harvesthq.github.io/chosen/">Chosen</a> library.</p>
+<img alt="_images/filter.png" src="_images/filter.png" />
+</div>
+<div class="section" id="permissions">
+<h2>permissions<a class="headerlink" href="#permissions" title="Permalink to this headline">¶</a></h2>
+<p>This is only used with the elements of <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'subpanel'</span></code>. This defines which permissions a user has on the subpanel items according to the following list of actions:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">C = Create</span>
+<span class="x">R = Read</span>
+<span class="x">U = Update</span>
+<span class="x">D = Delete</span>
+</pre></div>
+</div>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;colors&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+   <span class="s1">&#39;label&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;Product Colors&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;subpanel&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;display&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;CU&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;permissions&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;data&#39;</span>         <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s1">&#39;join&#39;</span>      <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+      <span class="s1">&#39;relation&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;hasMany&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;table&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;colors&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;key&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;product_id&#39;</span>
+   <span class="p">]</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>In the above example a user will be able to view the colors in the subpanel (according to the <code class="docutils literal"><span class="pre">display</span></code> option) however they have not been given <code class="docutils literal"><span class="pre">permissions</span></code> to do anything other than create new ones. They cannot delete or update because the letters <code class="docutils literal"><span class="pre">D</span></code> and <code class="docutils literal"><span class="pre">U</span></code> are not present.</p>
+</div>
+<div class="section" id="prepend">
+<h2>prepend<a class="headerlink" href="#prepend" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to prepend text to an element input field. The element must have <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'text'</span></code>. This text will not be written to the database.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;subtotal&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span>
+   <span class="s1">&#39;label&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;Subtotal&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;format&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;money&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;prepend&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;$&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;display&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;CRUD&#39;</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<img alt="_images/money.png" src="_images/money.png" />
+</div>
+<div class="section" id="prepend-icon">
+<h2>prepend_icon<a class="headerlink" href="#prepend-icon" title="Permalink to this headline">¶</a></h2>
+<p>This allows you to set a bootstrap glyphicon class name in order to prepend an icon to your elements input field. This only works with <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'text'</span></code>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;url&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Web Address&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;prepend_icon&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;glyphicon glyphicon-globe&#39;</span><span class="p">,</span>
+   <span class="o">...</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<img alt="_images/prepend.png" src="_images/prepend.png" />
+</div>
+<div class="section" id="rows">
+<h2>rows<a class="headerlink" href="#rows" title="Permalink to this headline">¶</a></h2>
+<p>This is only relevant for elements of <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'textarea'</span></code>. This is a simple integer which defines how many rows of visible space will be applied to the <code class="docutils literal"><span class="pre">&lt;textarea&gt;</span></code> input. This is handy for when you want to encourage, or discourage long-form typing.</p>
+</div>
+<div class="section" id="rules">
+<span id="id4"></span><h2>rules<a class="headerlink" href="#rules" title="Permalink to this headline">¶</a></h2>
+<p>This option configures the validation of an element. You must set the value to a pipe-delimited set of rules. The validation options include and are limited to the <a class="reference external" href="https://laravel.com/docs/5.2/validation#available-validation-rules">Laravel Validation Rules</a>. You set the rules in exactly the same way that you would define them natively in Laravel.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;title&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Post Title&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;rules&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|unique,posts,title|between:3,125&#39;</span><span class="p">,</span>
+   <span class="o">...</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> When using the <code class="docutils literal"><span class="pre">unique</span></code> rule, Station uses a <code class="docutils literal"><span class="pre">,</span></code> while Laravel requires a <code class="docutils literal"><span class="pre">:</span></code></p>
+</div>
+<div class="section" id="sizes">
+<span id="config-images"></span><h2>sizes<a class="headerlink" href="#sizes" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to specify one or more image sizes and locations for uploaded images. Upon upload, only the name of the uploaded file will be saved to your database. The image itself will be resized, cropped, and saved to the locations you specify. If you wish, you can specify global application defaults in &#8220;<a class="reference internal" href="principles.html#media-options"><span>media_options</span></a>&#8221; so that you do not need to repeat the same sizes and locations in every panel.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;logo&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+
+   <span class="s1">&#39;label&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;Logo Image&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;help&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;(270 x 270 min)&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;type&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;display&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;CRUD&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;allow_upsize&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+   <span class="s1">&#39;sizes&#39;</span>     <span class="o">=&gt;</span> <span class="p">[</span>
+      <span class="s1">&#39;original&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;Original&#39;</span><span class="p">],</span>
+      <span class="s1">&#39;logo-300x150&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;300 x 150&#39;</span><span class="p">,</span><span class="s1">&#39;size&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;300x150&#39;</span><span class="p">,</span> <span class="s1">&#39;letterbox&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;#FFFFFF&#39;</span><span class="p">],</span>
+      <span class="s1">&#39;logo-270x270&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;Fixed Width (270px)&#39;</span><span class="p">,</span><span class="s1">&#39;size&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;270x0&#39;</span><span class="p">],</span>
+      <span class="s1">&#39;logo-180x180&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;Square Thumbnail&#39;</span><span class="p">,</span><span class="s1">&#39;size&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;180x180&#39;</span><span class="p">],</span>
+   <span class="p">]</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>In the example above, there are 4 different sizes (including an untouched, original version) which will be created upon upload. An associative array defines how the original, uploaded image will be manipulated and transmitted to your CDN server. <em>Note: currently only Amazon S3 is supported</em>. Here is the breakdown on how to configure the <code class="docutils literal"><span class="pre">sizes</span></code> option:</p>
+<p><strong>(key)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>The key name, ex. <code class="docutils literal"><span class="pre">logo-300x150</span></code> is the name of the directory on the CDN server where the image will be saved.</li>
+<li>If the directory does not exist it will be created automatically.</li>
+</ul>
+</div></blockquote>
+<p><strong>label</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>This is the title of the image version which will display in the crop and preview tool (see screenshot below).</li>
+<li>This can be any descriptive value you wish.</li>
+</ul>
+</div></blockquote>
+<p><strong>size</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>This defines the dimensions of the manipulation. Leaving this blank or undefined will save an unmodified version of the uploaded image.</li>
+<li>Setting a width only (<code class="docutils literal"><span class="pre">500x0</span></code>) or height only (<code class="docutils literal"><span class="pre">0x500</span></code>) will preserve the image&#8217;s aspect ratio but will force the image to resize to the defined dimension.</li>
+<li>Setting both a width and a height (<code class="docutils literal"><span class="pre">500x500</span></code>) will center-crop the image and allow your users to further crop it via Station&#8217;s crop tool.</li>
+</ul>
+</div></blockquote>
+<p><strong>letterbox</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>When this is defined with a <strong>size</strong> of fixed width and height, the resulting crop will be an outer-crop instead of a center-crop.</li>
+<li>Use this option to define the hex color value that will be used to fill any remaining space surrounding the cropped image.</li>
+</ul>
+</div></blockquote>
+<p>Station&#8217;s preview and crop tool:</p>
+<img alt="_images/crop.png" src="_images/crop.png" />
+</div>
+<div class="section" id="thumb-size">
+<h2>thumb_size<a class="headerlink" href="#thumb-size" title="Permalink to this headline">¶</a></h2>
+<p>This option defines the dimensions of the square thumbnail in the panel&#8217;s list view for elements which have <code class="docutils literal"><span class="pre">'type'</span> <span class="pre">=&gt;</span> <span class="pre">'image'</span></code>. By default the value is <code class="docutils literal"><span class="pre">100</span></code>. However, it is possible to set this to a smaller integer.</p>
+</div>
+</div>
+<div class="section" id="custom-element-options">
+<h1>Custom Element Options<a class="headerlink" href="#custom-element-options" title="Permalink to this headline">¶</a></h1>
+<p>You are always free to use your own custom element options.</p>
+<p>Station will not return any errors if it finds extra, unreserved options in your elements. In fact setting custom options can be very useful if you are trying to create systems which need to map against your underlying data schema. Read more about this in &#8220;<a class="reference internal" href="panels.html#accessing-panel-configuration"><span>Accessing Panel Configuration</span></a>&#8221;.</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="models.html" class="btn btn-neutral float-right" title="Working with Station Models" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="panel-options.html" class="btn btn-neutral" title="Panel Options" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Lifeboy Tech.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

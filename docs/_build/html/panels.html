@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Working With Panels &mdash; Station 0.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Station 0.2 documentation" href="index.html"/>
+        <link rel="next" title="Panel Options" href="panel-options.html"/>
+        <link rel="prev" title="Basic Principles &amp; Configuration" href="principles.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Station
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="start.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="principles.html">Basic Principles &amp; Configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Working With Panels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-build-command">The Build Command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accessing-panel-configuration">Accessing Panel Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#panel-creation-workflow">Panel Creation Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="panel-options.html">Panel Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="element-options.html">Element Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="element-options.html#custom-element-options">Custom Element Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Working with Station Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="emailers.html">Configuring Emailers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap &amp; Todos</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Station</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Working With Panels</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/panels.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="working-with-panels">
+<span id="panel-anatomy"></span><h1>Working With Panels<a class="headerlink" href="#working-with-panels" title="Permalink to this headline">¶</a></h1>
+<p>Panels are the heart and soul of Station. Out of the box, panels contains all of the functionality necessary for a user to manipulate a specific type of data in your database. There are numerous options for panels and elements giving you the flexibility to craft back-end tools to fit virtually any scenario or database structure.</p>
+<p>Typically each panel maps to a database table one-to-one. However, a panel can also contain one or more <strong>subpanels</strong> as well as references to other tables for lookup capabilities.</p>
+<p>A panel can also be complete overriden so you can build your own functionality from scratch, but within the user-authenticated comfort of Station.</p>
+<div class="section" id="the-build-command">
+<span id="build-command"></span><h2>The Build Command<a class="headerlink" href="#the-build-command" title="Permalink to this headline">¶</a></h2>
+<p>Each time you add a new panel or change a panel&#8217;s configuration you need to run <code class="docutils literal"><span class="pre">php</span> <span class="pre">artisan</span> <span class="pre">station:build</span></code>.</p>
+<p>This artisan command will analyze your panels and elements and then do the following:</p>
+<ul class="simple">
+<li>generate migrations for any missing database fields, including database pivot tables</li>
+<li>run the new migrations</li>
+<li>generate / refresh models with foreign relationships for each panel (see &#8220;<a class="reference internal" href="models.html#models"><span>Working with Station Models</span></a>&#8221; for more info)</li>
+<li>seed the database (only when new user groups have been added)</li>
+</ul>
+<p>If you attempt to navigate to a newly created panel in the Station navigation, you will likely encounter errors. You must run the build command first.</p>
+</div>
+<div class="section" id="accessing-panel-configuration">
+<span id="id1"></span><h2>Accessing Panel Configuration<a class="headerlink" href="#accessing-panel-configuration" title="Permalink to this headline">¶</a></h2>
+<p>In your Laravel app you may wish to access a panel&#8217;s configuration array. To accomplish this, just add <code class="docutils literal"><span class="pre">use</span> <span class="pre">Lifeboy\Station\Config\StationConfig</span> <span class="pre">as</span> <span class="pre">StationConfig</span></code> to the top of any class. Then,</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">$my_panel_config = StationConfig::panel(&#39;my_panel_name&#39;);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="panel-creation-workflow">
+<h2>Panel Creation Workflow<a class="headerlink" href="#panel-creation-workflow" title="Permalink to this headline">¶</a></h2>
+<p>As discussed in &#8220;<a class="reference internal" href="principles.html#app-level-configuration"><span>Application Level Configuration</span></a>&#8221;, when you add new array elements to the <code class="docutils literal"><span class="pre">user_groups</span></code> associative array in your <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code> file, you are in-effect registering new panels with Station.</p>
+<p>Station is able to determine the behaviors of each panel given the values of the configuration parameters found in each panel&#8217;s configuration file. For example, if you have a panel named <code class="docutils literal"><span class="pre">posts</span></code> in your <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code> file, then you need a corresponding <code class="docutils literal"><span class="pre">posts.php</span></code> file in the <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/</span></code> directory to define the parameters of that panel.</p>
+<p>For example, refer to the <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/users.php</span></code> file which was packaged with your installed copy of Station, you will notice that there are two top-level array keys, <code class="docutils literal"><span class="pre">panel_options</span></code> and <code class="docutils literal"><span class="pre">elements</span></code>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39; =&gt; [</span>
+
+<span class="x">        // define your panel-level options here...</span>
+<span class="x">],</span>
+
+<span class="x">&#39;elements&#39;      =&gt; [</span>
+
+<span class="x">        // define your element-level options here...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>Panel options control the overall configuration of the panel (think of this as database table-level options). Elements define how your users interact with specific database fields.</p>
+<p>Without further ado, what follows is an exhaustive list of each and every panel and element option possible along with specific examples for each. Dive in!</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="panel-options.html" class="btn btn-neutral float-right" title="Panel Options" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="principles.html" class="btn btn-neutral" title="Basic Principles &amp; Configuration" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Lifeboy Tech.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

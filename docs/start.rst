@@ -1,12 +1,17 @@
 
-Getting Started 
-===============
-
 Installation 
-------------
+============
 
-Station should be installed via `Composer <http://getcomposer.org>`_ by requiring the
-``lifeboy/station`` package in your project's ``composer.json``.
+
+**1. Environment**
+
+Make sure Laravel is already installed and running. You should already have a valid database connection. This install process works best on a fresh Laravel installation. 
+
+
+
+**2. Install Using Composer**
+
+Station should be installed via `Composer`_ by requiring the ``lifeboy/station`` package in your project's ``composer.json``.
 
 .. code-block:: json
 
@@ -22,17 +27,17 @@ Then run a composer update
 
 	composer update
 
-
-Configuration & Setup
---------------------- 
+.. _Composer: http://getcomposer.org
 
 This assumes you have a working dev or production environment with Laravel 5 and a database already installed and configured.
 
-**1. Register Station in app/config/app.php**
 
-To use station, you must register the provider when bootstrapping your Laravel application.
 
-Find the ``providers`` key in your ``app/config/app.php`` and register the Station Service Provider.
+**3. Register Station Within Laravel**
+
+To use Station, you must register the provider when bootstrapping your Laravel application.
+
+Find the ``providers`` key in ``app/config/app.php`` and register the Station Service Provider.
 
 .. code-block:: php 
 
@@ -42,7 +47,7 @@ Find the ``providers`` key in your ``app/config/app.php`` and register the Stati
         Collective\Html\HtmlServiceProvider::class,
     ),
 
-Also update the ``aliases`` array 
+Also update the ``aliases`` key in ``app/config/app.php``
 
 .. code-block:: php 
 
@@ -52,7 +57,7 @@ Also update the ``aliases`` array
         'Html' => Collective\Html\HtmlFacade::class,
     ],
 
-In ``app/Http/Kernel.php``, add:
+In ``app/Http/Kernel.php``, update the ``$routeMiddleware`` class variable:
 
 .. code-block:: php 
 
@@ -61,44 +66,58 @@ In ``app/Http/Kernel.php``, add:
 	    'station.session' => \Lifeboy\Station\Filters\Session::class
 	];
 
-**2. Publish Station's assets over to your app.**
+
+
+**4. Publish Station's Assets to Laravel**
 
 .. code-block:: sh 
 
 	php artisan vendor:publish
 
-At this time you can (optionally) edit ``/app/config/packages/lifeboy/station/_app.php`` and change the ``root_admin_email``
+.. note::
 
-**3. Run default migrations if you haven't already.**
+	We sometimes see a "path not found" warning on this step. You can safely ignore this.
+
+
+
+**5. Run Default Migrations**
 
 .. code-block:: sh 
 	
 	php artisan migrate
 
-**4. Run Station's Build Command**
 
-This will generate migrations, run migrations, generate models, and seed the database.
+
+**6. Set the Administrator Email**
+
+In ``config/packages/lifeboy/station/_app.php`` set the ``root_admin_email`` to your email address.
+
+
+
+**7. Run Station's Build Command**
+
+This will generate new migrations, run the new migrations, generate models, and seed the database.
 
 .. code-block:: sh 
 
 	php artisan station:build 
 
 
-**5. Test Installation**
 
-You should now be able to browse to your app at:
+**8. Test Installation**
 
-http://{host}/station/ (ex. http://app.localhost/station/) and see station running without errors.
+You should now be able to browse to your app at: ``http://{host}/station/``. You can login using user/password: ``admin/admin``. Upon login, you will see a welcome screen:
 
-You can log in using user/password: ``admin/admin``
+.. image:: images/welcome.png
 
 
-**6. Configure Station and Your Panels!**
 
-Start by editing ``/app/config/packages/lifeboy/station/_app.php``
+**9. Configure Station and Your Panels!**
 
-Then create files for each panel in /app/config/packages/lifeboy/station/ [we need documentation on this]
+That's it! Next you will configure Station and tailor it to the needs of your users.
 
-That's it. You now have a fully functioning back end and user management system for your site.
+.. note::
+
+	You will be able to configure and test Station now. However, to run Station in production, please make sure that your email system has been configured and enabled. (See :ref:`emailers` for more info).
 
 

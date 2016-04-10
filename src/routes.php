@@ -13,7 +13,11 @@
 
 $root_uri_segment = Lifeboy\Station\Config\StationConfig::app('root_uri_segment');
 $path = 'Lifeboy\Station\Controllers\\';
-Route::get('/password/reset/{token}', $path.'StationUserController@password_reset');
+
+// unprotected routes that require the web middleware not prefixed
+Route::group(array('middleware' => ['web']), function() use ($path) {
+    Route::get('/password/reset/{token}', $path.'StationUserController@password_reset');
+});
 
 // unprotected routes. user does not have to be logged in to access
 Route::group(array('middleware' => ['web'], 'prefix' => $root_uri_segment), function() use ($path)

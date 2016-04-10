@@ -1,0 +1,355 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Basic Principles &amp; Configuration &mdash; Station 0.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Station 0.2 documentation" href="index.html"/>
+        <link rel="next" title="Working With Panels" href="panels.html"/>
+        <link rel="prev" title="Installation" href="start.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Station
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="start.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Basic Principles &amp; Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#panel-level-configuration">Panel Level Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#element-level-configuration">Element Level Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#application-level-configuration">Application Level Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#name">name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#root-admin-email">root_admin_email</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#root-uri-segment">root_uri_segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#panel-for-user-create">panel_for_user_create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-group-upon-register">user_group_upon_register</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#css-override-file">css_override_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#media-options">media_options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-groups">user_groups</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#html-append-file">html_append_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#html-prepend-content-file">html_prepend_content_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#strict-domains">strict_domains</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-variables">Configuration Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-configuration-variables">Custom Configuration Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="panels.html">Working With Panels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="panel-options.html">Panel Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="element-options.html">Element Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="element-options.html#custom-element-options">Custom Element Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Working with Station Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="emailers.html">Configuring Emailers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap &amp; Todos</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Station</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Basic Principles &amp; Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/principles.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="basic-principles-configuration">
+<h1>Basic Principles &amp; Configuration<a class="headerlink" href="#basic-principles-configuration" title="Permalink to this headline">¶</a></h1>
+<p>Station has three levels of configuration: <strong>Panel Level</strong>, <strong>Element Level</strong> and <strong>Application Level</strong>.</p>
+<div class="section" id="panel-level-configuration">
+<span id="id1"></span><h2>Panel Level Configuration<a class="headerlink" href="#panel-level-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Each individual section that appears in the navigation bar is referred to as a &#8220;panel&#8221;. By default, a panel contains all of the functionality to create, remove, update and delete records from a database table or foreign table. Panels can be customized in numerous ways. Panels can also be overriden entirely so that you may develop your own functionality and circumvent default panel behaviors.</p>
+<p>To learn all of the specifics of configuring panels, refer to <a class="reference internal" href="panels.html#panel-anatomy"><span>Working With Panels</span></a>.</p>
+</div>
+<div class="section" id="element-level-configuration">
+<span id="id2"></span><h2>Element Level Configuration<a class="headerlink" href="#element-level-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Each panel can have any number of elements associated with it. Typically each element refers to a specific element in your database but that is not always the case. A panel can have &#8220;virtual&#8221; elements as well as no elements at all.</p>
+<p>To learn all of the specifics of configuring panel elements, refer to <a class="reference internal" href="panels.html#panel-anatomy"><span>Working With Panels</span></a>.</p>
+</div>
+<div class="section" id="application-level-configuration">
+<span id="app-level-configuration"></span><h2>Application Level Configuration<a class="headerlink" href="#application-level-configuration" title="Permalink to this headline">¶</a></h2>
+<p>All of Station&#8217;s top level configuration occurs in the <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code> file. The boilerplate version of this file was copied to your app during the installation process.</p>
+<p>Following is a list of all of the available configuration options:</p>
+<div class="section" id="name">
+<h3>name<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>This is the name of your site or application</div></blockquote>
+</div>
+<div class="section" id="root-admin-email">
+<h3>root_admin_email<a class="headerlink" href="#root-admin-email" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>This value will be seeded into the <code class="docutils literal"><span class="pre">users</span></code> table when the admin user is created during the installation process.</div></blockquote>
+</div>
+<div class="section" id="root-uri-segment">
+<h3>root_uri_segment<a class="headerlink" href="#root-uri-segment" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>This value is what Station will use as its pseudo-directory &#8220;slug&#8221;. By default this is set to <code class="docutils literal"><span class="pre">station</span></code> which means that all of the URLs for Station will be found at <code class="docutils literal"><span class="pre">http://my-site.com/station/...</span></code>. You could use <code class="docutils literal"><span class="pre">admin</span></code> which would result in all URLs looking like <code class="docutils literal"><span class="pre">http://my-site.com/admin/...</span></code></div></blockquote>
+</div>
+<div class="section" id="panel-for-user-create">
+<h3>panel_for_user_create<a class="headerlink" href="#panel-for-user-create" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>This is the name of the panel which is used for creating new users. You may never need to use this as your app will likely have it&#8217;s own onboarding process. However this panel is shipped with Station in case you want a simple way for new users to create an account.</div></blockquote>
+</div>
+<div class="section" id="user-group-upon-register">
+<h3>user_group_upon_register<a class="headerlink" href="#user-group-upon-register" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>This is the group which a new user will be automatically set to upon creation.</div></blockquote>
+</div>
+<div class="section" id="css-override-file">
+<h3>css_override_file<a class="headerlink" href="#css-override-file" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>Optionally set this to the URL or path of a .css file which will be loaded on every Station URL. This is excellent for adding branding specifics to your Station installation.</div></blockquote>
+</div>
+<div class="section" id="media-options">
+<span id="id3"></span><h3>media_options<a class="headerlink" href="#media-options" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p><strong>AWS:</strong> Station currently only supports file uploads to AWS/S3. Enter your bucket, key and secret key here to establish connectivity. If your app does not require uploads then you do not need to configure this option.</p>
+<p><strong>Sizes:</strong> This is where you set the default image sizes for all uploaded images. If any of your panel elements utilize image uploads and <em>do not</em> specify a set of image sizes, these sizes will be used. This is a handy way to set standard sizes for all of your images site-wide, if needed. For more information how to configure this option, refer to the <a class="reference internal" href="element-options.html#config-images"><span>sizes</span></a> configuration documentation.</p>
+</div></blockquote>
+</div>
+<div class="section" id="user-groups">
+<h3>user_groups<a class="headerlink" href="#user-groups" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>This associative array defines the user groups for your app but also, just as importantly, defines the <strong>entire navigation structure</strong> of Station. Please refer to the boilerplate sample of <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code>, included in the installation, to visualize the structure of this document.</p>
+<p><strong>user_groups.[group name]:</strong> This associative array&#8217;s key is the group name. This is only for internal use. You can use any name you want. When you run <code class="docutils literal"><span class="pre">php</span> <span class="pre">artisan</span> <span class="pre">station:build</span></code> your groups will be seeded to the <code class="docutils literal"><span class="pre">groups</span></code> table in your database and presented as options in your <code class="docutils literal"><span class="pre">users</span></code> panel.</p>
+<p><strong>user_groups.[group name].starting_panel:</strong> This is the panel key that a user belonging to this group will be redirected to upon log in. The syntax for this is <code class="docutils literal"><span class="pre">panel_name.ACTION</span></code>, where action is L (list view), C (create view), or U (update view).</p>
+<p><strong>user_groups.[group name].panels</strong> This nested associative array defines the navigation that a user from this group will see in their navigation bar. It also defines the sections, panel titles, and permissions that a user of this group has regarding these panels. The format is as follows:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;panels&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+
+        <span class="s1">&#39;demo_section&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Section Header&#39;</span><span class="p">,</span>  <span class="s1">&#39;is_header&#39;</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span> <span class="s1">&#39;icon&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;glyphicon glyphicon-book&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;posts&#39;</span>          <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Posts&#39;</span><span class="p">,</span>           <span class="s1">&#39;permissions&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CRUDL&#39;</span><span class="p">],</span>
+
+        <span class="c1">// ... more sections headers and panels go here ...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>In the above example, <strong>demo_section</strong> is the key name for a section header. The actual name is irrelevant. Just make sure all of your section header keys have unique names because this is PHP array and you cannot duplicate your key names! <strong>is_header</strong> indicates that this item is only a header title and not an actual panel. The <strong>icon</strong> option allows you to use bootstrap glyphicon names to accompany your section headers.</p>
+<p>The <strong>posts</strong> key references an actual panel, not a section header. This key must match the name of a file in the <code class="docutils literal"><span class="pre">config/packages/lifeboy/station</span></code> directory where the <a class="reference internal" href="panels.html#panel-anatomy"><span>Working With Panels</span></a> is defined. The <strong>name</strong> option is the actual title of the panel as it will appear in the naviagtion.</p>
+<p>The <strong>permissions</strong> option sets the permissions that a user from this group has on this panel. You can enter any combination of the letters C.R.U.D. and L:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">C = Create</span>
+<span class="x">R = Read</span>
+<span class="x">U = Update</span>
+<span class="x">D = Delete</span>
+<span class="x">L = List</span>
+</pre></div>
+</div>
+<p>For example, if you only specify the letter <code class="docutils literal"><span class="pre">L</span></code> for permissions then the user will only be able to list the records in this panel. Specifying all of the letters gives the user full permissions on this panel.</p>
+</div></blockquote>
+</div>
+<div class="section" id="html-append-file">
+<h3>html_append_file<a class="headerlink" href="#html-append-file" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>This option allows you to specify an HTML or PHP blade file to append to every Station view. This is ideal for analytics.</div></blockquote>
+</div>
+<div class="section" id="html-prepend-content-file">
+<h3>html_prepend_content_file<a class="headerlink" href="#html-prepend-content-file" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>Like <code class="docutils literal"><span class="pre">html_append_file</span></code> you can specify an HTML or PHP blade file to prepend to the content area of every panel in Station. This is ideal for onboarding progress timelines or system-wide, universal alerts.</div></blockquote>
+</div>
+<div class="section" id="strict-domains">
+<h3>strict_domains<a class="headerlink" href="#strict-domains" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>This forces all requests within Station to return a 404 unless one of the domains specified in this array is the domain indicated in the request.</div></blockquote>
+</div>
+</div>
+<div class="section" id="configuration-variables">
+<span id="config-variables"></span><h2>Configuration Variables<a class="headerlink" href="#configuration-variables" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">%user_id%</span></code> variable can be used in any value of the application or panel config files. The user&#8217;s ID will be replaced. This allows you to create panels which display only user-specific data. See <a class="reference internal" href="panels.html#panel-anatomy"><span>Working With Panels</span></a> for more examples of where and how this can be used. See below on how this configuration variable can be used in the application level configuration:</p>
+</div>
+<div class="section" id="custom-configuration-variables">
+<span id="custom-config-variables"></span><h2>Custom Configuration Variables<a class="headerlink" href="#custom-configuration-variables" title="Permalink to this headline">¶</a></h2>
+<p>You can create your own custom configuration variables <code class="docutils literal"><span class="pre">custom_user_vars</span></code> which are accessible in any panel configuration file and the application configuration file. You can also create <code class="docutils literal"><span class="pre">custom_view_vars</span></code> which are available in any Station views. Just add them to the top-level of your <code class="docutils literal"><span class="pre">config/packages/lifeboy/station/_app.php</span></code> file.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+
+<span class="s1">&#39;custom_user_vars&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+
+        <span class="s1">&#39;user_company_ids&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;\CompanyRepository::id_list_for_user(%user_id%)&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;user_store_ids&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;\StoreRepository::id_list_for_user(%user_id%)&#39;</span><span class="p">,</span>
+<span class="p">],</span>
+
+<span class="s1">&#39;custom_view_vars&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+
+        <span class="s1">&#39;onboarding_progress_html&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;\UserRepository::onboarding_progress_html_for(%user_id%)&#39;</span><span class="p">,</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>In this example we are utilizing a <code class="docutils literal"><span class="pre">CompanyRepository</span></code> class, which is part of our Laravel app. This class is returning a set of IDs based on the current user&#8217;s ID. Those IDs are now stored in <code class="docutils literal"><span class="pre">%user_company_ids%</span></code>, which can be used in any panel configuration file.</p>
+<p>Similarly, with <code class="docutils literal"><span class="pre">custom_view_vars</span></code> we are creating the variable <code class="docutils literal"><span class="pre">$onboarding_progress_html</span></code> which is now accessible in any Station view. In this example we&#8217;re generating a snippet of HTML which is being inserted into the file that we specified as our <code class="docutils literal"><span class="pre">html_prepend_content_file</span></code>. That snippet of HTML contains information about onboarding specific to the user who is logged in.</p>
+<p>You can create as many of these custom variables as you wish.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="panels.html" class="btn btn-neutral float-right" title="Working With Panels" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="start.html" class="btn btn-neutral" title="Installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Lifeboy Tech.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

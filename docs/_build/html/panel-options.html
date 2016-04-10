@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Panel Options &mdash; Station 0.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Station 0.2 documentation" href="index.html"/>
+        <link rel="next" title="Element Options" href="element-options.html"/>
+        <link rel="prev" title="Working With Panels" href="panels.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Station
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="start.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="principles.html">Basic Principles &amp; Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="panels.html">Working With Panels</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Panel Options</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#table">table *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#single-item-name">single_item_name *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#allow-bulk-delete">allow_bulk_delete</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#default-order-by">default_order_by</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#has-timestamps">has_timestamps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#js-include">js_include</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nestable-by">nestable_by</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#no-build">no_build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#no-data-alert">no_data_alert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#no-data-force-create">no_data_force_create</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#override">override</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preview-url">preview_url</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reorderable-by">reorderable_by</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#where">where</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="element-options.html">Element Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="element-options.html#custom-element-options">Custom Element Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Working with Station Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="emailers.html">Configuring Emailers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap &amp; Todos</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Station</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Panel Options</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/panel-options.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="panel-options">
+<h1>Panel Options<a class="headerlink" href="#panel-options" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal"><span class="pre">panel_options</span></code> key of the array defined in any of the files at <code class="docutils literal"><span class="pre">/config/packages/lifeboy/station</span></code> represents the panel-level options which are available to users of Station.</p>
+<p>Generally, each panel is mapped to a specific database table. However, this is not always the case. Some panels have an <a class="reference internal" href="#override"><span>override</span></a> defined. See below for the full documentation on configuring panels.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All options marked with a * are required</p>
+</div>
+<div class="section" id="table">
+<span id="id1"></span><h2>table *<a class="headerlink" href="#table" title="Permalink to this headline">¶</a></h2>
+<p>Quite simply, this is the name of the database table to which this panel corresponds. Note that you can have many panels which use the same table.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+
+<span class="x">   &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="single-item-name">
+<h2>single_item_name *<a class="headerlink" href="#single-item-name" title="Permalink to this headline">¶</a></h2>
+<p>This is the singular version of the type of data which is being dealt with in this panel.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+
+<span class="x">   &#39;table&#39;              =&gt; &#39;posts&#39;,</span>
+<span class="x">   &#39;single_item_name&#39;   =&gt; &#39;Post&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="allow-bulk-delete">
+<h2>allow_bulk_delete<a class="headerlink" href="#allow-bulk-delete" title="Permalink to this headline">¶</a></h2>
+<p>Setting this option to true will allow users to select and delete multiple items in list views (including filtered list views)</p>
+</div>
+<div class="section" id="default-order-by">
+<h2>default_order_by<a class="headerlink" href="#default-order-by" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to set the order in which records for this panel will be displayed. You can choose one or more database fields. You will use traditional SQL syntax.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+
+<span class="x">   &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">   &#39;default_order_by&#39; =&gt; &#39;title ASC, date DESC&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="has-timestamps">
+<h2>has_timestamps<a class="headerlink" href="#has-timestamps" title="Permalink to this headline">¶</a></h2>
+<p>If this option is set to true then the migrations and models generated for this panel/table will create and utilize Laravel Eloquent&#8217;s <code class="docutils literal"><span class="pre">created_at</span></code> and <code class="docutils literal"><span class="pre">updated_at</span></code> timestamp fields.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+
+<span class="x">   &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">   &#39;has_timestamps&#39; =&gt; TRUE,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="js-include">
+<h2>js_include<a class="headerlink" href="#js-include" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to specify a javascript file to include on all pages of this panel. It is great for sewing in your own functionality. jQuery is available on all pages as well.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+
+<span class="x">   &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">   &#39;js_include&#39; =&gt; &#39;/js/my-own.js&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nestable-by">
+<h2>nestable_by<a class="headerlink" href="#nestable-by" title="Permalink to this headline">¶</a></h2>
+<p>This is a very powerful feature which will allow your users to reorder and hierarchically &#8220;nest&#8221; the records of this table. When enabled your users can drag and drop records to reorder them arbitrarily as well as &#8220;nest&#8221; them into a tree-like model.</p>
+<img alt="_images/nested.png" src="_images/nested.png" />
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+
+<span class="x">   &#39;table&#39; =&gt; &#39;pages&#39;,</span>
+<span class="x">   &#39;nestable_by&#39; =&gt; [&#39;position&#39;, &#39;parent_id&#39;, &#39;depth&#39;],</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>The three array elements are (1) the field name which contains the overall sort-order (2) the field name which contains the ID of the parent of the record. Records on the top-level have a <code class="docutils literal"><span class="pre">parent_id</span></code> of <code class="docutils literal"><span class="pre">0</span></code> and (3) the depth level of the record.</p>
+<p><em>Note: You do not need to also create ``position``, ``parent_id``, and ``depth`` elements in your panel&#8217;s :ref:`element-options` configuration. Station will manage these for you.</em></p>
+</div>
+<div class="section" id="no-build">
+<h2>no_build<a class="headerlink" href="#no-build" title="Permalink to this headline">¶</a></h2>
+<p>If this option is set to true then the <code class="docutils literal"><span class="pre">php</span> <span class="pre">artisan</span> <span class="pre">station:build</span></code> command will simply skip this panel entirely when it attempts to create models and migrations. This is useful for panels where you want to use the <code class="docutils literal"><span class="pre">override</span></code> option and you have no need for a data model to be available.</p>
+</div>
+<div class="section" id="no-data-alert">
+<h2>no_data_alert<a class="headerlink" href="#no-data-alert" title="Permalink to this headline">¶</a></h2>
+<p>This option, defined by an array, can be used to configure a special message to users of a panel which has no data. This can be useful for when you want to assist users on creating a type of data for the first time.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+<span class="x">   &#39;table&#39;              =&gt; &#39;posts&#39;,</span>
+<span class="x">   &#39;single_item_name&#39;   =&gt; &#39;Blog Post&#39;,</span>
+<span class="x">   &#39;no_data_alert&#39;      =&gt; [</span>
+
+<span class="x">      &#39;header&#39;    =&gt; &#39;You have no blog posts yet&#39;,</span>
+<span class="x">      &#39;body&#39;      =&gt; &#39;Go ahead and create your first blog post now!&#39;</span>
+<span class="x">   ]</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="no-data-force-create">
+<h2>no_data_force_create<a class="headerlink" href="#no-data-force-create" title="Permalink to this headline">¶</a></h2>
+<p>When this option is set to true it will redirect a user who is trying to access a panel&#8217;s (initial) list view to the panel&#8217;s create view instead.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+
+<span class="x">   &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">   &#39;no_data_force_create&#39; =&gt; TRUE,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="override">
+<span id="id2"></span><h2>override<a class="headerlink" href="#override" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to completely override the functionality of a specific panel using a controller and method from your Laravel app. For an example of this, look at the <code class="docutils literal"><span class="pre">welcome</span></code> panel which shipped with Station.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+
+<span class="x">   &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">   &#39;override&#39; =&gt; [&#39;L&#39; =&gt; &#39;MyControllerName@method_name&#39;],</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">L</span></code> above means that this will override the (initial) list view of your panel. However you can override the <code class="docutils literal"><span class="pre">U</span></code> (update) function instead and just leave the list view as-is using <code class="docutils literal"><span class="pre">'override'</span> <span class="pre">=&gt;</span> <span class="pre">['U'</span> <span class="pre">=&gt;</span> <span class="pre">'MyControllerName&#64;method_name'],</span></code>. When using the update override, the record your user is attempting to modify will be passed as data to your controller method automatically.</p>
+</div>
+<div class="section" id="preview-url">
+<h2>preview_url<a class="headerlink" href="#preview-url" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to specify a array template for generating the url for a button which will become visible in the update view of every record in this panel.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+
+<span class="x">   &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">   &#39;preview_url&#39; =&gt; [&#39;http://www.domain.com/post/&#39;, &#39;posts.id&#39;, &#39;/preview&#39;],</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>The elements of this array will concatenate to form the preview URL. When one of the array&#8217;s elements is in the format <code class="docutils literal"><span class="pre">table_name.field_name</span></code> it will be replaced by the actual record&#8217;s value. So the example above might produce <code class="docutils literal"><span class="pre">http://www.domain.com/post/9999/preview</span></code> and a button which looks like the one below will appear on your panel&#8217;s update pages:</p>
+<img alt="_images/preview-url.png" src="_images/preview-url.png" />
+</div>
+<div class="section" id="reorderable-by">
+<h2>reorderable_by<a class="headerlink" href="#reorderable-by" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to specify a field name to use as your table&#8217;s &#8220;position&#8221; field. This is a field which is used to store an arbitrary, user-defined sorting-order for the records in the table. When enabled, your users will be able to drag and drop records to reorder them within the list view of this panel. Each time a user reorders the records, all of the values for the field you specify will be re-written from 0 through X.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+
+<span class="x">   &#39;table&#39; =&gt; &#39;categories&#39;,</span>
+<span class="x">   &#39;reorderable_by&#39; =&gt; &#39;position&#39;,</span>
+<span class="x">   &#39;default_order_by&#39; =&gt; &#39;position&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p><em>Note: You do not need to also create a ``position`` element in your panel&#8217;s :ref:`element-options` configuration. Station will manage this for you.</em></p>
+</div>
+<div class="section" id="where">
+<h2>where<a class="headerlink" href="#where" title="Permalink to this headline">¶</a></h2>
+<p>This option allows you to append a SQL <code class="docutils literal"><span class="pre">where</span></code> clause onto the standard query which retrieves the data for this panel.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+
+<span class="x">   &#39;table&#39; =&gt; &#39;posts&#39;,</span>
+<span class="x">   &#39;where&#39; =&gt; &#39;title LIKE &quot;%robot%&quot;&#39;,</span>
+<span class="x">   ...</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+<p>This is also a good opportunity to pass in <a class="reference internal" href="principles.html#config-variables"><span>Configuration Variables</span></a> or <a class="reference internal" href="principles.html#custom-config-variables"><span>Custom Configuration Variables</span></a> if those are relevant to your app.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;panel_options&#39;   =&gt; [</span>
+
+<span class="x">   &#39;table&#39; =&gt; &#39;employees&#39;,</span>
+<span class="x">   &#39;where&#39; =&gt; &#39;company_id IN (%user_company_ids%)&#39;,</span>
+<span class="x">],</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="element-options.html" class="btn btn-neutral float-right" title="Element Options" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="panels.html" class="btn btn-neutral" title="Working With Panels" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Lifeboy Tech.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
