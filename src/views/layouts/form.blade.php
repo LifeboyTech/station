@@ -217,6 +217,7 @@
 					{{-- boolean / checkbox --}}
 					@if ($element_info['type'] == 'boolean')
 						<?php $default_value = isset($element_info['default']) ? $element_info['default'] : null; ?>
+						<?php $default_value = isset($passed_model->$element_name) ? $passed_model->$element_name : $default_value; ?>
 						{!! Form::checkbox($element_name, '1', $default_value, ['id' => $id, 'data-toggle' => 'switch']) !!}
 					@endif
 
