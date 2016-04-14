@@ -9,11 +9,13 @@
 		  <{{ $item_element }} class="col-{{ $c }}">
 		  	<?php $n_visible = 3 ?>
 		    @foreach($row[$elem_name] as $i => $sub_data)
-		      <span class="st-it" {{ $i > ($n_visible - 1) ? 'style="display: none;"' : '' }}>
-		      	{{ $i > 0 ? '| ' : '' }}{!! $sub_data['name'] !!}
-		      </span>
-		      @if ($i == ($n_visible + 1))
-		      	<a href="javascript:;" class="st-it-more">&nbsp; more...</a>
+		      @if (isset($sub_data['name']))
+		      	<span class="st-it" {{ $i > ($n_visible - 1) ? 'style="display: none;"' : '' }}>
+			    	{{ $i > 0 ? '| ' : '' }}{!! $sub_data['name'] !!}
+			    </span>
+			    @if ($i == ($n_visible + 1))
+			    	<a href="javascript:;" class="st-it-more">&nbsp; more...</a>
+			    @endif
 		      @endif
 		    @endforeach
 		  </{{ $item_element }}>
