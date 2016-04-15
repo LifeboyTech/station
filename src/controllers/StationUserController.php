@@ -52,7 +52,7 @@ class StationUserController extends ObjectBaseController {
             case Password::INVALID_USER:
                 return Redirect::back()->with('error', Lang::get($response));
 
-            case Password::REMINDER_SENT:
+            case Password::RESET_LINK_SENT:
                 return Redirect::back()->with('success', Lang::get($response));
         }
 
