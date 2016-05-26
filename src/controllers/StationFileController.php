@@ -209,7 +209,7 @@ class StationFileController extends BaseController {
 		$file						= $this->request->file('uploaded_file');
 		$original_file_name			= $file->getClientOriginalName();
 		$size						= $file->getSize();
-		$mime						= $file->getMimeType();
+		$mime						= $this->mime_for($file);
 		$this->mime 				= $mime;
 		$extension					= $file->getClientOriginalExtension();
 		$path 			 			= pathinfo($original_file_name);
@@ -282,6 +282,20 @@ class StationFileController extends BaseController {
         curl_exec($ch);
         curl_close($ch);
         fclose($fp);
+    }
+
+    private function mime_for($file){
+
+    	try { // sometimes this method simply fails even on legit files. wrapping it in an exception handler for now
+			
+	    	$mime = $file->getMimeType();
+
+    	} catch (Exception $e){
+
+			$mime = 'image';
+		}
+
+		return $mime;
     }
 
 	private function send_to_s3($file, $s3_directory = '',$app_config, $is_orig = FALSE){
