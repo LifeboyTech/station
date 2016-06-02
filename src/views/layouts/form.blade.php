@@ -123,7 +123,7 @@
 						$default_value		= isset($element_info['default']) ? $element_info['default'] : null; // important to keep this as null
 						$default_value 		= isset($passed_model->$element_name) ? $passed_model->$element_name : $default_value;
 						
-						$is_file_uploader 	= in_array($element_info['type'],['image','image_gallery']);
+						$is_file_uploader 	= in_array($element_info['type'],['image','image_gallery','file']);
 						$has_file_uploader	= $is_file_uploader	|| (isset($element_info['embeddable']) && $element_info['embeddable']);
 						$is_embedder 		= $has_file_uploader && !$is_file_uploader;
 						$needs_media 		= $needs_media || $has_file_uploader;
@@ -146,7 +146,7 @@
 					@endif
 
 
-					{{-- Image/gallery handling --}}
+					{{-- Image/gallery/file handling --}}
 					@if ($has_file_uploader)
 
 						<?php 

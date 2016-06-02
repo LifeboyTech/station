@@ -213,7 +213,7 @@ class StationFileController extends BaseController {
 		$this->mime 				= $mime;
 		$extension					= $file->getClientOriginalExtension();
 		$path 			 			= pathinfo($original_file_name);
-		$orig_name_wo_ext 			= $path['filename'];
+		$orig_name_wo_ext 			= preg_replace('/\W+/', '_', $path['filename']);
 		$new_file_name				= $orig_name_wo_ext.'_'.date('Y-m-d-H-i-s').'.'.$extension;
 		$panel						= new Panel;
 		$panel_name					= $this->request->get('panel_name');
@@ -225,27 +225,40 @@ class StationFileController extends BaseController {
 		$app_config					= StationConfig::app();
 		$success 					= FALSE;
 		$message 					= '';
-		$field_is_uploadable 		= $element['type'] == 'image' || (isset($element['embeddable']) && $element['embeddable']);
+		$field_is_uploadable 		= in_array($element['type'], ['image','file']) || (isset($element['embeddable']) && $element['embeddable']);
 
 		$this->request->file('uploaded_file')->move($this->tmp_dir, $new_file_name);
 
-		if ($field_is_uploadable){
+		if ($field_is_uploadable && $element['type'] != 'file'){
 
-			$allowed_image_extensions	= ['png', 'gif', 'jpg', 'jpeg', 'PNG', 'GIF', 'JPG', 'JPEG'];
-			$bad_image = strpos($mime, 'image') === FALSE || !in_array($extension, $allowed_image_extensions);
+			$allowed_image_extensions	= ['png', 'gif', 'jpg', 'jpeg'];
+			$bad_image = strpos($mime, 'image') === FALSE || !in_array(strtolower($extension), $allowed_image_extensions);
 
 			if ($bad_image) return Response::json(['success' => FALSE, 'reason' => 'not a proper image']);
 
-			$allow_upsize	= isset($element['allow_upsize']) && $element['allow_upsize'];
-			$all_sizes		= $panel->img_sizes_for($user_scope, $app_config);
-			$sizes_needed	= isset($all_sizes[$element_name]) ? $all_sizes[$element_name] : $all_sizes['standard'];
-			$manipulations	= $this->manipulate_sizes_and_send_each($new_file_name, $sizes_needed, $app_config, $allow_upsize);
-			$success 		= $manipulations['n_sent'] > 0;
-			$message 		= $manipulations['n_sent'].' manipulations made and sent to S3';
+			$allow_upsize    = isset($element['allow_upsize']) && $element['allow_upsize'];
+			$all_sizes       = $panel->img_sizes_for($user_scope, $app_config);
+			$sizes_needed    = isset($all_sizes[$element_name]) ? $all_sizes[$element_name] : $all_sizes['standard'];
+			$manipulations   = $this->manipulate_sizes_and_send_each($new_file_name, $sizes_needed, $app_config, $allow_upsize);
+			$success         = $manipulations['n_sent'] > 0;
+			$message         = $manipulations['n_sent'].' manipulations made and sent to S3';
+			$preview_uri     = isset($manipulations['file_name']) ? 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/'.'station_thumbs_lg/'.$manipulations['file_name'] : FALSE;
+			$final_file_name = isset($manipulations['file_name']) ? $manipulations['file_name'] : FALSE;
 
-		} else { // file?
+		} else if ($field_is_uploadable && $element['type'] == 'file'){ 
 
-			// TODO: deal with non-images here. check for allowed types. then just move and send to S3.
+			$allowed_extensions = isset($element['allowed_types']) ? $element['allowed_types'] : ['zip', 'pdf', 'doc', 'xls', 'docx'];
+			$bad_file           = !in_array(strtolower($extension), $allowed_extensions);
+			$target_directory 	= isset($element['directory']) ? $element['directory'] : '';
+
+			if ($bad_file) return Response::json(['success' => FALSE, 'reason' => 'not an allowed file type']); 
+
+			$this->send_to_s3($new_file_name, $target_directory, $app_config, TRUE);
+
+			$success         = TRUE;
+			$message         = 'File sent to S3';
+			$preview_uri     = '/public/packages/lifeboy/station/img/file.gif';
+			$final_file_name = $new_file_name;
 		}
 
 		$response = [
@@ -254,8 +267,8 @@ class StationFileController extends BaseController {
 			'message'		=> $message,
 			'insert_id'		=> isset($medium->id) ? $medium->id : FALSE,
 			'file_uri_stub'	=> 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/',
-			'file_uri'		=> isset($manipulations['file_name']) ? 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/'.'station_thumbs_lg/'.$manipulations['file_name'] : FALSE,
-			'file_name'		=> isset($manipulations['file_name']) ? $manipulations['file_name'] : FALSE
+			'file_uri'		=> $preview_uri,
+			'file_name'		=> $final_file_name,
         ];
 
 

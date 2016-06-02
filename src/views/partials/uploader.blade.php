@@ -21,7 +21,7 @@
 			</button>
 			<button type="button" class="btn btn-default file-remover" style="display:none;" id="remove_for_{{ $original_el_name }}">
 				<span class="fui-cross-inverted"></span>&nbsp;
-				Remove Image
+				Remove
 			</button>
 		</div>								
 		<div class="btn-group">								
