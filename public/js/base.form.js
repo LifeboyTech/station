@@ -119,11 +119,12 @@ $(document).ready(function() {
         if($type[0]=='edit')
         {
             // update upload button
-            $('.trigger_img_upload').html('Upload Different File');
+            $('.trigger_img_upload').html('Uploaded! Choose Different File?');
 
             //display image
             var $parts = $('#target-'+$elem_name).attr('src').split('/station_thumbs_sm/');
-            $('#station-fileupload-hud').html('<img src="'+$parts[0]+'/station_thumbs_lg/'+$parts[1]+'">');
+            var src = $('#target-'+$elem_name).hasClass('for-file') ? '/packages/lifeboy/station/img/file.png' : $parts[0] + '/station_thumbs_lg/' + $parts[1];
+            $('#station-fileupload-hud').html('<img src="' + src + '">');
 
             // loading text for controls
             $('.station-file-options').html('<h5><span class="label label-primary">Loading...</span></h5>').show();
@@ -163,9 +164,19 @@ $(document).ready(function() {
         var $elem_name = $(this).attr('name');
         //console.log($elem_name);
         var $img_hidden_val = $(this).val();
-        if($img_hidden_val!='')
+
+        if ($('#target-'+$elem_name).hasClass('for-file')){
+
+            var src = '/packages/lifeboy/station/img/file.png';
+
+        } else {
+
+            var src = 'http://'+$('#target-'+$elem_name).attr('bucket')+'.s3.amazonaws.com/station_thumbs_sm/'+$img_hidden_val;
+        }
+
+        if($img_hidden_val != '')
         {
-            $('#target-'+$elem_name).attr('src','http://'+$('#target-'+$elem_name).attr('bucket')+'.s3.amazonaws.com/station_thumbs_sm/'+$img_hidden_val);
+            $('#target-'+$elem_name).attr('src', src);
             $('#edit_for_' + $elem_name + ', #remove_for_' + $elem_name).show();
         }
     });
@@ -197,11 +208,12 @@ $(document).ready(function() {
                     if(typeof $results.file_uri!='undefined')
                     {
                         // we display the thumb
-                        $('#station-fileupload-hud').html('<img src="'+$results.file_uri_stub+'station_thumbs_lg/'+$results.file_name+'">');
-
-                        //populate sidebar info
                         var $elem_name = $('#mediaModal [name="upload_element_name"]').val();
 
+                        var src = $('#target-' + $elem_name).hasClass('for-file') ? '/packages/lifeboy/station/img/file.png' : $results.file_uri_stub+'station_thumbs_lg/'+$results.file_name
+                        $('#station-fileupload-hud').html('<img src="'+ src +'">');
+
+                        //populate sidebar info
                         create_media_side_controls($results.file_uri_stub,$results.file_name,$elem_name);
                         $(this).remove();
 
@@ -230,7 +242,8 @@ $(document).ready(function() {
 
         // we need the img filename and the uri
         var $parts = $('#station-fileupload-hud').children(':first').attr('src').split('/station_thumbs_lg/');
-        $('#target-'+$elem_name).attr('src',$parts[0]+'/station_thumbs_sm/'+$parts[1]).show();
+        var src = $('#target-'+$elem_name).hasClass('for-file') ? '/packages/lifeboy/station/img/file.png' : $parts[0]+'/station_thumbs_sm/' + $parts[1];
+        $('#target-'+$elem_name).attr('src', src).show();
         
         if ($('[name='+$elem_name+']').is('textarea')){ // using the embedder tool
 
@@ -407,7 +420,7 @@ $(document).ready(function() {
  * for url fetching
  */
     function disperse_fetched_url_parts(parts, element_name){
-
+        
         eval('var mapping = ' + $('.parsed-results[data-element="' + element_name + '"]').attr('data-mapping'));
         
         $.each(mapping, function(index, val) {
@@ -424,11 +437,16 @@ $(document).ready(function() {
             if (index == 'image'){
 
                 var thumbnail = $('.station-element-group[data-element-name="' + element_name + '"] .station-img-thumbnail');
+                var for_file = thumbnail.hasClass('for-file'); 
 
-                if (typeof parts.graph != 'undefined' && typeof parts.graph[index] != 'undefined') {
+                if (typeof parts.graph != 'undefined' && typeof parts.graph[index] != 'undefined' && !for_file) {
 
                     var src = 'http://' + thumbnail.attr('bucket') + '.s3.amazonaws.com/station_thumbs_sm/' + parts.graph[index];
-                    
+
+                } else if (typeof parts.graph != 'undefined' && typeof parts.graph[index] != 'undefined' && for_file) {
+
+                    var src = '/packages/lifeboy/station/img/file.png';
+
                 } else {
 
                     var src = '/packages/lifeboy/station/img/missing.gif';
@@ -613,7 +631,7 @@ $(document).ready(function() {
                 + '</div>\n';        
         }   
 
-        $('.station-file-options').html($button_html);
+        $('.station-file-options').html($('#target-' + $elem_name).hasClass('for-file') ? '' : $button_html);
 
         $('.btn-group.w-no-size .station-crop-start').remove();
         //console.log($this_img_sizes);

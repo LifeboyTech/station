@@ -257,7 +257,7 @@ class StationFileController extends BaseController {
 
 			$success         = TRUE;
 			$message         = 'File sent to S3';
-			$preview_uri     = '/public/packages/lifeboy/station/img/file.gif';
+			$preview_uri     = '/public/packages/lifeboy/station/img/file.png';
 			$final_file_name = $new_file_name;
 		}
 
