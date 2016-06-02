@@ -55,6 +55,8 @@ I welcome and encourage contributions. Please submit pull-requests. I will revie
 
 My only guideline is that enhancements to Station should be within the simple and straightforward spirit of the project.
 
+To build documentation, navigate to ``/docs`` directory and run ``touch *.rst; make html;``. `Read more <http://www.sphinx-doc.org/en/stable/>`_
+
 
 Issues?
 ------- 
