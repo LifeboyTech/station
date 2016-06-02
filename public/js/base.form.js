@@ -124,7 +124,7 @@ $(document).ready(function() {
             //display image
             var $parts = $('#target-'+$elem_name).attr('src').split('/station_thumbs_sm/');
             var src = $('#target-'+$elem_name).hasClass('for-file') ? '/packages/lifeboy/station/img/file.png' : $parts[0] + '/station_thumbs_lg/' + $parts[1];
-            $('#station-fileupload-hud').html('<img src="' + src + '">');
+            $('#station-fileupload-hud').html('<img data-src="' + $parts[0] + '/station_thumbs_lg/' + $parts[1] + '" src="' + src + '">');
 
             // loading text for controls
             $('.station-file-options').html('<h5><span class="label label-primary">Loading...</span></h5>').show();
@@ -211,7 +211,7 @@ $(document).ready(function() {
                         var $elem_name = $('#mediaModal [name="upload_element_name"]').val();
 
                         var src = $('#target-' + $elem_name).hasClass('for-file') ? '/packages/lifeboy/station/img/file.png' : $results.file_uri_stub+'station_thumbs_lg/'+$results.file_name
-                        $('#station-fileupload-hud').html('<img src="'+ src +'">');
+                        $('#station-fileupload-hud').html('<img data-src="' + $results.file_uri_stub+'station_thumbs_lg/'+$results.file_name + '" src="'+ src +'">');
 
                         //populate sidebar info
                         create_media_side_controls($results.file_uri_stub,$results.file_name,$elem_name);
@@ -241,7 +241,7 @@ $(document).ready(function() {
         var $elem_name = $('#mediaModal [name="upload_element_name"]').val();
 
         // we need the img filename and the uri
-        var $parts = $('#station-fileupload-hud').children(':first').attr('src').split('/station_thumbs_lg/');
+        var $parts = $('#station-fileupload-hud').children(':first').data('src').split('/station_thumbs_lg/');
         var src = $('#target-'+$elem_name).hasClass('for-file') ? '/packages/lifeboy/station/img/file.png' : $parts[0]+'/station_thumbs_sm/' + $parts[1];
         $('#target-'+$elem_name).attr('src', src).show();
         
@@ -631,7 +631,8 @@ $(document).ready(function() {
                 + '</div>\n';        
         }   
 
-        $('.station-file-options').html($('#target-' + $elem_name).hasClass('for-file') ? '' : $button_html);
+        $('.station-file-options').html($button_html);
+        if ($('#target-' + $elem_name).hasClass('for-file')) $('.station-file-options').hide();
 
         $('.btn-group.w-no-size .station-crop-start').remove();
         //console.log($this_img_sizes);
