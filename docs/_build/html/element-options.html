@@ -94,6 +94,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#integer">integer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#boolean">boolean</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#image">image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#file">file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#tags">tags</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#select">select</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#multiselect">multiselect</a></li>
@@ -273,6 +274,18 @@
 <li>See the <a class="reference internal" href="#config-images"><span>sizes</span></a> option for more details on configuration, sizing and cropping.</li>
 </ul>
 <img alt="_images/image.png" src="_images/image.png" />
+</div></blockquote>
+</div>
+<div class="section" id="file">
+<h3>file<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>This will generate a VARCHAR(255) database field.</li>
+<li>The input for user manipulation is a special file uploader modal dialog.</li>
+<li>You may also supply a <code class="docutils literal"><span class="pre">allowed_types</span></code> array containing the file-extensions this will allow.</li>
+<li>You may also supply a <code class="docutils literal"><span class="pre">directory</span></code> string containing the remote directory that uploaded files will save to.</li>
+<li>The uploaded file name will be saved to the database field.</li>
+</ul>
 </div></blockquote>
 </div>
 <div class="section" id="tags">

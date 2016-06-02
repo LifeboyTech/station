@@ -104,6 +104,15 @@ image
 
    .. image:: images/image.png
 
+file
+^^^^
+   
+   * This will generate a VARCHAR(255) database field.
+   * The input for user manipulation is a special file uploader modal dialog.
+   * You may also supply a ``allowed_types`` array containing the file-extensions this will allow.
+   * You may also supply a ``directory`` string containing the remote directory that uploaded files will save to.
+   * The uploaded file name will be saved to the database field.
+
 tags
 ^^^^
    
