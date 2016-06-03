@@ -1,5 +1,5 @@
 <div class="station-file-upload-wrap row {{ $is_embedder ? 'snapped-to-textarea' : '' }}">
-	<?php $for_file = $element_info['type'] == 'file'; ?>
+	<?php $for_file = $element_info['type'] == 'file' || $is_embedder; ?>
 	<div class="col-sm-2">
 		<img width="100px" height="100px" src="/packages/lifeboy/station/img/missing.gif" bucket="{{ $bucket_name }}" class="img-thumbnail station-img-thumbnail {{ $for_file ? 'for-file' : '' }}" id="target-{{ $original_el_name }}" data-target="{{ $original_el_name }}">
 	</div>

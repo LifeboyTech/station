@@ -213,6 +213,11 @@ $(document).ready(function() {
                         var src = $('#target-' + $elem_name).hasClass('for-file') ? '/packages/lifeboy/station/img/file.png' : $results.file_uri_stub+'station_thumbs_lg/'+$results.file_name
                         $('#station-fileupload-hud').html('<img data-src="' + $results.file_uri_stub+'station_thumbs_lg/'+$results.file_name + '" src="'+ src +'">');
 
+                        $('.embedder-snippet').remove();
+                        var html = '<input class="embedder-snippet" type="text" value="' + $results.complete_uri + '">';
+                        $('#target-' + $elem_name).closest('.station-file-upload-wrap').append(html);
+                        $('.embedder-snippet').click(function(event) { $(this).select(); });
+
                         //populate sidebar info
                         create_media_side_controls($results.file_uri_stub,$results.file_name,$elem_name);
                         $(this).remove();
@@ -586,7 +591,7 @@ $(document).ready(function() {
     function create_media_side_controls($stub,$filename,$elem_name)
     {
         // now need to dynamically make the column of size buttons on modal and in img form
-        var $img_sizes = $.parseJSON($('[name=img_sizes_array]').val());
+        var $img_sizes = $.parseJSON($('[name=img_sizes_array]').val()); 
         var $this_img_sizes = Array();
         //$this_img_sizes = $img_sizes.standard;
 

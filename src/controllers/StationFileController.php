@@ -225,14 +225,16 @@ class StationFileController extends BaseController {
 		$app_config					= StationConfig::app();
 		$success 					= FALSE;
 		$message 					= '';
-		$field_is_uploadable 		= in_array($element['type'], ['image','file']) || (isset($element['embeddable']) && $element['embeddable']);
+		$field_is_embeddable 		= isset($element['embeddable']) && $element['embeddable'];
+		$field_is_uploadable 		= in_array($element['type'], ['image','file']);
+		$is_an_image 				= strpos($mime, 'image') !== FALSE;
 
 		$this->request->file('uploaded_file')->move($this->tmp_dir, $new_file_name);
 
-		if ($field_is_uploadable && $element['type'] != 'file'){
+		if ($field_is_uploadable && $element['type'] != 'file' || ($field_is_embeddable && $is_an_image)){
 
 			$allowed_image_extensions	= ['png', 'gif', 'jpg', 'jpeg'];
-			$bad_image = strpos($mime, 'image') === FALSE || !in_array(strtolower($extension), $allowed_image_extensions);
+			$bad_image = !$is_an_image || !in_array(strtolower($extension), $allowed_image_extensions);
 
 			if ($bad_image) return Response::json(['success' => FALSE, 'reason' => 'not a proper image']);
 
@@ -243,9 +245,11 @@ class StationFileController extends BaseController {
 			$success         = $manipulations['n_sent'] > 0;
 			$message         = $manipulations['n_sent'].' manipulations made and sent to S3';
 			$preview_uri     = isset($manipulations['file_name']) ? 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/'.'station_thumbs_lg/'.$manipulations['file_name'] : FALSE;
+			$complete_uri 	 = $preview_uri;
 			$final_file_name = isset($manipulations['file_name']) ? $manipulations['file_name'] : FALSE;
+			$file_type 		 = 'image';
 
-		} else if ($field_is_uploadable && $element['type'] == 'file'){ 
+		} else if ($field_is_uploadable && $element['type'] == 'file' || ($field_is_embeddable && !$is_an_image)){ 
 
 			$allowed_extensions = isset($element['allowed_types']) ? $element['allowed_types'] : ['zip', 'pdf', 'doc', 'xls', 'docx'];
 			$bad_file           = !in_array(strtolower($extension), $allowed_extensions);
@@ -259,6 +263,8 @@ class StationFileController extends BaseController {
 			$message         = 'File sent to S3';
 			$preview_uri     = '/public/packages/lifeboy/station/img/file.png';
 			$final_file_name = $new_file_name;
+			$file_type 		 = 'file';
+			$complete_uri 	 = 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/'.$target_directory.'/'.$new_file_name;
 		}
 
 		$response = [
@@ -269,6 +275,8 @@ class StationFileController extends BaseController {
 			'file_uri_stub'	=> 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/',
 			'file_uri'		=> $preview_uri,
 			'file_name'		=> $final_file_name,
+			'file_type' 	=> $file_type,
+			'complete_uri' 	=> $complete_uri,
         ];
 
 

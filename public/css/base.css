@@ -680,3 +680,13 @@ textarea.embedder.open {
     font-size: 20px !important;
     line-height: 50px;
 }
+
+input.embedder-snippet {
+    margin: 0;
+    font-size: 11px;
+    float: left;
+    width: 60%;
+    padding: 3px 10px;
+    background: #ffffcc;
+    border: 1px solid #ccc;
+}
