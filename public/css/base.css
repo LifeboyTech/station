@@ -690,3 +690,64 @@ input.embedder-snippet {
     background: #ffffcc;
     border: 1px solid #ccc;
 }
+.mobile-menu {
+	display: none;
+}
+
+/* responsive stuff */
+@media (max-width: 1024px) {
+  body {
+  	width: 100%;
+  }
+  #sidebar-container {
+  	display: none;
+  	width: 100% !important;
+  	position: absolute;
+  	z-index: 99;
+  	left: 0;
+  	top: 0;
+  }
+  #sidebar {
+    width: 100%;
+    top: 35px;
+    box-sizing: border-box;
+    padding-top: 10px;
+}
+  .mobile-menu {
+	display: block;
+	position: fixed;
+	background: #333;
+	width: 100%;
+	color: #fff;
+	box-sizing: border-box;
+	padding: 0 10px;
+	height: 38px;
+	z-index: 999;
+	min-width: 0;
+	margin: 0;
+	overflow: hidden;
+	top: 0;
+	left: 0;
+	}
+	.nav-opener {
+		display: block;
+		float: left;
+		line-height: 40px;
+		cursor: pointer;
+	}
+	#content-container {
+		padding-top: 27px;
+		overflow: hidden;
+	}
+	.container, .row {
+		box-sizing: border-box;
+		padding: 0;
+		margin: 0;
+	}
+	#station-branding {
+		display: none !important;
+	}
+	h5 {
+		font-size: 20px;
+	}
+}

@@ -65,11 +65,12 @@
   <body>
     
     @if(Auth::check())
-
-      @include('station::layouts.navbar')
     
       <div class="container">
         <div class="row">
+          <div class="mobile-menu">
+            <div class="nav-opener"><span class="glyphicon glyphicon-align-justify"></span></div>
+          </div>
           <div id="sidebar-container" class="col-sm-2">
             @include('station::layouts.sidebar')
           </div>
