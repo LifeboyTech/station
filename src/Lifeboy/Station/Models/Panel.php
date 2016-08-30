@@ -719,7 +719,7 @@ class Panel {
 
             } else { // new user is forced into a group
 
-                $group_id = Group::where('name', '=', $starting_group_name)->pluck('id');
+                $group_id = Group::where('name', '=', $starting_group_name)->first()->id;
             }
             
             $model->groups()->attach($group_id);

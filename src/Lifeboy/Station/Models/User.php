@@ -12,6 +12,6 @@ class User extends App_user {
 	
     public function groups()
     {
-        return $this->belongsToMany('Lifeboy\Station\Models\Group');
+        return $this->belongsToMany('Lifeboy\Station\Models\Group', 'group_user', 'user_id', 'group_id');
     }
 }
