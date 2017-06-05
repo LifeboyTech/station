@@ -201,7 +201,7 @@
 								<span class="input-group-addon"><span class="{!! $with_prepend_icon !!}"></span></span>
 							@endif
 
-							{!! Form::$element_info['type']($element_name, $default_value, $attributes) !!}
+							{!! Form::{$element_info['type']}($element_name, $default_value, $attributes) !!}
 
 							@if ($with_append)
 								<span class="input-group-addon">{!! $element_info['append'] !!}</span>
