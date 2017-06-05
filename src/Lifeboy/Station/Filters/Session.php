@@ -39,7 +39,7 @@ class Session {
 
 		$user_id			= Auth::user()->id;
 		$user				= User::find($user_id);
-		$group_names		= $user->groups->lists('name');
+		$group_names		= $user->groups->pluck('name');
 		$primary_group		= $group_names->first();
 		$app_groups			= StationConfig::app('user_groups');
 		$starting_panel		= $app_groups[$primary_group]['starting_panel'];
