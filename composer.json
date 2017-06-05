@@ -13,7 +13,7 @@
         "php": ">=5.4.0",
         "illuminate/support": "~5.0",
         "laravelcollective/html": ">=5.2.0",
-        "laracasts/generators": "1.1.3"
+        "laracasts/generators": "dev-master"
     },
     "autoload": {
         "classmap": [
