@@ -51,7 +51,7 @@ class StationServiceProvider extends ServiceProvider {
      */
     protected function registerStationBuild()
     {
-            $this->app['station:build'] = $this->app->share(function($app)
+            $this->app->singleton('station:build', function($app)
             {
                     //$cache = new Cache($app['files']);
                     //$generator = new Generators\ModelGenerator($app['files'], $cache);
