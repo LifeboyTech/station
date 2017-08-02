@@ -38,7 +38,7 @@ class StationPanelController extends BaseController {
 		$title					= 'Create a new '.$this->single_item_name;
 		$title					.= $this->primary_element_value ? ' for "'.$this->primary_element_value.'"' : '';
 
-		View::share('n_items_in_panel', $panel_data_with_count['data']);
+		View::share('n_items_in_panel', isset($panel_data_with_count['data']) ? $panel_data_with_count['data'] : 0);
 		View::share('method', $method);
 		View::share('page_title', $title);
 		View::share('layout_title', $title);
