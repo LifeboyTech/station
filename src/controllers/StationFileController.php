@@ -305,19 +305,18 @@ class StationFileController extends BaseController {
         fclose($fp);
     }
 
-    private function mime_for($file){
-
-    	try { // sometimes this method simply fails even on legit files. wrapping it in an exception handler for now
-			
-	    	$mime = $file->getMimeType();
-
-    	} catch (Exception $e){
-
+	private function mime_for($file) {
+		// sometimes this method simply fails even on legit files. wrapping it in an exception handler for now
+		// since getMimeType fails to return valid mime types, we should catch the exception thrown and return a fallback
+		// mime type for the uploaded file.
+		try {
+			$mime = $file->getMimeType();
+		} catch (\Exception $e){
 			$mime = 'image';
 		}
 
 		return $mime;
-    }
+	}
 
 	private function send_to_s3($file, $s3_directory = '',$app_config, $is_orig = FALSE){
 
