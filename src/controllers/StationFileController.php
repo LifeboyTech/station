@@ -203,8 +203,11 @@ class StationFileController extends BaseController {
 
 	public function upload()
 	{
-
-		if (!$this->request->hasFile('uploaded_file')) echo json_encode(['success' => FALSE, 'reason' => 'no file uploaded']);
+		// return an error response if no file is detected, this may be due to the fact that the file is too large.
+		if (!$this->request->hasFile('uploaded_file')) {
+			echo json_encode(['success' => FALSE, 'reason' => 'No file uploaded or invalid file type.']);
+			return;
+		}
 
 		$file						= $this->request->file('uploaded_file');
 		$original_file_name			= $file->getClientOriginalName();
@@ -236,7 +239,10 @@ class StationFileController extends BaseController {
 			$allowed_image_extensions	= ['png', 'gif', 'jpg', 'jpeg'];
 			$bad_image = !$is_an_image || !in_array(strtolower($extension), $allowed_image_extensions);
 
-			if ($bad_image) return Response::json(['success' => FALSE, 'reason' => 'not a proper image']);
+			if ($bad_file) {
+				echo json_encode(['success' => FALSE, 'reason' => 'File is not a valid image.']);
+				return;
+			}
 
 			$allow_upsize    = isset($element['allow_upsize']) && $element['allow_upsize'];
 			$all_sizes       = $panel->img_sizes_for($user_scope, $app_config);
@@ -255,7 +261,10 @@ class StationFileController extends BaseController {
 			$bad_file           = !in_array(strtolower($extension), $allowed_extensions);
 			$target_directory 	= isset($element['directory']) ? $element['directory'] : '';
 
-			if ($bad_file) return Response::json(['success' => FALSE, 'reason' => 'not an allowed file type']); 
+			if ($bad_file) {
+				echo json_encode(['success' => FALSE, 'reason' => 'Sorry, this file type is not allowed.']);
+				return;
+			}
 
 			$this->send_to_s3($new_file_name, $target_directory, $app_config, TRUE);
 
