@@ -221,21 +221,19 @@ $(document).ready(function() {
                         //populate sidebar info
                         create_media_side_controls($results.file_uri_stub,$results.file_name,$elem_name);
                         $(this).remove();
-
-
                     }
                     
                 }
                 else
                 {
-                    var $errors = response.error_list;
+                    var $errors = $results.reason;
                     // // console.log($errors);
                     var $displayme = '<div class="alert alert-danger">'+$errors+'</div>';
                     //// // console.log($displayme);
+                    $('.trigger_img_upload').html('Upload Different File').removeAttr('disabled');
                     $('#station-fileupload-hud').html($displayme);
+                    $(this).remove();
                     scroll(0,0);
-
-
                 }
         });
     });
