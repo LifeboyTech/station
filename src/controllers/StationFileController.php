@@ -203,40 +203,44 @@ class StationFileController extends BaseController {
 
 	public function upload()
 	{
+		// return an error response if no file is detected, this may be due to the fact that the file is too large.
+		if (!$this->request->hasFile('uploaded_file')) {
+			return Response::json(['success' => FALSE, 'reason' => 'No file uploaded or invalid file type.']);
+		}
 
-		if (!$this->request->hasFile('uploaded_file')) echo json_encode(['success' => FALSE, 'reason' => 'no file uploaded']);
+		$panel               = new Panel;
+		$panel_name          = $this->request->get('panel_name');
+		$parent_panel_name   = $this->request->get('parent_panel_name');
+		$method              = $this->request->get('method');
+		$user_scope          = $panel->user_scope($panel_name, $method, $parent_panel_name);
+		$element_name        = $this->request->get('upload_element_name');
+		$element             = $user_scope['config']['elements'][$element_name];
 
-		$file						= $this->request->file('uploaded_file');
-		$original_file_name			= $file->getClientOriginalName();
-		$size						= $file->getSize();
-		$mime						= $this->mime_for($file);
-		$this->mime 				= $mime;
-		$extension					= $file->getClientOriginalExtension();
-		$path 			 			= pathinfo($original_file_name);
-		$orig_name_wo_ext 			= preg_replace('/\W+/', '_', $path['filename']);
-		$new_file_name				= $orig_name_wo_ext.'_'.date('Y-m-d-H-i-s').'.'.$extension;
-		$panel						= new Panel;
-		$panel_name					= $this->request->get('panel_name');
-		$parent_panel_name			= $this->request->get('parent_panel_name');
-		$element_name				= $this->request->get('upload_element_name');
-		$method						= $this->request->get('method');
-		$user_scope					= $panel->user_scope($panel_name, $method, $parent_panel_name);
-		$element					= $user_scope['config']['elements'][$element_name];
-		$app_config					= StationConfig::app();
-		$success 					= FALSE;
-		$message 					= '';
-		$field_is_embeddable 		= isset($element['embeddable']) && $element['embeddable'];
-		$field_is_uploadable 		= in_array($element['type'], ['image','file']);
-		$is_an_image 				= strpos($mime, 'image') !== FALSE;
+		$file                = $this->request->file('uploaded_file');
+		$original_file_name  = $file->getClientOriginalName();
+		$size                = $file->getSize();
+		$mime                = $this->mime_for($file, $element['type']);
+		$this->mime          = $mime;
+		$extension           = $file->getClientOriginalExtension();
+		$path                = pathinfo($original_file_name);
+		$orig_name_wo_ext    = preg_replace('/\W+/', '_', $path['filename']);
+		$new_file_name       = $orig_name_wo_ext.'_'.date('Y-m-d-H-i-s').'.'.$extension;
+		$app_config          = StationConfig::app();
+		$success             = FALSE;
+		$message             = '';
+		$field_is_embeddable = isset($element['embeddable']) && $element['embeddable'];
+		$field_is_uploadable = in_array($element['type'], ['image','file']);
+		$is_an_image         = strpos($mime, 'image') !== FALSE;
 
 		$this->request->file('uploaded_file')->move($this->tmp_dir, $new_file_name);
 
 		if ($field_is_uploadable && $element['type'] != 'file' || ($field_is_embeddable && $is_an_image)){
-
 			$allowed_image_extensions	= ['png', 'gif', 'jpg', 'jpeg'];
 			$bad_image = !$is_an_image || !in_array(strtolower($extension), $allowed_image_extensions);
 
-			if ($bad_image) return Response::json(['success' => FALSE, 'reason' => 'not a proper image']);
+			if ($bad_file) {
+				return Response::json(['success' => FALSE, 'reason' => 'File is not a valid image.']);
+			}
 
 			$allow_upsize    = isset($element['allow_upsize']) && $element['allow_upsize'];
 			$all_sizes       = $panel->img_sizes_for($user_scope, $app_config);
@@ -245,17 +249,17 @@ class StationFileController extends BaseController {
 			$success         = $manipulations['n_sent'] > 0;
 			$message         = $manipulations['n_sent'].' manipulations made and sent to S3';
 			$preview_uri     = isset($manipulations['file_name']) ? 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/'.'station_thumbs_lg/'.$manipulations['file_name'] : FALSE;
-			$complete_uri 	 = $preview_uri;
+			$complete_uri    = $preview_uri;
 			$final_file_name = isset($manipulations['file_name']) ? $manipulations['file_name'] : FALSE;
-			$file_type 		 = 'image';
-
-		} else if ($field_is_uploadable && $element['type'] == 'file' || ($field_is_embeddable && !$is_an_image)){ 
-
+			$file_type       = 'image';
+		} else if ($field_is_uploadable && $element['type'] == 'file' || ($field_is_embeddable && !$is_an_image)){
 			$allowed_extensions = isset($element['allowed_types']) ? $element['allowed_types'] : ['zip', 'pdf', 'doc', 'xls', 'docx'];
 			$bad_file           = !in_array(strtolower($extension), $allowed_extensions);
-			$target_directory 	= isset($element['directory']) ? $element['directory'] : '';
+			$target_directory   = isset($element['directory']) ? $element['directory'] : '';
 
-			if ($bad_file) return Response::json(['success' => FALSE, 'reason' => 'not an allowed file type']); 
+			if ($bad_file) {
+				return Response::json(['success' => FALSE, 'reason' => 'Sorry, this file type is not allowed.']);
+			}
 
 			$this->send_to_s3($new_file_name, $target_directory, $app_config, TRUE);
 
@@ -263,25 +267,22 @@ class StationFileController extends BaseController {
 			$message         = 'File sent to S3';
 			$preview_uri     = '/public/packages/lifeboy/station/img/file.png';
 			$final_file_name = $new_file_name;
-			$file_type 		 = 'file';
-			$complete_uri 	 = 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/'.$target_directory.'/'.$new_file_name;
+			$file_type       = 'file';
+			$complete_uri    = 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/'.$target_directory.'/'.$new_file_name;
 		}
 
 		$response = [
+			'success'       => $success,
+			'message'       => $message,
+			'insert_id'     => isset($medium->id) ? $medium->id : FALSE,
+			'file_uri_stub' => 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/',
+			'file_uri'      => $preview_uri,
+			'file_name'     => $final_file_name,
+			'file_type'     => $file_type,
+			'complete_uri'  => $complete_uri,
+		];
 
-			'success'		=> $success,
-			'message'		=> $message,
-			'insert_id'		=> isset($medium->id) ? $medium->id : FALSE,
-			'file_uri_stub'	=> 'http://'.$app_config['media_options']['AWS']['bucket'].'.s3.amazonaws.com/',
-			'file_uri'		=> $preview_uri,
-			'file_name'		=> $final_file_name,
-			'file_type' 	=> $file_type,
-			'complete_uri' 	=> $complete_uri,
-        ];
-
-
-        //return Response::json($response); // was erroring with Resource interpreted as Document but transferred with MIME type application/json: "/station/file/upload".
-        echo json_encode($response);
+		return Response::json($response);
 	}
 
 	private function fetch_original($filename, $app_config){
@@ -305,19 +306,18 @@ class StationFileController extends BaseController {
         fclose($fp);
     }
 
-    private function mime_for($file){
-
-    	try { // sometimes this method simply fails even on legit files. wrapping it in an exception handler for now
-			
-	    	$mime = $file->getMimeType();
-
-    	} catch (Exception $e){
-
-			$mime = 'image';
+	private function mime_for($file, $type) {
+		// sometimes this method simply fails even on legit files. wrapping it in an exception handler for now
+		// since getMimeType fails to return valid mime types, we should catch the exception thrown and return a fallback
+		// mime type for the uploaded file. we default back to the element type
+		try {
+			$mime = $file->getMimeType();
+		} catch (\Exception $e){
+			$mime = $type;
 		}
 
 		return $mime;
-    }
+	}
 
 	private function send_to_s3($file, $s3_directory = '',$app_config, $is_orig = FALSE){
 

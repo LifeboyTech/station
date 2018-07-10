@@ -197,12 +197,10 @@ $(document).ready(function() {
         $('#station-fileupload-form').submit();
 
         $("#postiframe").load(function () {
-                $iframeContents = $("#postiframe")[0].contentWindow.document.body.innerHTML;
-                // console.log($iframeContents);
+                $iframeContents = $("#postiframe").contents().find('*').first().text();
                 $results = $.parseJSON($iframeContents);
-                if ($results.success) 
+                if ($results.success)
                 {
-                    // console.log('success! ');
                     $('.trigger_img_upload').html('Upload Different File').removeAttr('disabled');
                     $('.station-file-options').show();
                     if(typeof $results.file_uri!='undefined')
@@ -221,21 +219,19 @@ $(document).ready(function() {
                         //populate sidebar info
                         create_media_side_controls($results.file_uri_stub,$results.file_name,$elem_name);
                         $(this).remove();
-
-
                     }
                     
                 }
                 else
                 {
-                    var $errors = response.error_list;
+                    var $errors = $results.reason;
                     // // console.log($errors);
                     var $displayme = '<div class="alert alert-danger">'+$errors+'</div>';
                     //// // console.log($displayme);
+                    $('.trigger_img_upload').html('Upload Different File').removeAttr('disabled');
                     $('#station-fileupload-hud').html($displayme);
+                    $(this).remove();
                     scroll(0,0);
-
-
                 }
         });
     });
