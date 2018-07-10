@@ -197,12 +197,10 @@ $(document).ready(function() {
         $('#station-fileupload-form').submit();
 
         $("#postiframe").load(function () {
-                $iframeContents = $("#postiframe")[0].contentWindow.document.body.innerHTML;
-                // console.log($iframeContents);
+                $iframeContents = $("#postiframe").contents().find('*').first().text();
                 $results = $.parseJSON($iframeContents);
-                if ($results.success) 
+                if ($results.success)
                 {
-                    // console.log('success! ');
                     $('.trigger_img_upload').html('Upload Different File').removeAttr('disabled');
                     $('.station-file-options').show();
                     if(typeof $results.file_uri!='undefined')

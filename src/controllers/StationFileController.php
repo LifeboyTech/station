@@ -205,8 +205,7 @@ class StationFileController extends BaseController {
 	{
 		// return an error response if no file is detected, this may be due to the fact that the file is too large.
 		if (!$this->request->hasFile('uploaded_file')) {
-			echo json_encode(['success' => FALSE, 'reason' => 'No file uploaded or invalid file type.']);
-			return;
+			return Response::json(['success' => FALSE, 'reason' => 'No file uploaded or invalid file type.']);
 		}
 
 		$file						= $this->request->file('uploaded_file');
@@ -240,8 +239,7 @@ class StationFileController extends BaseController {
 			$bad_image = !$is_an_image || !in_array(strtolower($extension), $allowed_image_extensions);
 
 			if ($bad_file) {
-				echo json_encode(['success' => FALSE, 'reason' => 'File is not a valid image.']);
-				return;
+				return Response::json(['success' => FALSE, 'reason' => 'File is not a valid image.']);
 			}
 
 			$allow_upsize    = isset($element['allow_upsize']) && $element['allow_upsize'];
@@ -262,8 +260,7 @@ class StationFileController extends BaseController {
 			$target_directory 	= isset($element['directory']) ? $element['directory'] : '';
 
 			if ($bad_file) {
-				echo json_encode(['success' => FALSE, 'reason' => 'Sorry, this file type is not allowed.']);
-				return;
+				return Response::json(['success' => FALSE, 'reason' => 'Sorry, this file type is not allowed.']);
 			}
 
 			$this->send_to_s3($new_file_name, $target_directory, $app_config, TRUE);
@@ -287,10 +284,7 @@ class StationFileController extends BaseController {
 			'file_type' 	=> $file_type,
 			'complete_uri' 	=> $complete_uri,
         ];
-
-
-        //return Response::json($response); // was erroring with Resource interpreted as Document but transferred with MIME type application/json: "/station/file/upload".
-        echo json_encode($response);
+		return Response::json($response);
 	}
 
 	private function fetch_original($filename, $app_config){
