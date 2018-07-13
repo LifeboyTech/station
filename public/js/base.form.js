@@ -195,9 +195,9 @@ $(document).ready(function() {
 
 
         $('#station-fileupload-form').submit();
-
         $("#postiframe").load(function () {
-                $iframeContents = $("#postiframe").contents().find('*').first().text();
+            try {
+                $iframeContents = $("#postiframe")[0].contentWindow.document.body.innerText;
                 $results = $.parseJSON($iframeContents);
                 if ($results.success)
                 {
@@ -233,6 +233,9 @@ $(document).ready(function() {
                     $(this).remove();
                     scroll(0,0);
                 }
+            } catch (e) {
+                $(this).remove();
+            }
         });
     });
 
